@@ -1,0 +1,44 @@
+name: Bug report
+description: Something in Tank Advisor, wotctx or the client mod does not work as it should.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Please leave out anything personal: `wotctx doctor` output is already
+        redacted, but screenshots may show your nickname.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Tank Advisor → About, or `wotctx version`.
+      placeholder: v1.0.1
+    validations:
+      required: true
+  - type: dropdown
+    id: part
+    attributes:
+      label: Which part
+      options:
+        - The Tank Advisor app or its installer
+        - Claude Desktop or Claude Code (answers, the extension, the plugin)
+        - The client mod
+        - wotctx on the command line
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to make it happen again
+  - type: textarea
+    id: doctor
+    attributes:
+      label: wotctx doctor
+      description: The output of `wotctx doctor`, in a terminal. It never prints credentials.
+      render: text

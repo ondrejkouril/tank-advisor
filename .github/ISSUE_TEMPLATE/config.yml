@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/ondrejkouril/tank-advisor/security/advisories/new
+    about: Privately, please; see SECURITY.md.
+  - name: Wargaming account or game support
+    url: https://wargaming.net/support/
+    about: Tank Advisor is not affiliated with Wargaming; account and game problems go to Wargaming Support.
