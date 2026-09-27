@@ -24,7 +24,7 @@ Phase 1 was built on `phase-1-mvp` (28 commits) and fast-forwarded into `main` a
 | phase 2 — MCP | **done**, built on `phase-2-mcp` and fast-forwarded into `main` at `bc33519`: server built and tested; evals over MCP 7/10 without the skill, 10/10 with it; the owner confirmed it working in Claude Desktop on 2026-09-25 |
 | phase 3 — packaging | **done**, built on `phase-3-packaging` and fast-forwarded into `main`: plugin installed (run 6: 10/10), framework over MCP (run 5b: 10/10), bundle installed in Desktop and confirmed working by the owner 2026-09-25; the phone export is built, not yet tried |
 | phase 4 — client mod | **done**, built on `phase-4-mod` and fast-forwarded into `main` at `b9a8b9d` (2026-09-26): the mod in the client (0.2.1, checked against it by the owner; 0.3.0 built), `wotctx` reading it, answers from it; runs 7 and 8c 10/10. mod 0.3.0 and the Desktop bundle installed by the owner |
-| phase 5 — Tank Advisor | **in progress** on `phase-5-desktop`, in the worktree `../tank-advisor-phase5`. The spec was written, Wargaming's terms read and decisions D1–D9 settled with the owner on 2026-09-26. Wargaming and tomato.gg are contacted only if they raise something first. D1–D5 are done, with owner checks open on D1, D4 and D5. The switch-over happened on 2026-09-27: this branch's `wotctx` is installed, and so is the 0.5.0 launcher extension. D6, D7 and D8 were built 2026-09-27, each with its owner check open. D9 was built and tested locally the same day; releasing waits on D0 and on the repository going public. **D11's docs are done**; SignPath wants proof of users, so the first releases go out unsigned. The owner's advice settings are not in the overlay the installed `wotctx` reads (see D7). D0 (the owner's accounts) has not started. Next: the owner's checks, the rest of D0, and D10; then the 1.0 release |
+| phase 5 — Tank Advisor | **released as v1.0.0** on 2026-09-27, from the public repository `ondrejkouril/tank-advisor`; owner checks and D10 still open. Earlier: **in progress** on `phase-5-desktop`, in the worktree `../tank-advisor-phase5`. The spec was written, Wargaming's terms read and decisions D1–D9 settled with the owner on 2026-09-26. Wargaming and tomato.gg are contacted only if they raise something first. D1–D5 are done, with owner checks open on D1, D4 and D5. The switch-over happened on 2026-09-27: this branch's `wotctx` is installed, and so is the 0.5.0 launcher extension. D6, D7 and D8 were built 2026-09-27, each with its owner check open. D9 was built and tested locally the same day; releasing waits on D0 and on the repository going public. **D11's docs are done**; SignPath wants proof of users, so the first releases go out unsigned. The owner's advice settings are not in the overlay the installed `wotctx` reads (see D7). D0 (the owner's accounts) has not started. Next: the owner's checks, the rest of D0, and D10; then the 1.0 release |
 
 **Phase 1 (MVP) is complete.** Its done-criterion — *"What tank should I get now?"* gets a
 grounded, data-cited answer — is met in docs/evals.md, runs 1 and 2, from fresh sessions in an
@@ -1454,7 +1454,34 @@ understood and fixed, and the non-EU sync clean.
 
 *Acceptance:* the release is public. Spec, README and plan match what shipped.
 
-**Result (2026-09-27): the docs are done; the release is not.**
+**Result (2026-09-27): v1.0.0 is released.**
+
+The project moved to a public repository first, `ondrejkouril/tank-advisor`. It starts from the
+finished tree with no history and no personal data, and the Go module path, updater and links
+were renamed with it. The full history is in the private, archived `tank-advisor-old`.
+
+- **Built by the workflow**, with the owner's decision to release as 1.0.0 rather than as a
+  pre-release first. The first attempt found that GitHub starts no workflow for a draft
+  release's own events. The workflow now runs by hand with the draft's tag
+  (`gh workflow run release -f tag=v1.2.3`). The run passed in 4m22s: tests, the installer
+  built with the secret application id, sums, signature, upload.
+- **Checked before publishing**, on the downloaded assets:
+  - `SHA256SUMS` matches both executables;
+  - `TankAdvisor.exe.sig` verifies against the committed `release.pub`;
+  - the installer's manifest is `asInvoker`, and its version is v1.0.0;
+  - the app carries its version and payloads.
+- **Published** 2026-09-27 as the latest release, with the tag `v1.0.0` at `65474c2`, the
+  commit it was built from. Assets: `TankAdvisor-setup.exe`, `TankAdvisor.exe`,
+  `TankAdvisor.exe.sig`, `SHA256SUMS` and the mod 0.3.0. The notes carry the SmartScreen
+  step.
+- **Still open, now against a public release:**
+  - D9's and D10's checks: the installer has not yet been run on any machine; a first
+    install, an update to a later release, and an uninstall remain to be seen;
+  - run 11, on another player's account;
+  - the Mod Hub submission;
+  - signing, once SignPath accepts the project.
+
+**Earlier, the docs:**
 
 - **`docs/spec.md`** has every change spec-desktop §13 lists:
   - §1: no fixed account;
