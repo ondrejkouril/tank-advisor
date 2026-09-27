@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tank Advisor with Claude</title>
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1600px; height: 900px; overflow: hidden; }
+  body {
+    font: 15px/1.5 "Segoe UI", system-ui, sans-serif;
+    color: #1c2129;
+    background:
+      radial-gradient(1200px 700px at 15% 10%, #3a74d6 0%, transparent 60%),
+      radial-gradient(900px 600px at 95% 100%, #0f2f66 0%, transparent 65%),
+      linear-gradient(135deg, #1d4ea8 0%, #143a80 55%, #0c2556 100%);
+    position: relative;
+  }
+  .window {
+    position: absolute;
+    background: #f6f7f9;
+    border-radius: 12px;
+    box-shadow: 0 30px 70px rgb(0 0 0 / 0.45), 0 0 0 1px rgb(255 255 255 / 0.08);
+    overflow: hidden;
+  }
+  .titlebar {
+    height: 38px; display: flex; align-items: center; gap: 10px;
+    padding: 0 14px; font-size: 13px; color: #3d4652;
+    background: #eceef2; border-bottom: 1px solid #dde1e7;
+  }
+  .titlebar img { width: 18px; height: 18px; }
+  .titlebar .controls { margin-left: auto; display: flex; gap: 18px; color: #6b7480; font-size: 12px; letter-spacing: 1px; }
+
+  /* The Tank Advisor window: the real page, from the demo install. */
+  .app { left: 70px; top: 64px; width: 600px; height: 772px; }
+  .app .body { height: calc(100% - 38px); overflow: hidden; }
+  .app .body img { width: 100%; display: block; }
+
+  /* The chat: the project's own neutral styling, not a copy of any app. */
+  .chat { left: 610px; top: 170px; width: 920px; height: 580px; background: #ffffff; display: flex; flex-direction: column; }
+  .chat .titlebar { background: #f3f1ec; border-bottom-color: #e6e2d9; }
+  .chat .dot { width: 18px; height: 18px; border-radius: 50%; background: #d97757; }
+  .chat .label { margin-left: 10px; font-size: 12px; color: #8a8378; border: 1px solid #e0dbd0; border-radius: 999px; padding: 1px 9px; }
+  .conv { flex: 1; padding: 30px 46px 10px; display: flex; flex-direction: column; gap: 18px; overflow: hidden; }
+  .you {
+    align-self: flex-end; background: #f0ede6; border-radius: 16px 16px 4px 16px;
+    padding: 11px 18px; font-size: 16px; max-width: 70%;
+  }
+  .tools {
+    align-self: flex-start; display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: #6b665d; border: 1px solid #e6e2d9; border-radius: 8px; padding: 6px 12px;
+  }
+  .tools .check { color: #1f8a4c; font-weight: 700; }
+  .tools code { font: 12.5px Consolas, monospace; color: #3d4652; }
+  .answer { font-size: 15.5px; line-height: 1.6; color: #25221d; max-width: 800px; }
+  .answer p { margin: 0 0 12px; }
+  .answer b { font-weight: 650; }
+  .answer .data { color: #6b665d; font-size: 14px; }
+  .input {
+    margin: 0 46px 26px; border: 1px solid #e0dbd0; border-radius: 14px;
+    padding: 14px 18px; color: #a39d92; font-size: 15px; display: flex; justify-content: space-between;
+  }
+  .input .send { width: 30px; height: 30px; border-radius: 8px; background: #d97757; opacity: 0.35; }
+
+  .caption {
+    position: absolute; left: 70px; bottom: 26px; right: 70px;
+    display: flex; justify-content: space-between; align-items: baseline;
+    color: #e3ecfb; font-size: 15px;
+  }
+  .caption b { font-size: 19px; font-weight: 600; color: #ffffff; margin-right: 10px; }
+  .caption small { color: #b5c6e6; font-size: 12px; }
+</style>
+</head>
+<body>
+
+  <div class="window app">
+    <div class="titlebar"><img src="../../../cmd/tankadvisor/icon.png" alt=""> Tank Advisor <span class="controls">—&nbsp;&nbsp;☐&nbsp;&nbsp;✕</span></div>
+    <div class="body"><img src="../screenshots/4-goals.png" alt="The Goals page"></div>
+  </div>
+
+  <div class="window chat">
+    <div class="titlebar"><span class="dot"></span> Claude <span class="label">example conversation</span><span class="controls">—&nbsp;&nbsp;☐&nbsp;&nbsp;✕</span></div>
+    <div class="conv">
+      <div class="you">What tank should I get now?</div>
+      <div class="tools"><span class="check">✓</span> Used Tank Advisor: <code>wot_brief</code>, <code>wot_candidates</code></div>
+      <div class="answer">
+        <p><b>Short answer:</b> Your next tank is the LPT-67 Šelma, the next step on your Blesk → Šelma → Tesák goal. You need about 19,195 more XP on the Blesk — roughly 22 battles, or 3 one-hour sessions. The XP will come quickly; the real problem is credits. You're about 2.71M short, so play credit-earners alongside the Blesk.</p>
+        <p><b>Why:</b> … The Blesk is your best tank by WN8 (2,507 WN8, 51.9 % win rate, 54 battles) — that's only 54 battles, so it's an early sign, not proof …</p>
+        <p class="data"><b>Data:</b> account and stats 12 min old, XVM WN8 values from 2026-09-12, overlay 2026-09-18.</p>
+      </div>
+    </div>
+    <div class="input">Reply to Claude… <span class="send"></span></div>
+  </div>
+
+  <div class="caption">
+    <span><b>Tank Advisor</b>keeps your account current. Claude answers from your real figures.</span>
+    <small>Illustration. The answer is excerpted from the project's evaluation run 2.</small>
+  </div>
+
+</body>
+</html>
