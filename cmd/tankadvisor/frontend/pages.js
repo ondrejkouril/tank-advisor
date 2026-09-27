@@ -95,15 +95,17 @@ export async function openAdvice() {
   let conflicts = [];
 
   function part(title, id, body, resetKeys) {
+    // The reset button comes first, floated right, so the part's text flows
+    // around it instead of running under it.
     return el("fieldset", { class: "part", id },
       el("legend", {}, title),
-      ...body,
       el("button", {
         class: "quiet reset", onclick: () => {
           for (const k of resetKeys) settings[k] = clone(emptyOf(page.settings[k]));
           changed();
         },
-      }, "Reset to defaults"));
+      }, "Reset to defaults"),
+      ...body);
   }
 
   function emptyOf(v) {
