@@ -499,7 +499,8 @@ Running MCP servers keep the old code until Claude Desktop restarts.
 
 GitHub Actions on a Windows runner (`.github/workflows/release.yml`) builds `wotctx` and the
 bundle, then the app with them embedded, then the installer (`make installer`). It runs when
-the maintainer saves a draft release with the mod attached, and it uploads the installer, the
+the maintainer runs it with the tag of a draft release they made with the mod attached (a
+draft's own events start no workflow), and it uploads the installer, the
 app, `SHA256SUMS` and the signature to the draft. The maintainer then publishes it. It injects the Wargaming application id from
 a repository secret (§12.1). It Authenticode-signs through SignPath, and publishes the release
 with `SHA256SUMS` and the Ed25519 signature the updater checks. The `.wotmod` is a

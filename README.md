@@ -256,7 +256,9 @@ packaging/mcpb/       the Desktop extension       packaging/nsis/  the installer
 ```
 
 **Releasing.** Create a draft release with its tag (`v1.2.3`, or `v1.2.3-rc.1` for a
-pre-release), attach the mod built with `make mod`, and save it. The release workflow checks:
+pre-release), attach the mod built with `make mod`, and save it. Then run the release workflow
+with the tag (`gh workflow run release -f tag=v1.2.3`); GitHub starts no workflow for a draft
+by itself. The workflow checks:
 - the committed public key, `cmd/tankadvisor/release.pub`;
 - the `WG_APPLICATION_ID` and `RELEASE_SIGNING_KEY` secrets.
 

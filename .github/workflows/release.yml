@@ -2,10 +2,12 @@
 #
 # The maintainer creates a draft release, with its tag, and attaches the client
 # mod they built (make mod: ondrejkouril.wotctx_<version>.wotmod), since hosted
-# runners no longer set up Python 2.7. Saving the draft starts this workflow,
-# which builds the installer, signs the app, and uploads everything to the
-# draft. The maintainer then checks it and publishes it, as a pre-release to
-# test (plan step D9) or as a release.
+# runners no longer set up Python 2.7. Then they run this workflow with the tag
+# (gh workflow run release -f tag=v1.2.3). GitHub starts no workflow for a
+# draft release's own events, so the draft cannot start it. It builds the
+# installer from main, signs the app, and uploads everything to the draft. The
+# maintainer then checks it and publishes it, as a pre-release to test or as a
+# release.
 #
 # Secrets (plan step D0):
 #   WG_APPLICATION_ID    the project's standalone Wargaming application id
@@ -15,26 +17,26 @@
 name: release
 
 on:
-  release:
-    types: [created]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "The draft release's tag: v1.2.3, or v1.2.3-rc.1 for a pre-release"
+        required: true
 
 permissions:
   contents: write
 
 jobs:
   build:
-    if: github.event.release.draft
     runs-on: windows-latest
     defaults:
       run:
         shell: bash
     env:
-      TAG: ${{ github.event.release.tag_name }}
+      TAG: ${{ inputs.tag }}
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.release.target_commitish }}
 
       - uses: actions/setup-go@v5
         with:
@@ -53,6 +55,7 @@ jobs:
           [ -s cmd/tankadvisor/release.pub ] || { echo "cmd/tankadvisor/release.pub is empty: commit the release key's public half first"; exit 1; }
           [ -n "$WG_APPLICATION_ID" ] || { echo "the WG_APPLICATION_ID secret is missing"; exit 1; }
           [ -n "$RELEASE_SIGNING_KEY" ] || { echo "the RELEASE_SIGNING_KEY secret is missing"; exit 1; }
+          [ "$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isDraft -q .isDraft)" = "true" ] || { echo "there is no draft release $TAG"; exit 1; }
 
       - name: Test
         run: go test ./...

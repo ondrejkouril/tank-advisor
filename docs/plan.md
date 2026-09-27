@@ -1395,8 +1395,9 @@ uninstaller leaves no mod, autostart or `PATH` entry, and keeps the database unl
   - a pre-release is offered only to a pre-release build.
 - **Signing.** `internal/release` and `cmd/releasetool` handle `keygen`, `sign`, `verify` and
   `sums`: Ed25519 over the SHA-256 digest, the scheme the updater checks.
-- **The release workflow** (`.github/workflows/release.yml`) runs when the maintainer saves a
-  draft release with the `.wotmod` attached. It checks the tag, the committed public key and
+- **The release workflow** (`.github/workflows/release.yml`) is run by hand with the tag of a
+  draft release that has the `.wotmod` attached; GitHub starts no workflow for a draft's own
+  events, which the first release found out. It checks the tag, the committed public key and
   both secrets. It runs the tests, builds the installer with the secret application id,
   writes `SHA256SUMS`, signs the app, verifies that signature against the committed key, and
   uploads the files to the draft. Authenticode signing through SignPath has its place marked
