@@ -1,0 +1,124 @@
+{
+  "data": {
+    "window": "30d",
+    "complete": true,
+    "span": {
+      "requested": "30d",
+      "from": "2026-08-09T12:00:00Z",
+      "to": "2026-09-18T11:00:00Z",
+      "days": 40
+    },
+    "total": {
+      "battles": 45,
+      "confidence": "low",
+      "win_rate": 51.11,
+      "dpg": 1273.3,
+      "frags": 0.89,
+      "spots": 2.11,
+      "survival_rate": 28.89,
+      "avg_xp": 736.5,
+      "assist": 783.1,
+      "assist_radio": 721.9,
+      "assist_track": 61.2,
+      "assist_stun": 0,
+      "wn8": 1856,
+      "wn8_excluded_battles": 2
+    },
+    "intervals": [
+      {
+        "from": "2026-08-09T12:00:00Z",
+        "to": "2026-09-08T12:00:00Z",
+        "stats": {
+          "battles": 30,
+          "confidence": "low",
+          "win_rate": 53.33,
+          "dpg": 1233.3,
+          "frags": 0.93,
+          "spots": 2.17,
+          "survival_rate": 30,
+          "avg_xp": 716.7,
+          "assist": 803.3,
+          "assist_radio": 750,
+          "assist_track": 53.3,
+          "assist_stun": 0,
+          "wn8": 1893
+        },
+        "tanks": [
+          {
+            "tank_id": 4929,
+            "name": "AMX 13 90",
+            "battles": 20
+          },
+          {
+            "tank_id": 4721,
+            "name": "Vz. 64 Blesk",
+            "battles": 10
+          }
+        ]
+      },
+      {
+        "from": "2026-09-08T12:00:00Z",
+        "to": "2026-09-18T11:00:00Z",
+        "stats": {
+          "battles": 15,
+          "confidence": "very_low",
+          "win_rate": 46.67,
+          "dpg": 1353.3,
+          "frags": 0.8,
+          "spots": 2,
+          "survival_rate": 26.67,
+          "avg_xp": 776.2,
+          "assist": 742.6,
+          "assist_radio": 665.8,
+          "assist_track": 76.8,
+          "assist_stun": 0,
+          "wn8": 1767,
+          "wn8_excluded_battles": 2
+        },
+        "tanks": [
+          {
+            "tank_id": 4929,
+            "name": "AMX 13 90",
+            "battles": 9
+          },
+          {
+            "tank_id": 4721,
+            "name": "Vz. 64 Blesk",
+            "battles": 4
+          },
+          {
+            "tank_id": 68673,
+            "name": "Leox",
+            "battles": 2
+          }
+        ]
+      }
+    ],
+    "empty_intervals": 0
+  },
+  "meta": {
+    "generated_at": "2026-09-18T12:00:00Z",
+    "sources": [
+      {
+        "name": "wg:encyclopedia/vehicles",
+        "observed_at": "2026-09-18T10:00:00Z",
+        "age_seconds": 7200
+      },
+      {
+        "name": "wg:tanks/stats",
+        "observed_at": "2026-09-18T11:00:00Z",
+        "age_seconds": 3600
+      },
+      {
+        "name": "xvm:wn8exp",
+        "observed_at": "2026-09-18T11:30:00Z",
+        "age_seconds": 1800,
+        "version": "2026-09-12"
+      }
+    ],
+    "caveats": [
+      "the nearest snapshot before the 30d cutoff is from 2026-08-09, so this 30d window actually covers 40.0 days",
+      "assist figures are random battles only, from the API's assist totals; the in-game service record shows an all-battles figure with no radio/track split, so they will not match it exactly"
+    ]
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "data": {
+    "count": 4,
+    "by_tier": {
+      "10": 1,
+      "8": 1,
+      "9": 2
+    },
+    "by_class": {
+      "SPG": 1,
+      "lightTank": 2,
+      "mediumTank": 1
+    },
+    "tanks": [
+      {
+        "tank_id": 8705,
+        "name": "Object 261",
+        "tier": 10,
+        "class": "SPG",
+        "nation": "ussr",
+        "is_premium": false,
+        "mastery": 2,
+        "stats": {
+          "battles": 100,
+          "confidence": "moderate",
+          "win_rate": 52,
+          "dpg": 900,
+          "frags": 0.7,
+          "spots": 0.05,
+          "survival_rate": 45,
+          "avg_xp": 500,
+          "assist": 70,
+          "assist_radio": 10,
+          "assist_track": 60,
+          "assist_stun": 0,
+          "wn8": 1125
+        }
+      },
+      {
+        "tank_id": 4929,
+        "name": "AMX 13 90",
+        "tier": 9,
+        "class": "lightTank",
+        "nation": "france",
+        "is_premium": false,
+        "mastery": 2,
+        "stats": {
+          "battles": 529,
+          "confidence": "ok",
+          "win_rate": 48.96,
+          "dpg": 1120,
+          "frags": 0.94,
+          "spots": 2.26,
+          "survival_rate": 29.87,
+          "avg_xp": 778,
+          "assist": 798.2,
+          "assist_radio": 744.5,
+          "assist_track": 53.7,
+          "assist_stun": 0,
+          "wn8": 1894
+        }
+      },
+      {
+        "tank_id": 68673,
+        "name": "Leox",
+        "tier": 9,
+        "class": "mediumTank",
+        "nation": "italy",
+        "is_premium": false,
+        "mastery": 2,
+        "stats": {
+          "battles": 2,
+          "confidence": "very_low",
+          "win_rate": 100,
+          "dpg": 1910,
+          "frags": 0.5,
+          "spots": 1,
+          "survival_rate": 50,
+          "avg_xp": 1041.5,
+          "assist": 294.5,
+          "assist_radio": 67,
+          "assist_track": 227.5,
+          "assist_stun": 0,
+          "wn8": null,
+          "wn8_excluded_battles": 2
+        }
+      },
+      {
+        "tank_id": 4721,
+        "name": "Vz. 64 Blesk",
+        "tier": 8,
+        "class": "lightTank",
+        "nation": "czech",
+        "is_premium": false,
+        "mastery": 2,
+        "stats": {
+          "battles": 54,
+          "confidence": "low",
+          "win_rate": 50,
+          "dpg": 1500,
+          "frags": 0.76,
+          "spots": 1.8,
+          "survival_rate": 29.63,
+          "avg_xp": 620.4,
+          "assist": 800,
+          "assist_radio": 750,
+          "assist_track": 50,
+          "assist_stun": 0,
+          "wn8": 1741
+        }
+      }
+    ]
+  },
+  "meta": {
+    "generated_at": "2026-09-18T12:00:00Z",
+    "sources": [
+      {
+        "name": "wg:account/info",
+        "observed_at": "2026-09-18T11:00:00Z",
+        "age_seconds": 3600
+      },
+      {
+        "name": "wg:account/tanks",
+        "observed_at": "2026-09-18T11:00:00Z",
+        "age_seconds": 3600
+      },
+      {
+        "name": "wg:encyclopedia/vehicles",
+        "observed_at": "2026-09-18T10:00:00Z",
+        "age_seconds": 7200
+      },
+      {
+        "name": "wg:tanks/stats",
+        "observed_at": "2026-09-18T11:00:00Z",
+        "age_seconds": 3600
+      },
+      {
+        "name": "xvm:wn8exp",
+        "observed_at": "2026-09-18T11:30:00Z",
+        "age_seconds": 1800,
+        "version": "2026-09-12"
+      }
+    ],
+    "caveats": [
+      "the API reported 1 further garage id(s) the encyclopedia does not describe; they do not appear in the client and are not counted",
+      "assist figures are random battles only, from the API's assist totals; the in-game service record shows an all-battles figure with no radio/track split, so they will not match it exactly"
+    ]
+  }
+}

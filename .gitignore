@@ -1,0 +1,24 @@
+# build output
+/wotctx
+/wotctx.exe
+/dist/
+
+# local cache and secrets - never commit these
+*.db
+*.db-wal
+*.db-shm
+.env
+
+# editors
+.idea/
+.vscode/
+
+# compiled by the mod build and its tests
+/mod/*.pyc
+
+# The app's payloads, filled by make installer
+/cmd/tankadvisor/payload/*
+!/cmd/tankadvisor/payload/README.md
+
+# A player's own settings: kept in the config directory, never in this repository
+/wot-overlay.yaml

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "tank-advisor",
+  "description": "The wot plugin: World of Tanks advice from one account's own data.",
+  "owner": { "name": "ondrejkouril" },
+  "plugins": [
+    {
+      "name": "wot",
+      "source": ".",
+      "description": "The wot-advisor skill, the wotctx MCP server, /wot:sync, and a sync at session start."
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "data": {
+    "count": 1,
+    "by_tier": {
+      "9": 1
+    },
+    "by_class": {
+      "lightTank": 1
+    },
+    "tanks": [
+      {
+        "tank_id": 4929,
+        "name": "AMX 13 90",
+        "tier": 9,
+        "class": "lightTank",
+        "nation": "france",
+        "is_premium": false,
+        "mastery": 2,
+        "stats": {
+          "battles": 529,
+          "confidence": "ok",
+          "win_rate": 48.96,
+          "dpg": 1120,
+          "frags": 0.94,
+          "spots": 2.26,
+          "survival_rate": 29.87,
+          "avg_xp": 778,
+          "assist": 798.2,
+          "assist_radio": 744.5,
+          "assist_track": 53.7,
+          "assist_stun": 0,
+          "wn8": 1894
+        }
+      }
+    ]
+  },
+  "meta": {
+    "generated_at": "2026-09-18T12:00:00Z",
+    "sources": [
+      {
+        "name": "wg:account/info",
+        "observed_at": "2026-09-18T11:00:00Z",
+        "age_seconds": 3600
+      },
+      {
+        "name": "wg:account/tanks",
+        "observed_at": "2026-09-18T11:00:00Z",
+        "age_seconds": 3600
+      },
+      {
+        "name": "wg:encyclopedia/vehicles",
+        "observed_at": "2026-09-18T10:00:00Z",
+        "age_seconds": 7200
+      },
+      {
+        "name": "wg:tanks/stats",
+        "observed_at": "2026-09-18T11:00:00Z",
+        "age_seconds": 3600
+      },
+      {
+        "name": "xvm:wn8exp",
+        "observed_at": "2026-09-18T11:30:00Z",
+        "age_seconds": 1800,
+        "version": "2026-09-12"
+      }
+    ],
+    "caveats": [
+      "the API reported 1 further garage id(s) the encyclopedia does not describe; they do not appear in the client and are not counted",
+      "assist figures are random battles only, from the API's assist totals; the in-game service record shows an all-battles figure with no radio/track split, so they will not match it exactly"
+    ]
+  }
+}

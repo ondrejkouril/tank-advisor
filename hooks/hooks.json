@@ -1,0 +1,24 @@
+{
+  "description": "Sync World of Tanks data in the background when a session starts; optionally add the cached brief to the context.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "wotctx",
+            "args": ["sync", "--quiet"],
+            "async": true
+          },
+          {
+            "type": "command",
+            "command": "wotctx",
+            "args": ["hook", "session-start"],
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+{"status":"ok","meta":{"count":3},"data":{"512345678":[
+{"tank_id":4929,"mark_of_mastery":4,"statistics":{"battles":529,"wins":259}},
+{"tank_id":2417,"mark_of_mastery":3,"statistics":{"battles":180,"wins":99}},
+{"tank_id":26705,"mark_of_mastery":0,"statistics":{"battles":0,"wins":0}}
+]}}

@@ -1,0 +1,98 @@
+# Builds a Tank Advisor release (docs/spec-desktop.md section 9.1).
+#
+# The maintainer creates a draft release, with its tag, and attaches the client
+# mod they built (make mod: ondrejkouril.wotctx_<version>.wotmod), since hosted
+# runners no longer set up Python 2.7. Saving the draft starts this workflow,
+# which builds the installer, signs the app, and uploads everything to the
+# draft. The maintainer then checks it and publishes it, as a pre-release to
+# test (plan step D9) or as a release.
+#
+# Secrets (plan step D0):
+#   WG_APPLICATION_ID    the project's standalone Wargaming application id
+#   RELEASE_SIGNING_KEY  the Ed25519 release key's private half (releasetool keygen)
+# The public half is committed as cmd/tankadvisor/release.pub.
+
+name: release
+
+on:
+  release:
+    types: [created]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    if: github.event.release.draft
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    env:
+      TAG: ${{ github.event.release.tag_name }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.target_commitish }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.27"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Check what a release needs
+        env:
+          WG_APPLICATION_ID: ${{ secrets.WG_APPLICATION_ID }}
+          RELEASE_SIGNING_KEY: ${{ secrets.RELEASE_SIGNING_KEY }}
+        run: |
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?$ ]] || { echo "the tag $TAG is not v1.2.3 or v1.2.3-rc.1"; exit 1; }
+          [ -s cmd/tankadvisor/release.pub ] || { echo "cmd/tankadvisor/release.pub is empty: commit the release key's public half first"; exit 1; }
+          [ -n "$WG_APPLICATION_ID" ] || { echo "the WG_APPLICATION_ID secret is missing"; exit 1; }
+          [ -n "$RELEASE_SIGNING_KEY" ] || { echo "the RELEASE_SIGNING_KEY secret is missing"; exit 1; }
+
+      - name: Test
+        run: go test ./...
+
+      - name: Fetch the maintainer's mod build
+        run: |
+          mkdir -p dist
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "ondrejkouril.wotctx_*.wotmod" --dir dist
+          ls dist/ondrejkouril.wotctx_*.wotmod
+
+      - name: Install NSIS
+        run: choco install nsis --no-progress -y
+
+      - name: Build the installer
+        env:
+          WG_APP_ID: ${{ secrets.WG_APPLICATION_ID }}
+        run: |
+          make installer VERSION="$TAG" WG_APP_ID="$WG_APP_ID" \
+            MOD_PKG="$(ls dist/ondrejkouril.wotctx_*.wotmod | head -1)" \
+            MAKENSIS="/c/Program Files (x86)/NSIS/makensis.exe"
+
+      # Authenticode signing through the SignPath Foundation goes here, before
+      # anything is hashed, once SignPath has accepted the project (plan step
+      # D0): TankAdvisor.exe first, then the installer rebuilt around it.
+
+      - name: Checksums and the release signature
+        env:
+          RELEASE_SIGNING_KEY: ${{ secrets.RELEASE_SIGNING_KEY }}
+        run: |
+          cd dist/installer
+          mv "TankAdvisor-$TAG-setup.exe" "TankAdvisor-setup.exe"
+          go run ../../cmd/releasetool sums TankAdvisor.exe TankAdvisor-setup.exe > SHA256SUMS
+          go run ../../cmd/releasetool sign TankAdvisor.exe > TankAdvisor.exe.sig
+          # The app will check this signature against the committed key; so
+          # does the build, before anything is uploaded.
+          go run ../../cmd/releasetool verify TankAdvisor.exe TankAdvisor.exe.sig ../../cmd/tankadvisor/release.pub
+          cat SHA256SUMS
+
+      - name: Upload to the draft
+        run: |
+          cd dist/installer
+          gh release upload "$TAG" --repo "$GITHUB_REPOSITORY" --clobber \
+            TankAdvisor-setup.exe TankAdvisor.exe TankAdvisor.exe.sig SHA256SUMS

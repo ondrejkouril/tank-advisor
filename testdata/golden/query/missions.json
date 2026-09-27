@@ -1,0 +1,94 @@
+{
+  "data": {
+    "status_at": "2026-09-18T11:00:00Z",
+    "operations": [
+      {
+        "campaign_id": 1,
+        "campaign": "Long-Awaited Backup",
+        "operation_id": 3,
+        "operation": "T 55A",
+        "missions": 4,
+        "done": 2,
+        "done_with_honors": 1,
+        "not_done": 2,
+        "open_by_class": [
+          {
+            "class": "lightTank",
+            "open": 1,
+            "first": {
+              "mission_id": 165,
+              "name": "LT-15: The Aggressive Recon Specialist",
+              "class": "lightTank",
+              "min_tier": 6,
+              "max_tier": 10,
+              "status": "not_done",
+              "primary": "Damage caused (including damage caused with your assistance) must total 7000 HP.",
+              "secondary": "Survive the battle"
+            }
+          },
+          {
+            "class": "heavyTank",
+            "open": 1,
+            "first": {
+              "mission_id": 174,
+              "name": "HT-9: A Crushing Blow",
+              "class": "heavyTank",
+              "min_tier": 6,
+              "max_tier": 10,
+              "status": "not_done",
+              "primary": "Destroy an enemy vehicle by ramming",
+              "secondary": "Survive the battle"
+            }
+          }
+        ]
+      },
+      {
+        "campaign_id": 1,
+        "campaign": "Long-Awaited Backup",
+        "operation_id": 4,
+        "operation": "Object 260",
+        "missions": 1,
+        "done": 0,
+        "done_with_honors": 0,
+        "not_done": 1,
+        "open_by_class": [
+          {
+            "class": "lightTank",
+            "open": 1,
+            "first": {
+              "mission_id": 226,
+              "name": "LT-1: For Victory!",
+              "class": "lightTank",
+              "min_tier": 6,
+              "max_tier": 10,
+              "status": "not_done",
+              "primary": "Finish the battle as the top player on your team by experience earned",
+              "secondary": "Survive the battle"
+            }
+          }
+        ]
+      }
+    ],
+    "undescribed_statuses": 1
+  },
+  "meta": {
+    "generated_at": "2026-09-18T12:00:00Z",
+    "sources": [
+      {
+        "name": "wg:account/info",
+        "observed_at": "2026-09-18T11:00:00Z",
+        "age_seconds": 3600
+      },
+      {
+        "name": "wg:encyclopedia/personalmissions",
+        "observed_at": "2026-09-18T10:00:00Z",
+        "age_seconds": 7200
+      }
+    ],
+    "caveats": [
+      "the Dravec, Fossa VM 68 and Black Rock mission chains are not in the API; ask the player for that progress",
+      "not_done means not completed; the API does not say whether a mission was started",
+      "1 mission status(es) belong to campaigns the API does not describe; they cannot be named"
+    ]
+  }
+}

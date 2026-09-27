@@ -1,0 +1,40 @@
+{
+  "manifest_version": "0.3",
+  "name": "wotctx",
+  "display_name": "Tank Advisor",
+  "version": "@VERSION@",
+  "description": "Answers about your World of Tanks account from its own data, following your own advice settings.",
+  "long_description": "Connects Claude to the Tank Advisor app: your account's resources, garage, per-tank and per-class performance, recent sessions, purchase and research candidates, personal missions and Mark of Excellence thresholds, each with its data age and caveats. wot_guide carries the core rules, your advice settings from the app and the default framework. The extension runs the wotctx installed by the Tank Advisor app, so app updates reach Claude with no reinstall. Not affiliated with or endorsed by Wargaming; data from the Wargaming.net Public API.",
+  "author": { "name": "ondrejkouril" },
+  "repository": { "type": "git", "url": "https://github.com/ondrejkouril/tank-advisor" },
+  "homepage": "https://github.com/ondrejkouril/tank-advisor",
+  "support": "https://github.com/ondrejkouril/tank-advisor/issues",
+  "license": "MIT",
+  "keywords": ["world-of-tanks", "wotctx", "tank-advisor"],
+  "server": {
+    "type": "binary",
+    "entry_point": "server/wotctx-launcher.exe",
+    "mcp_config": {
+      "command": "${__dirname}/server/wotctx-launcher.exe",
+      "args": [],
+      "env": {}
+    }
+  },
+  "tools": [
+    { "name": "wot_guide", "description": "How to advise you: the procedure, the core rules, your advice settings and the default framework" },
+    { "name": "wot_data_status", "description": "Health and freshness of the cached data" },
+    { "name": "wot_brief", "description": "The whole account on one Markdown page" },
+    { "name": "wot_resources", "description": "Credits, gold, bonds, free XP, premium status and reserves" },
+    { "name": "wot_garage", "description": "Vehicles owned, with lifetime statistics" },
+    { "name": "wot_tank", "description": "Everything known about one vehicle" },
+    { "name": "wot_performance", "description": "Rollups by class, tier or nation over a window" },
+    { "name": "wot_sessions", "description": "Recent play, one interval per pair of syncs" },
+    { "name": "wot_candidates", "description": "What to buy or research next, with cost and affordability" },
+    { "name": "wot_missions", "description": "Personal-mission progress" },
+    { "name": "wot_moe", "description": "Mark of Excellence thresholds, fetched now" },
+    { "name": "wot_sync", "description": "Fetch fresh data into the local cache" }
+  ],
+  "compatibility": {
+    "platforms": ["win32"]
+  }
+}

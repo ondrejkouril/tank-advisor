@@ -1,0 +1,2 @@
+{"status":"ok","meta":{"count":1,"page_total":1,"total":1,"limit":100,"page":1},"data":{
+"3329":{"tank_id":3329,"name":"T26E4 SuperPershing","short_name":"SuperPershing","tier":8,"type":"mediumTank","nation":"usa","tag":"A45_M26_T26E4","is_premium":true,"is_gift":false,"is_wheeled":false,"price_credit":0,"price_gold":8200,"next_tanks":null,"prices_xp":null}}}

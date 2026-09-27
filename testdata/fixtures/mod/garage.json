@@ -1,0 +1,786 @@
+{
+ "account_id": 512345678,
+ "captured_at": "2026-09-25T20:38:53Z",
+ "errors": [],
+ "game_version": "2.4.0.1",
+ "mod_version": "0.2.1",
+ "premium": {
+  "premium": true,
+  "premium_expires_at": "2026-10-16T10:27:11Z",
+  "premium_type": 2,
+  "wot_plus": true
+ },
+ "resources": {
+  "bonds": 12169,
+  "credits": 1884086,
+  "free_xp": 253317,
+  "gold": 6347
+ },
+ "schema": 1,
+ "vehicles": [
+  {
+   "consumables": [
+    {
+     "id": 763,
+     "name": "smallMedkit",
+     "user_name": "Malá lékárnička"
+    },
+    {
+     "id": 1275,
+     "name": "smallRepairkit",
+     "user_name": "Malá sada nářadí"
+    },
+    {
+     "id": 507,
+     "name": "autoExtinguishers",
+     "user_name": "Automatický hasicí přístroj"
+    }
+   ],
+   "crew": [
+    {
+     "bonus_skills": {
+      "radioman": [
+       "radioman_finder",
+       "fireFighting"
+      ]
+     },
+     "role": "commander",
+     "skills": [
+      {
+       "level": 100,
+       "name": "brotherhood"
+      },
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 100,
+       "name": "commander_eagleEye"
+      },
+      {
+       "level": 84,
+       "name": "camouflage"
+      }
+     ],
+     "slot": 0
+    },
+    {
+     "bonus_skills": {},
+     "role": "gunner",
+     "skills": [
+      {
+       "level": 100,
+       "name": "gunner_smoothTurret"
+      },
+      {
+       "level": 100,
+       "name": "brotherhood"
+      },
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 84,
+       "name": "camouflage"
+      }
+     ],
+     "slot": 1
+    },
+    {
+     "bonus_skills": {},
+     "role": "driver",
+     "skills": [
+      {
+       "level": 100,
+       "name": "brotherhood"
+      },
+      {
+       "level": 100,
+       "name": "driver_smoothDriving"
+      },
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 83,
+       "name": "camouflage"
+      }
+     ],
+     "slot": 2
+    },
+    {
+     "bonus_skills": {},
+     "role": "loader",
+     "skills": [
+      {
+       "level": 100,
+       "name": "loader_pedant"
+      },
+      {
+       "level": 100,
+       "name": "brotherhood"
+      },
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 80,
+       "name": "camouflage"
+      }
+     ],
+     "slot": 3
+    }
+   ],
+   "directives": [
+    null
+   ],
+   "elite": true,
+   "equipment": [
+    {
+     "id": 24825,
+     "name": "improvedRotationMechanism_tier1",
+     "user_name": "Vylepšený otočný mechanismus 1. třídy"
+    },
+    {
+     "id": 18681,
+     "name": "coatedOptics_tier1",
+     "user_name": "Skládaná optika 1. třídy"
+    },
+    {
+     "id": 19705,
+     "name": "improvedVentilation_tier2",
+     "user_name": "Vylepšená ventilace 2. třídy"
+    }
+   ],
+   "marks": {
+    "marks": 0,
+    "moving_avg_damage": 1612,
+    "percent": 48.12
+   },
+   "name": "czech:Cz04_T50_51",
+   "rented": false,
+   "shells": [
+    {
+     "count": 28,
+     "id": 512122,
+     "kind": "ARMOR_PIERCING_CR",
+     "name": "_100mm_Prurazny_vz_50_51",
+     "user_name": "Průrazný vz. 50/51"
+    },
+    {
+     "count": 20,
+     "id": 512378,
+     "kind": "HOLLOW_CHARGE",
+     "name": "_100mm_Prupalny_vz_50_51",
+     "user_name": "Průpalný vz. 50/51"
+    },
+    {
+     "count": 0,
+     "id": 512634,
+     "kind": "HIGH_EXPLOSIVE",
+     "name": "_100mm_Narazovy_vz_50_51",
+     "user_name": "Nárazový vz. 50/51"
+    }
+   ],
+   "tank_id": 2417,
+   "tier": 10,
+   "user_name": "TVP T 50/51",
+   "xp": 3625
+  },
+  {
+   "consumables": [],
+   "crew": [
+    {
+     "bonus_skills": {},
+     "role": "commander",
+     "skills": [],
+     "slot": 0
+    },
+    {
+     "bonus_skills": {},
+     "role": "gunner",
+     "skills": [
+      {
+       "level": 100,
+       "name": "gunner_rancorous"
+      }
+     ],
+     "slot": 1
+    },
+    {
+     "bonus_skills": {},
+     "role": "driver",
+     "skills": [],
+     "slot": 2
+    },
+    {
+     "bonus_skills": {},
+     "role": "loader",
+     "skills": [
+      {
+       "level": 100,
+       "name": "loader_intuition"
+      }
+     ],
+     "slot": 3
+    }
+   ],
+   "directives": [],
+   "elite": true,
+   "equipment": [],
+   "marks": {
+    "marks": 0,
+    "moving_avg_damage": 0,
+    "percent": 0
+   },
+   "name": "sweden:S14_Ikv_103_SH",
+   "rented": false,
+   "shells": [
+    {
+     "count": 13,
+     "id": 256138,
+     "kind": "ARMOR_PIERCING",
+     "name": "_105mm_kan_m_41_strv_G1_HEAT_SH",
+     "user_name": "slpprj m/41"
+    },
+    {
+     "count": 0,
+     "id": 256394,
+     "kind": "ARMOR_PIERCING_CR",
+     "name": "_105mm_kan_m_41_strv_G1_APCR_SH",
+     "user_name": "slpprj m/41 B"
+    }
+   ],
+   "tank_id": 5761,
+   "tier": 1,
+   "user_name": "Beowulf",
+   "xp": 0
+  },
+  {
+   "consumables": [
+    {
+     "id": 763,
+     "name": "smallMedkit",
+     "user_name": "Malá lékárnička"
+    },
+    {
+     "id": 1275,
+     "name": "smallRepairkit",
+     "user_name": "Malá sada nářadí"
+    },
+    {
+     "id": 15867,
+     "name": "ration_czech",
+     "user_name": "Buchty"
+    }
+   ],
+   "crew": [
+    {
+     "bonus_skills": {
+      "radioman": [
+       "radioman_finder",
+       "fireFighting",
+       "radioman_interference"
+      ]
+     },
+     "role": "commander",
+     "skills": [
+      {
+       "level": 100,
+       "name": "brotherhood"
+      },
+      {
+       "level": 100,
+       "name": "camouflage"
+      },
+      {
+       "level": 100,
+       "name": "commander_eagleEye"
+      },
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 59,
+       "name": "commander_coordination"
+      }
+     ],
+     "slot": 0
+    },
+    {
+     "bonus_skills": {
+      "loader": [
+       "loader_intuition",
+       "loader_ammunitionImprove",
+       "loader_perfectCharge"
+      ]
+     },
+     "role": "gunner",
+     "skills": [
+      {
+       "level": 100,
+       "name": "brotherhood"
+      },
+      {
+       "level": 100,
+       "name": "camouflage"
+      },
+      {
+       "level": 100,
+       "name": "gunner_smoothTurret"
+      },
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 59,
+       "name": "gunner_rancorous"
+      }
+     ],
+     "slot": 1
+    },
+    {
+     "bonus_skills": {},
+     "role": "driver",
+     "skills": [
+      {
+       "level": 100,
+       "name": "brotherhood"
+      },
+      {
+       "level": 100,
+       "name": "camouflage"
+      },
+      {
+       "level": 100,
+       "name": "driver_smoothDriving"
+      },
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 59,
+       "name": "driver_badRoadsKing"
+      }
+     ],
+     "slot": 2
+    }
+   ],
+   "directives": [
+    null
+   ],
+   "elite": false,
+   "equipment": [
+    {
+     "id": 25849,
+     "name": "commandersView",
+     "user_name": "Sledovací systém velitele"
+    },
+    {
+     "id": 18681,
+     "name": "coatedOptics_tier1",
+     "user_name": "Skládaná optika 1. třídy"
+    },
+    {
+     "id": 22265,
+     "name": "aimingStabilizer_tier2",
+     "user_name": "Vertikální stabilizátor 2. třídy"
+    }
+   ],
+   "marks": {
+    "marks": 0,
+    "moving_avg_damage": 800,
+    "percent": 35.96
+   },
+   "name": "czech:Cz28_LPT_67_Selma",
+   "rented": false,
+   "shells": [
+    {
+     "count": 640,
+     "id": 23930,
+     "kind": "ARMOR_PIERCING",
+     "name": "_57_JPNh_AMDvK_535S",
+     "user_name": "57-JPNh-AMDvK 535Š"
+    },
+    {
+     "count": 256,
+     "id": 24186,
+     "kind": "ARMOR_PIERCING_CR",
+     "name": "_57_JPNhWJ_AMDvK_535S",
+     "user_name": "57-JPNhWJ-AMDvK 535Š"
+    },
+    {
+     "count": 128,
+     "id": 24442,
+     "kind": "HIGH_EXPLOSIVE",
+     "name": "_57_JF_AMDvK_535S",
+     "user_name": "57-JF-AMDvK 535Š"
+    }
+   ],
+   "tank_id": 6257,
+   "tier": 9,
+   "user_name": "LPT-67 Šelma",
+   "xp": 90237
+  },
+  {
+   "consumables": [
+    {
+     "id": 763,
+     "name": "smallMedkit",
+     "user_name": "Malá lékárnička"
+    },
+    {
+     "id": 1275,
+     "name": "smallRepairkit",
+     "user_name": "Malá sada nářadí"
+    },
+    {
+     "id": 3067,
+     "name": "ration",
+     "user_name": "Zvláštní příděl potravy"
+    }
+   ],
+   "crew": [
+    {
+     "bonus_skills": {
+      "radioman": [
+       "radioman_finder",
+       "fireFighting"
+      ]
+     },
+     "role": "commander",
+     "skills": [
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 100,
+       "name": "camouflage"
+      },
+      {
+       "level": 100,
+       "name": "commander_eagleEye"
+      },
+      {
+       "level": 59,
+       "name": "brotherhood"
+      }
+     ],
+     "slot": 0
+    },
+    {
+     "bonus_skills": {},
+     "role": "gunner",
+     "skills": [
+      {
+       "level": 100,
+       "name": "gunner_smoothTurret"
+      },
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 100,
+       "name": "camouflage"
+      },
+      {
+       "level": 59,
+       "name": "brotherhood"
+      }
+     ],
+     "slot": 1
+    },
+    {
+     "bonus_skills": {},
+     "role": "driver",
+     "skills": [
+      {
+       "level": 100,
+       "name": "driver_smoothDriving"
+      },
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 100,
+       "name": "camouflage"
+      },
+      {
+       "level": 59,
+       "name": "brotherhood"
+      }
+     ],
+     "slot": 2
+    },
+    {
+     "bonus_skills": {},
+     "role": "loader",
+     "skills": [
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 100,
+       "name": "loader_pedant"
+      },
+      {
+       "level": 100,
+       "name": "camouflage"
+      },
+      {
+       "level": 59,
+       "name": "brotherhood"
+      }
+     ],
+     "slot": 3
+    }
+   ],
+   "directives": [
+    null
+   ],
+   "elite": true,
+   "equipment": [
+    {
+     "id": 18681,
+     "name": "coatedOptics_tier1",
+     "user_name": "Skládaná optika 1. třídy"
+    },
+    {
+     "id": 20985,
+     "name": "tankRammer_tier2",
+     "user_name": "Hydraulický nabiják 2. třídy"
+    },
+    {
+     "id": 22521,
+     "name": "aimingStabilizer_tier1",
+     "user_name": "Vertikální stabilizátor 1. třídy"
+    }
+   ],
+   "marks": {
+    "marks": 1,
+    "moving_avg_damage": 2961,
+    "percent": 75.15
+   },
+   "name": "ussr:R97_Object_140",
+   "rented": false,
+   "shells": [
+    {
+     "count": 25,
+     "id": 565258,
+     "kind": "ARMOR_PIERCING_CR",
+     "name": "_100mm_UBR_412PB_140",
+     "user_name": "UBR-412PB (140)"
+    },
+    {
+     "count": 23,
+     "id": 565514,
+     "kind": "HOLLOW_CHARGE",
+     "name": "_100mm_3UBK4M_140",
+     "user_name": "3UBK4M (140)"
+    },
+    {
+     "count": 2,
+     "id": 565770,
+     "kind": "HIGH_EXPLOSIVE",
+     "name": "_100mm_3UOF10_140",
+     "user_name": "3UOF10 (140)"
+    }
+   ],
+   "tank_id": 16897,
+   "tier": 10,
+   "user_name": "Objekt 140",
+   "xp": 4370
+  },
+  {
+   "consumables": [
+    {
+     "id": 763,
+     "name": "smallMedkit",
+     "user_name": "Malá lékárnička"
+    },
+    {
+     "id": 1275,
+     "name": "smallRepairkit",
+     "user_name": "Malá sada nářadí"
+    },
+    {
+     "id": 507,
+     "name": "autoExtinguishers",
+     "user_name": "Automatický hasicí přístroj"
+    }
+   ],
+   "crew": [
+    {
+     "bonus_skills": {
+      "radioman": [
+       "radioman_finder",
+       "fireFighting"
+      ]
+     },
+     "role": "commander",
+     "skills": [
+      {
+       "level": 100,
+       "name": "brotherhood"
+      },
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 100,
+       "name": "commander_eagleEye"
+      },
+      {
+       "level": 74,
+       "name": "commander_emergency"
+      }
+     ],
+     "slot": 0
+    },
+    {
+     "bonus_skills": {},
+     "role": "gunner",
+     "skills": [
+      {
+       "level": 100,
+       "name": "brotherhood"
+      },
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 100,
+       "name": "gunner_smoothTurret"
+      },
+      {
+       "level": 74,
+       "name": "gunner_sniper"
+      }
+     ],
+     "slot": 2
+    },
+    {
+     "bonus_skills": {},
+     "role": "driver",
+     "skills": [
+      {
+       "level": 100,
+       "name": "brotherhood"
+      },
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 100,
+       "name": "driver_smoothDriving"
+      },
+      {
+       "level": 74,
+       "name": "driver_virtuoso"
+      }
+     ],
+     "slot": 1
+    },
+    {
+     "bonus_skills": {},
+     "role": "loader",
+     "skills": [
+      {
+       "level": 100,
+       "name": "brotherhood"
+      },
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 100,
+       "name": "loader_intuition"
+      },
+      {
+       "level": 74,
+       "name": "loader_pedant"
+      }
+     ],
+     "slot": 3
+    },
+    {
+     "bonus_skills": {},
+     "role": "loader",
+     "skills": [
+      {
+       "level": 100,
+       "name": "brotherhood"
+      },
+      {
+       "level": 100,
+       "name": "repair"
+      },
+      {
+       "level": 83,
+       "name": "loader_intuition"
+      }
+     ],
+     "slot": 4
+    }
+   ],
+   "directives": [
+    null
+   ],
+   "elite": true,
+   "equipment": [
+    null,
+    null,
+    null
+   ],
+   "marks": {
+    "marks": 0,
+    "moving_avg_damage": 281,
+    "percent": 19.37
+   },
+   "name": "usa:A145_TS_54",
+   "rented": true,
+   "shells": [
+    {
+     "count": 38,
+     "id": 42794,
+     "kind": "ARMOR_PIERCING",
+     "name": "_94mm_AP_MkI",
+     "user_name": "AP MB77"
+    },
+    {
+     "count": 0,
+     "id": 43050,
+     "kind": "ARMOR_PIERCING_CR",
+     "name": "_94mm_APCR_MkII",
+     "user_name": "HVAP MB304"
+    },
+    {
+     "count": 2,
+     "id": 43306,
+     "kind": "HIGH_EXPLOSIVE",
+     "name": "_94mm_HE_MkI",
+     "user_name": "HE MB71"
+    }
+   ],
+   "tank_id": 34849,
+   "tier": 8,
+   "user_name": "TS-54",
+   "xp": 1665
+  }
+ ]
+}

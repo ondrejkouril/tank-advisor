@@ -1,0 +1,169 @@
+{
+ "data": {
+  "1": {
+   "campaign_id": 1,
+   "description": "Every campaign comprises several operations that contain numerous missions for all types of vehicles. You will receive a unique vehicle for completion of each operation.",
+   "name": "Long-Awaited Backup",
+   "operations": {
+    "4": {
+     "description": "A set of missions for all vehicle types to receive the Soviet Object 260 heavy tank.",
+     "image": "http:\/\/api.worldoftanks.eu\/static\/2.77.0\/wot\/encyclopedia\/quests\/tiles\/tile_1_4_color_over.png",
+     "missions": {
+      "226": {
+       "description": "At lower tiers, some light tanks have almost as much firepower as heavier vehicles.",
+       "hint": "Still, try to avoid face-to-face combat. Instead, try to hit enemies in the side or rear. Observe where the enemy vehicle's gun is pointing and approach from the other side.",
+       "max_level": 10,
+       "min_level": 6,
+       "mission_id": 226,
+       "name": "LT-1: For Victory!",
+       "rewards": {
+        "primary": {
+         "berths": null,
+         "premium": null,
+         "free_xp": null,
+         "items": {},
+         "tokens": 1,
+         "credits": 300000,
+         "slots": null,
+         "conditions": "•  Destroy all enemy vehicles \/ capture or defend the base\n•  Finish the battle as the top player on your team by experience earned"
+        },
+        "secondary": {
+         "berths": null,
+         "premium": null,
+         "free_xp": null,
+         "items": {},
+         "tokens": 1,
+         "credits": 150000,
+         "slots": null,
+         "conditions": "•  Survive the battle"
+        }
+       },
+       "set_id": 1,
+       "tags": [
+        "initial",
+        "lightTank"
+       ]
+      },
+      "227": {
+       "description": "One of the main objectives of light tanks is to spot enemy vehicles.",
+       "hint": "But to spot a few enemy vehicles and get destroyed in the process would be a waste of your valuable tank. A good scout can spot enemies while successfully staying alive.",
+       "max_level": 10,
+       "min_level": 6,
+       "mission_id": 227,
+       "name": "LT-2: Reconnaissance",
+       "rewards": {
+        "primary": {
+         "berths": null,
+         "premium": null,
+         "free_xp": null,
+         "items": {},
+         "tokens": 1,
+         "credits": 300000,
+         "slots": null,
+         "conditions": "•  Spot 8 enemy vehicles\n•  Survive the battle"
+        },
+        "secondary": {
+         "berths": null,
+         "premium": null,
+         "free_xp": null,
+         "items": {},
+         "tokens": 1,
+         "credits": 150000,
+         "slots": null,
+         "conditions": "•  Destroy all enemy vehicles \/ capture or defend the base"
+        }
+       },
+       "set_id": 1,
+       "tags": [
+        "lightTank"
+       ]
+      },
+      "228": {
+       "description": "Your light tank has enough speed to quickly cross the map and provide support to your allies where your help is needed.",
+       "hint": "Always try to flank the enemy and hit them from the rear, where the armor is weakest. Do not linger in one spot. If you change positions frequently, the enemy will have a hard time hitting your vehicle. Remember that light tanks have the same chance of being detected while on the move as when they are stationary.",
+       "max_level": 10,
+       "min_level": 6,
+       "mission_id": 228,
+       "name": "LT-3: The Pursuit",
+       "rewards": {
+        "primary": {
+         "berths": null,
+         "premium": null,
+         "free_xp": null,
+         "items": {},
+         "tokens": 1,
+         "credits": 300000,
+         "slots": null,
+         "conditions": "•  Spot 6 enemy vehicles\n•  Cause damage 6 times to enemy vehicles by shooting them"
+        },
+        "secondary": {
+         "berths": null,
+         "premium": null,
+         "free_xp": null,
+         "items": {},
+         "tokens": 1,
+         "credits": 150000,
+         "slots": null,
+         "conditions": "•  Destroy 4 enemy vehicles"
+        }
+       },
+       "set_id": 1,
+       "tags": [
+        "lightTank"
+       ]
+      },
+      "241": {
+       "description": "The guns of heavy tanks are powerful, but still benefit from skillful aim.",
+       "hint": "You will encounter other heavy tanks with very thick armor. Learn to aim at their thinner plates and at weak spots.",
+       "max_level": 10,
+       "min_level": 6,
+       "mission_id": 241,
+       "name": "HT-1: Debut",
+       "rewards": {
+        "primary": {
+         "berths": null,
+         "premium": null,
+         "free_xp": null,
+         "items": {},
+         "tokens": 1,
+         "credits": 300000,
+         "slots": null,
+         "conditions": "•  Destroy 5 enemy vehicles"
+        },
+        "secondary": {
+         "berths": null,
+         "premium": null,
+         "free_xp": null,
+         "items": {},
+         "tokens": 1,
+         "credits": 150000,
+         "slots": null,
+         "conditions": "•  Cause 4000 HP of damage to enemy vehicles"
+        }
+       },
+       "set_id": 2,
+       "tags": [
+        "heavyTank",
+        "initial"
+       ]
+      }
+     },
+     "missions_in_set": 15,
+     "name": "Object 260",
+     "next_id": 0,
+     "operation_id": 4,
+     "reward": {
+      "slots": null,
+      "tanks": []
+     },
+     "sets_count": 5,
+     "sets_to_next": 0
+    }
+   }
+  }
+ },
+ "meta": {
+  "count": 1
+ },
+ "status": "ok"
+}

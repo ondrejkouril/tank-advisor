@@ -1,0 +1,107 @@
+{
+  "data": {
+    "by": "class",
+    "window": "lifetime",
+    "available": true,
+    "total": {
+      "battles": 685,
+      "confidence": "ok",
+      "win_rate": 49.64,
+      "dpg": 1120.1,
+      "frags": 0.89,
+      "spots": 1.9,
+      "survival_rate": 32.12,
+      "avg_xp": 725.8,
+      "assist": 690.6,
+      "assist_radio": 635.7,
+      "assist_track": 54.8,
+      "assist_stun": 0,
+      "wn8": 1778,
+      "wn8_excluded_battles": 2
+    },
+    "rows": [
+      {
+        "key": "SPG",
+        "tanks": 1,
+        "stats": {
+          "battles": 100,
+          "confidence": "moderate",
+          "win_rate": 52,
+          "dpg": 900,
+          "frags": 0.7,
+          "spots": 0.05,
+          "survival_rate": 45,
+          "avg_xp": 500,
+          "assist": 70,
+          "assist_radio": 10,
+          "assist_track": 60,
+          "assist_stun": 0,
+          "wn8": 1125
+        }
+      },
+      {
+        "key": "lightTank",
+        "tanks": 2,
+        "stats": {
+          "battles": 583,
+          "confidence": "ok",
+          "win_rate": 49.06,
+          "dpg": 1155.2,
+          "frags": 0.92,
+          "spots": 2.22,
+          "survival_rate": 29.85,
+          "avg_xp": 763.4,
+          "assist": 798.4,
+          "assist_radio": 745,
+          "assist_track": 53.3,
+          "assist_stun": 0,
+          "wn8": 1879
+        }
+      },
+      {
+        "key": "mediumTank",
+        "tanks": 1,
+        "stats": {
+          "battles": 2,
+          "confidence": "very_low",
+          "win_rate": 100,
+          "dpg": 1910,
+          "frags": 0.5,
+          "spots": 1,
+          "survival_rate": 50,
+          "avg_xp": 1041.5,
+          "assist": 294.5,
+          "assist_radio": 67,
+          "assist_track": 227.5,
+          "assist_stun": 0,
+          "wn8": null,
+          "wn8_excluded_battles": 2
+        }
+      }
+    ]
+  },
+  "meta": {
+    "generated_at": "2026-09-18T12:00:00Z",
+    "sources": [
+      {
+        "name": "wg:encyclopedia/vehicles",
+        "observed_at": "2026-09-18T10:00:00Z",
+        "age_seconds": 7200
+      },
+      {
+        "name": "wg:tanks/stats",
+        "observed_at": "2026-09-18T11:00:00Z",
+        "age_seconds": 3600
+      },
+      {
+        "name": "xvm:wn8exp",
+        "observed_at": "2026-09-18T11:30:00Z",
+        "age_seconds": 1800,
+        "version": "2026-09-12"
+      }
+    ],
+    "caveats": [
+      "assist figures are random battles only, from the API's assist totals; the in-game service record shows an all-battles figure with no radio/track split, so they will not match it exactly"
+    ]
+  }
+}

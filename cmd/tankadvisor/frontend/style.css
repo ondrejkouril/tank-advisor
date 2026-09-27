@@ -1,0 +1,290 @@
+/* Tank Advisor's own look: plain system type and neutral colours. Nothing
+   here borrows from Wargaming's interfaces (docs/spec-desktop.md section 12). */
+
+:root {
+  --bg: #f6f7f9;
+  --card: #ffffff;
+  --text: #1c2129;
+  --muted: #5d6673;
+  --line: #dde1e7;
+  --accent: #2563c7;
+  --accent-text: #ffffff;
+  --ok: #1f8a4c;
+  --warn: #b26b00;
+  --fail: #c62f2f;
+  --unknown: #7a828e;
+  --ok-bg: #e8f5ee;
+  --warn-bg: #fdf3e2;
+  --fail-bg: #fbeaea;
+  --unknown-bg: #eef0f3;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15181d;
+    --card: #1e2229;
+    --text: #e6e9ee;
+    --muted: #9aa3af;
+    --line: #2f353e;
+    --accent: #5b8def;
+    --accent-text: #0d1117;
+    --ok: #4cc47f;
+    --warn: #e9a23b;
+    --fail: #f06a6a;
+    --unknown: #8d95a1;
+    --ok-bg: #16291f;
+    --warn-bg: #2d2415;
+    --fail-bg: #311b1c;
+    --unknown-bg: #242830;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 20px 24px 32px;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.45 "Segoe UI", system-ui, sans-serif;
+}
+
+h1 { font-size: 20px; margin: 0; font-weight: 600; }
+h2 { font-size: 15px; margin: 0; font-weight: 600; }
+.muted { color: var(--muted); margin: 2px 0 0; }
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+button {
+  font: inherit;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--text);
+  padding: 5px 12px;
+  cursor: pointer;
+}
+button:hover:not(:disabled) { border-color: var(--accent); }
+button:disabled { opacity: 0.5; cursor: default; }
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+button.danger { color: var(--fail); }
+button.danger:hover:not(:disabled) { border-color: var(--fail); }
+button.quiet { background: transparent; }
+button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+select {
+  font: inherit;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--text);
+  padding: 4px 8px;
+}
+
+.banner {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  position: relative;
+}
+.banner.ok { border-left-color: var(--ok); }
+.banner.fail { border-left-color: var(--fail); }
+.banner p { margin: 0; padding-right: 80px; }
+#result-close { position: absolute; top: 6px; right: 8px; }
+pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font: 12px/1.4 Consolas, ui-monospace, monospace;
+  color: var(--muted);
+  margin: 6px 0 0;
+  max-height: 220px;
+  overflow: auto;
+}
+
+.row {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+.row header { display: flex; align-items: center; gap: 10px; }
+.row .badge {
+  margin-left: auto;
+  font-size: 12px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+
+.state-ok .dot { background: var(--ok); }
+.state-ok .badge { background: var(--ok-bg); color: var(--ok); }
+.state-warn .dot { background: var(--warn); }
+.state-warn .badge { background: var(--warn-bg); color: var(--warn); }
+.state-fail .dot { background: var(--fail); }
+.state-fail .badge { background: var(--fail-bg); color: var(--fail); }
+.state-unknown .dot { background: var(--unknown); }
+.state-unknown .badge { background: var(--unknown-bg); color: var(--unknown); }
+
+.summary { margin: 8px 0 0; }
+.lines { margin: 6px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 13px; }
+.lines li { margin: 2px 0; overflow-wrap: anywhere; }
+.hint { margin: 8px 0 0; font-weight: 600; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
+.working { color: var(--muted); font-style: italic; }
+
+.about {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+.about h2 { color: var(--text); margin-bottom: 6px; }
+.about p { margin: 4px 0; }
+.links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; align-items: center; }
+.links #links { display: contents; }
+button.support {
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+dialog {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--text);
+  max-width: 480px;
+  padding: 18px 20px;
+}
+dialog::backdrop { background: rgb(0 0 0 / 0.4); }
+dialog p { white-space: pre-line; }
+dialog .actions { justify-content: flex-end; }
+
+/* The setup wizard (docs/spec-desktop.md section 5.1). */
+.top-actions { display: flex; gap: 6px; }
+.wizard { display: grid; grid-template-columns: 170px 1fr; gap: 20px; }
+@media (max-width: 620px) { .wizard { grid-template-columns: 1fr; } }
+.wizard ol { list-style: none; margin: 0; padding: 0; }
+.wizard li button {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  padding: 6px 8px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.wizard li button[aria-current="step"] { background: var(--card); font-weight: 600; box-shadow: inset 3px 0 0 var(--accent); }
+.wizard .mark {
+  width: 20px; height: 20px; border-radius: 50%; flex: none;
+  display: inline-grid; place-items: center; font-size: 11px;
+  border: 1px solid var(--line); color: var(--muted);
+}
+.wizard .done .mark { background: var(--ok); border-color: var(--ok); color: #fff; }
+.wizard-page {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px 20px;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+}
+.wizard-page h2 { font-size: 17px; margin-bottom: 8px; }
+.wizard-page p { margin: 8px 0; }
+#wizard-body { flex: 1; }
+.wizard-footer { justify-content: flex-end; border-top: 1px solid var(--line); padding-top: 12px; }
+.wizard-footer .spacer { flex: 1; }
+.wizard-message { margin: 10px 0 0; padding: 8px 10px; border-radius: 6px; background: var(--unknown-bg); }
+.wizard-message.ok { background: var(--ok-bg); }
+.wizard-message.fail { background: var(--fail-bg); }
+.choice-list { display: grid; gap: 6px; margin: 10px 0; }
+.choice-list label {
+  display: flex; gap: 8px; align-items: flex-start;
+  border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; cursor: pointer;
+}
+.choice-list label:has(input:checked) { border-color: var(--accent); }
+.question { margin: 14px 0; }
+.question > label, .question > legend { font-weight: 600; display: block; margin-bottom: 4px; }
+.question fieldset { border: none; padding: 0; margin: 0; }
+.question .help { color: var(--muted); font-size: 13px; margin: 2px 0 6px; }
+.checks { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+input[type="number"] { font: inherit; width: 80px; padding: 4px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--card); color: var(--text); }
+.note { color: var(--muted); font-size: 13px; }
+.examples li { margin: 4px 0; font-style: italic; }
+.waiting { color: var(--muted); font-style: italic; }
+.wizard-page h3 { font-size: 14px; margin: 16px 0 4px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Tabs, and the Goals and Advice pages (docs/spec-desktop.md sections 5.3, 8.4). */
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+.tabs button {
+  border: none; border-radius: 6px 6px 0 0; background: transparent; color: var(--muted);
+  padding: 6px 14px; border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.tabs button[aria-current="page"] { color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
+.page-view h2 { font-size: 17px; }
+.page-view h3 { font-size: 14px; margin: 0 0 6px; }
+.part {
+  border: 1px solid var(--line); border-radius: 10px; background: var(--card);
+  padding: 12px 16px 14px; margin: 0 0 12px; position: relative;
+}
+.part legend { font-weight: 600; padding: 0 4px; }
+.part .reset { position: absolute; top: 4px; right: 8px; font-size: 12px; }
+.field { display: grid; gap: 4px; margin: 8px 0; }
+.field input[type="text"], .field input[type="number"], .field select, .rule textarea {
+  font: inherit; border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px;
+  background: var(--card); color: var(--text);
+}
+.field input[type="number"] { width: 140px; }
+.field-label { margin: 10px 0 4px; font-weight: 600; font-size: 13px; }
+.row2 { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: end; }
+.segmented { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.segmented label { padding: 4px 10px; cursor: pointer; font-size: 13px; border-right: 1px solid var(--line); }
+.segmented label:last-child { border-right: none; }
+.segmented label.on { background: var(--accent); color: var(--accent-text); }
+.segmented input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.segmented label:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: -2px; }
+table.classes, table.weights { border-collapse: collapse; margin: 10px 0; }
+table.classes th, table.classes td, table.weights th, table.weights td { text-align: left; padding: 4px 10px 4px 0; font-size: 13px; }
+table.classes thead th { color: var(--muted); font-weight: 600; }
+table.weights th { font-weight: normal; white-space: nowrap; }
+.rule { border-top: 1px solid var(--line); padding: 8px 0; }
+.rule textarea { width: 100%; resize: vertical; }
+.rule-tools { display: flex; gap: 6px; align-items: center; margin-top: 4px; }
+.rule-tools .note { margin-right: auto; }
+.conflict { color: var(--warn); margin: 4px 0 0; font-size: 13px; }
+.advice-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr); gap: 16px; align-items: start; }
+@media (max-width: 760px) { .advice-layout { grid-template-columns: 1fr; } }
+.preview-box {
+  position: sticky; top: 8px; background: var(--card); border: 1px solid var(--line);
+  border-radius: 10px; padding: 12px 14px; max-height: calc(100vh - 40px); overflow: auto;
+}
+.preview pre { font: 12.5px/1.45 "Segoe UI", system-ui, sans-serif; white-space: pre-wrap; color: var(--text); max-height: none; margin: 0; }
+.preview-errors { color: var(--fail); font-size: 13px; margin-bottom: 8px; }
+.page-actions { justify-content: flex-end; margin-top: 4px; }
+.page-note { margin: 8px 0; padding: 6px 10px; border-radius: 6px; background: var(--unknown-bg); }
+.page-note.ok { background: var(--ok-bg); }
+.page-note.fail { background: var(--fail-bg); }
+.banner.fail { border-left-color: var(--fail); }
+.picker { position: relative; display: grid; gap: 2px; }
+.picks {
+  position: absolute; top: 100%; left: 0; z-index: 5; list-style: none; margin: 2px 0 0; padding: 4px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 8px; min-width: 280px;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.15);
+}
+.picks button { width: 100%; text-align: left; border: none; }

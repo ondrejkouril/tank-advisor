@@ -1,0 +1,4 @@
+{"status":"ok","meta":{"count":3},"data":{
+"warrior":{"name":"warrior","name_i18n":"Top Gun","description":"Destroy the most vehicles in a battle.","condition":"Destroy 6 or more vehicles and be the top scorer on your team.","hero_info":"","section":"battle","section_order":1,"order":3,"image":"http://example.invalid/warrior.png"},
+"medalKay":{"name":"medalKay","name_i18n":"Kay's Medal","description":"Awarded for exceptional light tank play.","condition":"Survive a battle having destroyed at least 5 vehicles while playing a light tank.","hero_info":"Named after a tanker.","section":"epic","section_order":2,"order":11,"image":"http://example.invalid/kay.png"},
+"maxKillingSeries":{"name":"maxKillingSeries","name_i18n":"Kill Series","description":"Longest run of battles with a kill.","condition":"","hero_info":"","section":"series","section_order":3,"order":1,"image":""}}}

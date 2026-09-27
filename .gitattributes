@@ -1,0 +1,7 @@
+# Keep LF in the index and the working tree on every platform.
+#
+# core.autocrlf is true on the development machine, so without this a Windows
+# clone gets CRLF working-tree files while macOS and Linux get LF. GNU make and
+# gofmt both tolerate CRLF in practice, so this is about clones agreeing with
+# each other rather than about a known breakage.
+* text=auto eol=lf

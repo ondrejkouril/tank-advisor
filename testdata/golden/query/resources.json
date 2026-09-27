@@ -1,0 +1,39 @@
+{
+  "data": {
+    "observed_at": "2026-09-18T11:00:00Z",
+    "credits": 4000000,
+    "gold": 3373,
+    "bonds": 11561,
+    "free_xp": 41294,
+    "premium": {
+      "premium_account": true,
+      "wot_plus": true,
+      "source": "overlay"
+    },
+    "reserves": {
+      "kinds": 2,
+      "count": 105,
+      "active": [
+        {
+          "kind": "12006",
+          "count": 1,
+          "state": "ACTIVE",
+          "expires_at": "2026-09-18T12:30:00Z"
+        }
+      ]
+    },
+    "last_battle": "2026-09-18T09:00:00Z"
+  },
+  "meta": {
+    "generated_at": "2026-09-18T12:00:00Z",
+    "sources": [
+      {
+        "name": "wg:account/info",
+        "observed_at": "2026-09-18T11:00:00Z",
+        "age_seconds": 3600
+      }
+    ],
+    "overlay_version": "2026-09-17T10:00:00Z",
+    "caveats": []
+  }
+}

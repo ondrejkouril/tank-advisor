@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "wot",
+  "displayName": "Tank Advisor",
+  "description": "Advice grounded in one World of Tanks account's own data: the wot-advisor skill, the wotctx MCP server, /wot:sync, and a sync at session start. Needs wotctx on the PATH (make install) and a Wargaming login (wotctx auth wg).",
+  "author": { "name": "ondrejkouril" },
+  "repository": "https://github.com/ondrejkouril/tank-advisor",
+  "license": "MIT",
+  "keywords": ["world-of-tanks", "wotctx", "mcp"],
+  "mcpServers": {
+    "wotctx": { "command": "wotctx", "args": ["mcp"] }
+  },
+  "userConfig": {
+    "inject_brief": {
+      "type": "boolean",
+      "title": "Brief at session start",
+      "description": "Add the cached account brief (about 4,500 characters) to the context of every new Claude Code session. Off by default: the plugin runs in every session, including ones that are not about World of Tanks, and the skill reads the brief anyway when a question needs it.",
+      "default": false
+    }
+  }
+}

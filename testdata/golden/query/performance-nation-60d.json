@@ -1,0 +1,27 @@
+{
+  "data": {
+    "by": "nation",
+    "window": "60d",
+    "available": false,
+    "reason": "not yet: 40.0 days of history (since 2026-08-09, 3 snapshots) against the 60 requested",
+    "rows": []
+  },
+  "meta": {
+    "generated_at": "2026-09-18T12:00:00Z",
+    "sources": [
+      {
+        "name": "wg:encyclopedia/vehicles",
+        "observed_at": "2026-09-18T10:00:00Z",
+        "age_seconds": 7200
+      },
+      {
+        "name": "wg:tanks/stats",
+        "observed_at": "2026-09-18T11:00:00Z",
+        "age_seconds": 3600
+      }
+    ],
+    "caveats": [
+      "not yet: 40.0 days of history (since 2026-08-09, 3 snapshots) against the 60 requested"
+    ]
+  }
+}

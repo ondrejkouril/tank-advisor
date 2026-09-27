@@ -1,0 +1,51 @@
+Tank Advisor, a companion app for World of Tanks
+
+Tank Advisor is not affiliated with or endorsed by Wargaming.
+
+Account data comes from Wargaming.net through its public API.
+© Wargaming.net. All rights reserved.
+Official World of Tanks website: https://worldoftanks.eu/ (EU),
+https://worldoftanks.com/ (North America), https://worldoftanks.asia/ (Asia).
+Wargaming Customer Support: https://wargaming.net/support/
+
+WN8 expected values come from XVM. Marks of Excellence thresholds come from
+tomato.gg.
+
+What Tank Advisor does with your data
+- It stores your account statistics, garage, resources and, if you install
+  its client mod, what the game client shows in the garage. All of it stays
+  on this computer, under your Windows account. There is no server of ours:
+  nothing is sent to the makers of Tank Advisor.
+- It talks to Wargaming, through its public API and its own login page, so
+  Tank Advisor never sees your password. It reads the public pages of XVM and
+  tomato.gg, which carry no account data, and asks GitHub whether an update
+  exists.
+- When you ask Claude about your account, Claude receives the figures it
+  needs to answer, under your own agreement with Anthropic.
+- Delete my data, in the app, deletes it all; so can this program's
+  uninstaller.
+
+Source code and issues: https://github.com/ondrejkouril/tank-advisor
+
+
+MIT License
+
+Copyright (c) 2026 ondrejkouril
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

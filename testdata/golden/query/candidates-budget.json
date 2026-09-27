@@ -1,0 +1,135 @@
+{
+  "data": {
+    "credits": 7000000,
+    "credits_source": "--budget-credits",
+    "free_xp": 41294,
+    "avoid_classes": [
+      "SPG"
+    ],
+    "excluded_by_preference": 1,
+    "credit_buffer": 500000,
+    "free_xp_max_tier": 8,
+    "improvement_focus": [
+      "lightTank"
+    ],
+    "candidates": [
+      {
+        "tank_id": 2433,
+        "name": "Kranvagn",
+        "tier": 10,
+        "class": "heavyTank",
+        "nation": "sweden",
+        "origin": "researched_not_bought",
+        "researched": true,
+        "via": [],
+        "xp_cost": 0,
+        "free_xp_allowed": false,
+        "free_xp_covers": false,
+        "price_credit": 6100000,
+        "affordable": true,
+        "credits_short": 0,
+        "class_rank": 3
+      },
+      {
+        "tank_id": 6769,
+        "name": "Vz. 71 Tesák",
+        "tier": 10,
+        "class": "lightTank",
+        "nation": "czech",
+        "origin": "goal",
+        "researched": null,
+        "via": [
+          {
+            "tank_id": 6257,
+            "name": "LPT-67 Šelma",
+            "tier": 9,
+            "xp_cost": 242560,
+            "owned": false
+          }
+        ],
+        "xp_cost": 242560,
+        "xp_remaining": 242560,
+        "free_xp_allowed": false,
+        "free_xp_covers": false,
+        "path_xp": 261755,
+        "price_credit": 6100000,
+        "affordable": true,
+        "credits_short": 0,
+        "class_rank": 2,
+        "goal": "target"
+      },
+      {
+        "tank_id": 17217,
+        "name": "AMX 13 105",
+        "tier": 10,
+        "class": "lightTank",
+        "nation": "france",
+        "origin": "next_research",
+        "researched": null,
+        "via": [
+          {
+            "tank_id": 4929,
+            "name": "AMX 13 90",
+            "tier": 9,
+            "xp_cost": 261000,
+            "owned": true
+          }
+        ],
+        "xp_cost": 261000,
+        "free_xp_allowed": false,
+        "free_xp_covers": false,
+        "price_credit": 6100000,
+        "affordable": true,
+        "credits_short": 0,
+        "class_rank": 2
+      },
+      {
+        "tank_id": 6257,
+        "name": "LPT-67 Šelma",
+        "tier": 9,
+        "class": "lightTank",
+        "nation": "czech",
+        "origin": "next_research",
+        "researched": null,
+        "via": [
+          {
+            "tank_id": 4721,
+            "name": "Vz. 64 Blesk",
+            "tier": 8,
+            "xp_cost": 185490,
+            "owned": true
+          }
+        ],
+        "xp_cost": 185490,
+        "xp_remaining": 19195,
+        "free_xp_allowed": false,
+        "free_xp_covers": false,
+        "price_credit": 3500000,
+        "affordable": true,
+        "credits_short": 0,
+        "class_rank": 2,
+        "goal": "target"
+      }
+    ]
+  },
+  "meta": {
+    "generated_at": "2026-09-18T12:00:00Z",
+    "sources": [
+      {
+        "name": "wg:account/info",
+        "observed_at": "2026-09-18T11:00:00Z",
+        "age_seconds": 3600
+      },
+      {
+        "name": "wg:encyclopedia/vehicles",
+        "observed_at": "2026-09-18T10:00:00Z",
+        "age_seconds": 7200
+      }
+    ],
+    "overlay_version": "2026-09-17T10:00:00Z",
+    "caveats": [
+      "goal XP banked is hand-maintained in the overlay (last updated 2026-09-17); no API exposes per-vehicle XP, so it is stale once the vehicle has been played since",
+      "research progress is not exposed by any API: researched is known only for overlay entries, xp_cost is the full research cost, and xp_remaining subtracts banked XP only where the overlay records it"
+    ]
+  }
+}

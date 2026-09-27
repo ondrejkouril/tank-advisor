@@ -1,0 +1,4 @@
+{"status":"ok","meta":{"count":2},"data":{"512345678":[
+{"tank_id":4929,"achievements":{"warrior":2,"sniper":9,"markOfMastery":1},"max_series":{"maxKillingSeries":5},"frags":{}},
+{"tank_id":2417,"achievements":{"sniper":3},"max_series":{},"frags":{"beasthunter":1}}
+]}}

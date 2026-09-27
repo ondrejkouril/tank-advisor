@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tank Advisor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>Tank Advisor</h1>
+      <p id="account" class="muted">Loading…</p>
+    </div>
+    <div class="top-actions">
+      <button id="open-setup" class="quiet" title="Run any setup step again">Setup</button>
+      <button id="refresh" class="quiet" title="Check everything again">Refresh</button>
+    </div>
+  </header>
+
+  <nav id="tabs" class="tabs" aria-label="Pages">
+    <button data-view="status" aria-current="page">Status</button>
+    <button data-view="goals">Goals</button>
+    <button data-view="advice">Advice</button>
+  </nav>
+
+  <div id="busy" class="banner" hidden></div>
+  <div id="result" class="banner" hidden>
+    <p id="result-message"></p>
+    <details id="result-details" hidden>
+      <summary>Details</summary>
+      <pre id="result-output"></pre>
+    </details>
+    <button id="result-close" class="quiet" aria-label="Dismiss">Dismiss</button>
+  </div>
+
+  <main id="rows"></main>
+
+  <section id="goals-view" class="page-view" hidden aria-label="Goals"></section>
+  <section id="advice-view" class="page-view" hidden aria-label="Advice"></section>
+
+  <section id="wizard" class="wizard" hidden aria-label="Setup">
+    <nav><ol id="wizard-steps"></ol></nav>
+    <div class="wizard-page">
+      <div id="wizard-body"></div>
+      <p id="wizard-message" class="wizard-message" hidden></p>
+      <div id="wizard-footer" class="actions wizard-footer"></div>
+    </div>
+  </section>
+
+  <section id="about" class="about" aria-labelledby="about-title">
+    <h2 id="about-title">About</h2>
+    <div id="notices"></div>
+    <div class="links">
+      <span id="links"></span>
+      <button id="support" class="support">Wargaming Support</button>
+    </div>
+  </section>
+
+  <dialog id="confirm">
+    <form method="dialog">
+      <h2 id="confirm-title"></h2>
+      <p id="confirm-text"></p>
+      <div class="actions">
+        <button value="cancel" class="quiet">Cancel</button>
+        <button value="ok" id="confirm-ok" class="danger">Delete</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

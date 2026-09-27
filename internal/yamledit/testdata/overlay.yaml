@@ -1,0 +1,87 @@
+# wot-overlay.yaml - what no API exposes about the account. Hand-edited.
+#
+# Schema: docs/spec.md section 5. Check it with `wotctx overlay validate`.
+# wotctx finds this file through `overlay_path` in its config.yaml.
+#
+# Tank references are names (full or short, punctuation-insensitive) or, for a
+# name shared by several vehicles, the unquoted tank_id.
+
+version: 1
+updated_at: 2026-09-26T06:50:00Z      # required; becomes meta.overlay_version
+
+# The API reports is_premium false with a 2018 expiry for an account that holds
+# both, so premium status has to be maintained here (see section 3.1). It
+# affects credit and XP earn rates, so it changes grind and purchase advice.
+premium:
+  premium_account: true
+  wot_plus: true
+
+researched_not_bought:                 # names resolved to tank_id at load
+  - T110E4
+  - Obj 277
+
+xp_goals:                              # xp_banked is manual (no API exposes vehicle XP):
+                                       # it goes stale as soon as the vehicle is played
+  # The Šelma step was completed by 2026-09-25 (bought; the Blesk was sold).
+  - target: Tesak                      # Vz. 71 Tesák, tier X Czech light (set 2026-09-18)
+    via: Selma
+    xp_required: 242560
+    xp_banked: 0                       # NOT yet read from the client: 12 Šelma battles
+                                       # played since it was bought (2026-09-25)
+
+research_paths: []                     # fallback only; used if the API omits a tier
+                                       # - from: Concept No. 5
+                                       #   to: Executor
+                                       #   xp_cost: 325000
+
+preferences:                           # validated 2026-09-18; see references/framework.md
+  avoid_classes: [SPG]                 # Obj 261 and M40/M43 kept only for missions
+  strengths: [medium tanks, autoloaders]   # context: autoloaders never rank a tank higher
+  class_rank:                          # 1 = most preferred; ties allowed
+    mediumTank: 1
+    lightTank: 2
+    AT-SPG: 3
+    heavyTank: 3
+  free_xp_max_tier: 8                  # free XP researches tanks up to VIII; modules any tier
+  improvement_focus: [lightTank]
+
+constraints:
+  playtime: limited                    # one-hour sessions set by reserves, sometimes two
+  credit_buffer: 500000                # credits left after a purchase for it to count affordable
+
+# The advice settings (docs/spec-desktop.md section 8.3). These reproduce what
+# framework.md section 1 and its validation record said about this player
+# before the framework became generic (2026-09-26); the Tank Advisor app edits
+# them on its Advice page.
+profile:
+  session_minutes: 60                  # one Personal Reserve
+  battles_per_hour: 8                  # an estimate; replace with a measured rate
+  experience: experienced              # ~14,600 random battles, account WN8 ~1,800
+
+advice:
+  weights:                             # validated 2026-09-18: fit over meta
+    fit: highest
+    time: high
+    credits: medium
+    earning: low
+    meta: tiebreak
+    goals: tiebreak
+  answer:
+    length: normal
+    format: sections
+    explain_basics: never
+    also_worth_knowing: true
+  coaching: true                       # light tanks, the improvement focus
+  rules:
+    - text: A session is one hour, set by Personal Reserves; sometimes two back to back, rarely longer. Offer a two-hour option only as the exception.
+      added: 2026-09-18
+    - text: Autoloaders are context, not a criterion. Mention when a candidate is one, but never rank a tank higher for it.
+      added: 2026-09-18
+    - text: The SPGs I own are kept for missions only. Answer questions about them, and name one when a mission condition can only be done in an SPG, but never propose it as the better option.
+      added: 2026-09-18
+    - text: I like the current mission chains for the Vz. 60S Dravec, the Fossa VM 68 and the Black Rock; questions about them are in scope.
+      added: 2026-09-18
+    - text: I am trying Onslaught; questions about it are in scope.
+      added: 2026-09-18
+
+notes: []
