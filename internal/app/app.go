@@ -50,6 +50,9 @@ type Options struct {
 	Claude     ClaudeLocator
 	ClaudeCode ClaudeCode
 	Updates    UpdateChecker
+	// Processes lists the running wotctx processes (procs_windows.go); the
+	// default asks Windows.
+	Processes func() ([]Proc, error)
 	// FindGames lists the game clients for a realm ("" for any), best
 	// first. The default is internal/game's detection.
 	FindGames func(realm string) []game.Install
@@ -87,6 +90,9 @@ func New(opts Options) *Service {
 	}
 	if opts.ClaudeCode == nil {
 		opts.ClaudeCode = ClaudeCLI{}
+	}
+	if opts.Processes == nil {
+		opts.Processes = listWotctx
 	}
 	return &Service{opts: opts}
 }

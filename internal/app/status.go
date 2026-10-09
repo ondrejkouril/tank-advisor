@@ -429,6 +429,18 @@ func (s *Service) claudeRow() Row {
 		return row
 	}
 
+	// Claude still serving the previous version outranks an OK row: the
+	// player sees the extension installed and Claude without the new tools.
+	if procs, err := s.opts.Processes(); err == nil {
+		if n := staleClaude(s.opts.PayloadDir, procs); n > 0 {
+			row.Lines = append(row.Lines, fmt.Sprintf("%d Claude session(s) still run Tank Advisor's tools from before the last update", n))
+			if row.State == stateOK {
+				row.State, row.Summary = stateWarn, "Restart Claude to use this version."
+				row.Hint = "Claude Desktop: right-click its tray icon, choose Quit, and open it again. Claude Code: start a new session."
+			}
+		}
+	}
+
 	if c.Desktop && bundle != "" && !extOK {
 		label := "Install extension"
 		if c.Extension != "" {

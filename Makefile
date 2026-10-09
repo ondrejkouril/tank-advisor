@@ -73,7 +73,7 @@ install-skill:
 # runs the wotctx the Tank Advisor app installed, plus packaging/mcpb/manifest.json,
 # packed by the official mcpb tool (needs Node). The bundle carries no wotctx of
 # its own, so it needs reinstalling only when the manifest changes.
-BUNDLE_VERSION ?= 0.5.0
+BUNDLE_VERSION ?= 0.6.0
 MCPB           ?= npx -y @anthropic-ai/mcpb
 
 bundle:

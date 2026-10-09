@@ -4,7 +4,7 @@
   "display_name": "Tank Advisor",
   "version": "@VERSION@",
   "description": "Answers about your World of Tanks account from its own data, following your own advice settings.",
-  "long_description": "Connects Claude to the Tank Advisor app: your account's resources, garage, per-tank and per-class performance, recent sessions, purchase and research candidates, personal missions and Mark of Excellence thresholds, each with its data age and caveats. wot_guide carries the core rules, your advice settings from the app and the default framework. The extension runs the wotctx installed by the Tank Advisor app, so app updates reach Claude with no reinstall. Not affiliated with or endorsed by Wargaming; data from the Wargaming.net Public API.",
+  "long_description": "Connects Claude to the Tank Advisor app: your account's resources, garage, per-tank and per-class performance, recent sessions, purchase and research candidates, personal missions and Mark of Excellence thresholds; and server-wide figures: how a tank does across the server, credits per tank, Onslaught, game updates and stock against top configuration. Each comes with its data age and caveats. wot_guide carries the core rules, your advice settings from the app and the default framework. The extension runs the wotctx installed by the Tank Advisor app, so app updates reach Claude with no reinstall. Not affiliated with or endorsed by Wargaming; data from the Wargaming.net Public API, XVM and tomato.gg.",
   "author": { "name": "ondrejkouril" },
   "repository": { "type": "git", "url": "https://github.com/ondrejkouril/tank-advisor" },
   "homepage": "https://github.com/ondrejkouril/tank-advisor",

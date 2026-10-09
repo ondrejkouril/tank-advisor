@@ -493,7 +493,7 @@ one signed download, and the installer is only needed for the first install.
 **Replacing a running `wotctx.exe`.** Claude Desktop may hold it open. Windows allows renaming a
 running executable, so the app renames it to `wotctx.old.exe`, writes the new one, and deletes
 the old copy on a later start. That is the same trick the README gives for `make install`.
-Running MCP servers keep the old code until Claude Desktop restarts.
+Running MCP servers keep the old code until Claude Desktop restarts. The status window's Claude row finds them: a `wotctx.exe` from the app's folder that started before the current one was written is a Claude session on the old version (the app runs `wotctx` in its own process, so every running copy is Claude's). It then asks for a restart. Found after 1.1.0, when an update landed minutes after Claude Desktop started and its new tools never appeared. The extension's own version (`BUNDLE_VERSION`) changes with its manifest, so the row also offers *Update extension* when Desktop holds an older one.
 
 ### 9.1 Release pipeline
 

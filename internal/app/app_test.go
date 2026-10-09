@@ -27,7 +27,9 @@ type fixture struct {
 	host    *fakeHost
 	code    *fakeCode
 	games   []game.Install
-	svc     *Service
+	// procs is what the Windows process list returns.
+	procs []Proc
+	svc   *Service
 }
 
 func newFixture(t *testing.T, configured bool) *fixture {
@@ -65,6 +67,7 @@ func newFixture(t *testing.T, configured bool) *fixture {
 		Updates:    fakeUpdates{},
 		ClaudeCode: f.code,
 		FindGames:  func(string) []game.Install { return f.games },
+		Processes:  func() ([]Proc, error) { return f.procs, nil },
 		NewEnv: func(stdout, stderr io.Writer) *cli.Env {
 			env := &cli.Env{Stdout: stdout, Stderr: stderr, Version: "test", Paths: f.paths,
 				Config: config.Default(), Secrets: f.secrets, Stdin: strings.NewReader("")}
