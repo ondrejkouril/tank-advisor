@@ -39,7 +39,7 @@ func aboutFor(realm string) About {
 			"Tank Advisor, a companion app for World of Tanks. © 2026 ondrejkouril. Free software under the MIT licence.",
 			"Tank Advisor is not affiliated with or endorsed by Wargaming.",
 			"Account data comes from Wargaming.net through its public API. © Wargaming.net. All rights reserved.",
-			"WN8 expected values come from XVM. Marks of Excellence thresholds come from tomato.gg.",
+			"WN8 expected values and rating scales come from XVM. Marks of Excellence thresholds, server-wide tank performance, credit economics and Onslaught figures come from tomato.gg.",
 			"Everything Tank Advisor fetches stays on this computer. When you ask Claude about your account, Claude receives the figures it needs to answer.",
 		},
 		Links: []Link{

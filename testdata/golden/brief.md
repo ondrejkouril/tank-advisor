@@ -8,6 +8,7 @@ Generated 2026-09-18 12:00 UTC by wotctx. Random battles unless stated. Figures 
 - `wg:account/tanks` 2026-09-18 11:00 UTC (1h ago)
 - `wg:encyclopedia/vehicles` 2026-09-18 10:00 UTC (2h ago)
 - `wg:tanks/stats` 2026-09-18 11:00 UTC (1h ago)
+- `xvm:scales` 2026-09-18 11:30 UTC (30m ago), version 2026-09-17
 - `xvm:wn8exp` 2026-09-18 11:30 UTC (30m ago), version 2026-09-12
 - overlay updated 2026-09-17 10:00 UTC
 - History: 3 snapshot(s) since 2026-08-09 (40.0 days); nothing earlier can be known
@@ -37,6 +38,7 @@ Random battles in tanks of tier VIII and above, the baseline for current play. L
 | **All** | 685 | ok | 49.64 | 1,120 | 691 | 1,778 | 1,856 (45) | — |
 
 All tiers, for context: 685 battles, WN8 1,778; lower tiers include old games that do not describe current play.
+XVM rank: WN8 40, win rate 31 (the share of the players XVM rates with a lower lifetime figure; XVM's field is stronger than the whole server).
 
 The 30d column actually covers 40.0 days (the nearest earlier snapshot).
 
@@ -71,6 +73,7 @@ Owned tanks with 30+ random battles (3 of 4), ordered by lifetime WN8. A sort, n
 - assist figures are random battles only, from the API's assist totals; the in-game service record shows an all-battles figure with no radio/track split, so they will not match it exactly
 - the nearest snapshot before the 30d cutoff is from 2026-08-09, so this 30d window actually covers 40.0 days
 - not yet: 40.0 days of history (since 2026-08-09, 3 snapshots) against the 60 requested
+- xvm_rank is the share of the players XVM rates whose lifetime figure is lower (XVM's scale, 0 to 100). XVM rates a field stronger than the whole server - its midpoint win rate is 54.2 % and its midpoint WN8 2160 - so the rank is against that field, not against everyone who plays
 - goal XP banked is hand-maintained in the overlay (last updated 2026-09-17); no API exposes per-vehicle XP, so it is stale once the vehicle has been played since
 - research progress is not exposed by any API: researched is known only for overlay entries, xp_cost is the full research cost, and xp_remaining subtracts banked XP only where the overlay records it
 - Not in any API: per-vehicle XP, Marks of Excellence, loadouts and crew (the wotctx client mod supplies them when installed)

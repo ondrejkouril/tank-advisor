@@ -120,6 +120,8 @@ func fixtureFor(endpoint string) string {
 		return "encyclopedia-personalmissions.json"
 	case "encyclopedia/achievements":
 		return "encyclopedia-achievements.json"
+	case "encyclopedia/info":
+		return "encyclopedia-info.json"
 	default:
 		return ""
 	}
@@ -546,8 +548,8 @@ func TestDryRunTouchesNothing(t *testing.T) {
 	if got := calls.Load(); got != 0 {
 		t.Errorf("a dry run made %d requests, want 0", got)
 	}
-	if len(report.Synced) != 7 {
-		t.Errorf("Synced = %v, want all seven sources it would fetch", report.Synced)
+	if len(report.Synced) != 8 {
+		t.Errorf("Synced = %v, want all eight sources it would fetch", report.Synced)
 	}
 	if n, _ := db.VehicleCount(ctx); n != 0 {
 		t.Errorf("a dry run wrote %d vehicles", n)
@@ -577,8 +579,8 @@ func TestDryRunWorksWithNoCacheOrCredentials(t *testing.T) {
 	if len(report.Caveats) != 0 {
 		t.Errorf("caveats = %v, want none for a dry run", report.Caveats)
 	}
-	if len(report.Synced) != 7 {
-		t.Errorf("Synced = %v, want all seven sources", report.Synced)
+	if len(report.Synced) != 8 {
+		t.Errorf("Synced = %v, want all eight sources", report.Synced)
 	}
 	if !report.OK() {
 		t.Error("OK() = false for a dry run that found work to do")
@@ -636,8 +638,8 @@ func TestFreshDataIsSkipped(t *testing.T) {
 	if len(report.Synced) != 0 {
 		t.Errorf("Synced = %v, want nothing", report.Synced)
 	}
-	if len(report.Skipped) != 7 {
-		t.Errorf("Skipped = %v, want all seven sources", report.Skipped)
+	if len(report.Skipped) != 8 {
+		t.Errorf("Skipped = %v, want all eight sources", report.Skipped)
 	}
 }
 
@@ -725,7 +727,7 @@ func TestOneFailingSourceDoesNotStopTheRest(t *testing.T) {
 		}
 	}
 	if !report.OK() {
-		t.Error("OK() = false for a run that synced six of seven sources")
+		t.Error("OK() = false for a run that synced seven of eight sources")
 	}
 
 	// The failure is recorded as evidence, but never as usable data.
@@ -948,8 +950,8 @@ func TestConcurrentSyncsFetchOnce(t *testing.T) {
 		t.Fatalf("first Sync: %v", err)
 	}
 
-	if len(report.Synced) != 0 || len(report.Skipped) != 7 {
-		t.Errorf("second sync: Synced = %v, Skipped = %v; want nothing fetched and all seven fresh",
+	if len(report.Synced) != 0 || len(report.Skipped) != 8 {
+		t.Errorf("second sync: Synced = %v, Skipped = %v; want nothing fetched and all eight fresh",
 			report.Synced, report.Skipped)
 	}
 	for _, endpoint := range []string{"encyclopedia/vehicles", "account/info", "tanks/stats"} {

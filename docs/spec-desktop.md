@@ -529,14 +529,20 @@ self-built bundle. The app takes all of it as it finds it:
 - **Wargaming.** A standalone application's limit is per IP address, at "in general 10 requests
   per second" (developer guide, *Limitations*). So players do not share a budget, and each still
   self-caps at 5 a second (`docs/spec.md` §3.1). A full sync is about 20 requests.
-- **XVM.** Its expected-values file is a static download fetched weekly, which is negligible.
-- **tomato.gg.** Its MoE page is fetched only when a player asks about marks, but with many
-  players this becomes regular scraping of someone else's site. The project does not ask
-  tomato.gg in advance (§12.4). It sends an honest `User-Agent` naming the project and its
-  repository URL, so tomato.gg can see who is fetching and reach the project. If tomato.gg
-  objects, the fetch is switched off with `meta.moe_fetch: false`, which an update can also
-  ship as the default. Without it, `meta moe` still gives the player's marks from the dump, and
-  says the thresholds are unavailable.
+- **XVM.** Its expected-values file and rating scales are static downloads fetched weekly,
+  which is negligible.
+- **tomato.gg.** Its MoE, tank-performance, economics and Onslaught pages (0.2 to 0.9 MB each)
+  are fetched only when a player asks a question that needs them, and each at most once per 30
+  minutes per process. With many players this still becomes regular scraping of someone else's
+  site. The project does not ask tomato.gg in advance (§12.4). It sends an honest `User-Agent`
+  naming the project and its repository URL, so tomato.gg can see who is fetching and reach the
+  project. If tomato.gg objects, every fetch is switched off with `meta.tomato_fetch: false`
+  (or the MoE page alone with `meta.moe_fetch: false`), which an update can also ship as the
+  default. Without it, `meta moe` still gives the player's marks from the dump and says the
+  thresholds are unavailable; `meta perf` gives the player's own figures; `meta econ` and
+  `meta onslaught` say the data is unavailable. Wargaming's own `tanks/mastery` carries the same
+  mark thresholds and is the fallback for `meta moe` (spec §3.1).
+- **Wargaming's news feed.** One small RSS request when a player asks about updates.
 
 ## 12. Wargaming's terms, checked 2026-09-26
 
@@ -654,7 +660,7 @@ the design to match. To make that possible:
   | A limit on how long history is kept | a retention window on snapshots, beside the 90-day pruning of raw bodies | `sync.retention` in `config.yaml`, with the default changed by an update |
   | Less data from `account/info` | a shorter `fields` list | `internal/wg` |
   | A different application setup, or a new id | a new built-in id, or players' own ids through the override | the release pipeline's secret; `auth wg --application-id` |
-  | No fetches of tomato.gg's MoE page | `meta.moe_fetch: false` (§11) | `config.yaml`, with the default changed by an update |
+  | No fetches of tomato.gg's pages | `meta.tomato_fetch: false`, or `meta.moe_fetch: false` for the MoE page alone (§11) | `config.yaml`, with the default changed by an update |
 
 - **The update path carries the change.** Self-update (§9) reaches every player, so a change
   Wargaming or tomato.gg asks for ships like any fix.

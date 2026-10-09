@@ -105,9 +105,10 @@ the figure was taken, say it is behind.
 ### 4.3 "Is tank X underperforming?"
 
 1. Tank line vs the player's class line (same window, both with confidence).
-2. If worse beyond the core §2.2 threshold: compare the tank's DPG to its server-wide average.
-3. Classify: **tank is weak** (server figures low too) / **fit problem** (tank fine, player
-   worse than their own class norm) / **sample too small** / **no real difference**.
+2. If worse beyond the core §2.2 threshold: `meta perf <tank>` for the server line, dated.
+3. Classify: **tank is weak** (its `win_rate_differential` is below zero by more than its
+   `win_rate_margin`) / **fit problem** (tank fine on the server, player worse than their own
+   class norm; `versus` shows the gap) / **sample too small** / **no real difference**.
 4. For a fit problem, look at the class profile (core §3.3): which ratio is off.
 
 ### 4.4 Marks of Excellence
@@ -150,7 +151,9 @@ empty crew is possible: a tank can stand in the garage unmanned.
 
 - Tier X usually costs credits per battle even with premium; tier VIII premiums earn.
 - When credits are the bottleneck, suggest the credit-earning tanks the player owns and plays
-  well (own data), not generic lists.
+  well: `meta econ --owned` with the player's account type ranks the garage by average profit;
+  then weigh the player's own results in the top few (a tank they play badly earns less than its
+  average). Quote the table's date and its account filter.
 
 ### 4.8 Premium tanks, gold and bonds
 
@@ -180,12 +183,16 @@ candidates, weighed by the same §4.1 factors, unless the player's rules say oth
 
 ### 4.10 Onslaught
 
-- **No Onslaught statistics exist in the API.** Everything the data says is random battles,
-  and must not be presented as Onslaught performance.
+- **The player's own Onslaught results are in no source.** Everything the account data says is
+  random battles, and must not be presented as Onslaught performance. Ask for the rating.
 - Whether Onslaught battles count in the `all` block is **unverified**; do not use
   `all − random` as an Onslaught figure.
-- Rules, rewards and season details come from the web at question time, dated. Advice on which
-  owned tanks suit it is opinion informed by random-battle stats, and labelled so.
+- **Server-wide Onslaught figures** come from `meta onslaught`: the season's tanks by win rate,
+  and the rating it takes to reach the top half, quarter, tenth and hundredth. They are
+  server-wide (core §2.1) and carry no players' win rate, so a tank's figure mixes in who plays
+  it. Advice on which owned tanks suit Onslaught combines them with the player's random-battle
+  results in those tanks, labelled as such.
+- Rules, rewards and season details come from the web at question time, dated.
 
 ## 5. Answer format
 

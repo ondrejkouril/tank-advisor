@@ -432,3 +432,36 @@ func (s *Syncer) syncPersonalMissions(ctx context.Context, report *Report) error
 	s.logf("%s: %d missions", key, n)
 	return nil
 }
+
+// syncGameInfo records the server's game version (docs/plan.md phase 6, step
+// S5). Its TTL is twelve hours, so the first sync to see a new version dates
+// the patch to within half a day of the syncs that ran.
+func (s *Syncer) syncGameInfo(ctx context.Context, report *Report) error {
+	const (
+		source   = "wg"
+		endpoint = "encyclopedia/info"
+	)
+	key := store.SourceKey(source, endpoint)
+
+	due, err := s.due(ctx, source, endpoint, key, report)
+	if err != nil || !due {
+		return err
+	}
+	if s.DryRun {
+		return s.reportIntent(key, report)
+	}
+
+	result, fetchErr := s.WG.GameInfo(ctx)
+	if _, err := s.record(ctx, source, endpoint, result.Result); err != nil {
+		return err
+	}
+	if fetchErr != nil {
+		return fetchErr
+	}
+	if err := s.DB.RecordGameVersion(ctx, result.Info.Version, result.Info.TanksUpdatedAt, result.Result.RequestedAt); err != nil {
+		return err
+	}
+	report.Synced = append(report.Synced, key)
+	s.logf("%s: game version %s", key, result.Info.Version)
+	return nil
+}

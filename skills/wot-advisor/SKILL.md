@@ -100,10 +100,13 @@ turns a gap into a wrong answer.
 
 ### 4. Server-wide and meta data
 
-When the question needs data about the game rather than the player — MoE thresholds, patch
-changes, shop offers, mission conditions, Onslaught rules — fetch it from the sources in
-`references/meta-sources.md`, and quote the page's own date. A figure without a date is not
-used. If a source cannot be read, say so rather than filling the gap from memory.
+When the question needs data about the game rather than the player, use `wotctx meta`:
+`perf` (how a tank does across the server), `econ` (credits per tank), `onslaught`, `moe`
+(mark thresholds), `news` (patches and events) and `profile` (stock and top configuration).
+Anything else — shop offers, mission conditions, Onslaught rules — comes from the sources in
+`references/meta-sources.md`. Quote each figure's own date and keep it apart from the player's
+figures. A figure without a date is not used. If a source cannot be read, say so rather than
+filling the gap from memory.
 
 ### 5. Decide
 
@@ -170,7 +173,8 @@ Say so plainly rather than estimate:
   always available: `wotctx meta moe`.)
 - **Recent form** needs snapshots from before the window. "Not yet: N days of history" is the
   answer until they exist.
-- **Onslaught** has no statistics in the API; everything in the data is random battles.
+- **Onslaught**: the player's own results are in no source; everything in the account data is
+  random battles. `meta onslaught` gives only server-wide figures.
 - **Newer mission chains** (Dravec, Fossa VM 68, Black Rock and the like) are not in the API;
   their conditions come from the web, progress from the player. (Classic personal missions
   are: `query missions`.)

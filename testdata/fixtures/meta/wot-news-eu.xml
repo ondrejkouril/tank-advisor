@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://worldoftanks.eu/static/6.16.0_bbf399/portalnews/css/rss.xsl" media="screen"?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+    <channel>
+        <atom:link href="https://worldoftanks.eu/en/news/" rel="self" type="application/rss+xml" />
+        <title>World of Tanks News | World of Tanks</title>
+        <link>https://worldoftanks.eu/en/news/</link>
+        <description>
+            The latest news, updates, specials, and events for World of Tanks, the team-based, MMO tank battle game from Wargaming. Everything about WoT in one place.
+        </description>
+        <language> en </language>
+        <pubDate>Fri, 09 Oct 2026 20:23:41 GMT</pubDate>
+
+        <image>
+            <url>https://worldoftanks.eu/static/6.16.0_bbf399/portalnews/img/news.png</url>
+            <title>World of Tanks News | World of Tanks</title>
+            <link>https://worldoftanks.eu/en/news/</link>
+        </image>
+
+        
+            <item>
+                <title>Halloween 2026: Babylon — Dark Tower</title>
+                <link>https://worldoftanks.eu/en/news/general-news/halloween-2026/</link>
+                <description>
+                    <![CDATA[
+
+<div>
+    Return to Mirny-13, uncover the secrets of the Dark Tower, and shape its fate.
+</div>
+
+<div>
+    <a href="https://worldoftanks.eu/en/news/general-news/halloween-2026/">Read more</a>
+    
+        <a href="https://discord.gg/YQ7N4U2DRF" target="_blank"> Discuss </a>
+    
+</div>]]>
+                </description>
+                <guid isPermaLink="true">https://worldoftanks.eu/en/news/general-news/halloween-2026/</guid>
+                <pubDate>Fri, 09 Oct 2026 13:00:00 GMT</pubDate>
+                <category domain="https://worldoftanks.eu/en/news/general-news/">General News</category>
+                
+                <enclosure url="https://eu-wotp.wgcdn.co/dcont/fb/image/1022x360_halloween.jpg" length="103250" type="image/jpeg" />
+                
+            </item>
+<item>
+                <title>Preload Update 2.4.1 Right Now!</title>
+                <link>https://worldoftanks.eu/en/news/updates/update-2-4-1-preload/</link>
+                <description>
+                    <![CDATA[
+
+<div>
+    Download Update 2.4.1 in advance and play as soon as it launches!
+</div>
+
+<div>
+    <a href="https://worldoftanks.eu/en/news/updates/update-2-4-1-preload/">Read more</a>
+    
+        <a href="https://discord.gg/YQ7N4U2DRF" target="_blank"> Discuss </a>
+    
+</div>]]>
+                </description>
+                <guid isPermaLink="true">https://worldoftanks.eu/en/news/updates/update-2-4-1-preload/</guid>
+                <pubDate>Fri, 09 Oct 2026 10:00:00 GMT</pubDate>
+                <category domain="https://worldoftanks.eu/en/news/updates/">Updates</category>
+                
+                <enclosure url="https://eu-wotp.wgcdn.co/dcont/fb/image/2-4-1-preload-1022x360.jpg" length="179242" type="image/jpeg" />
+                
+            </item>
+<item>
+                <title>Watch the AMD OLS Season 7 Finals</title>
+                <link>https://worldoftanks.eu/en/news/live-streams/onslaught-legends-series-season-7-finals/</link>
+                <description>
+                    <![CDATA[
+
+<div>
+    See the action of the AMD Onslaught Legends Series Season 7 finale live on Twitch!
+</div>
+
+<div>
+    <a href="https://worldoftanks.eu/en/news/live-streams/onslaught-legends-series-season-7-finals/">Read more</a>
+    
+        <a href="https://discord.gg/YQ7N4U2DRF" target="_blank"> Discuss </a>
+    
+</div>]]>
+                </description>
+                <guid isPermaLink="true">https://worldoftanks.eu/en/news/live-streams/onslaught-legends-series-season-7-finals/</guid>
+                <pubDate>Thu, 08 Oct 2026 09:00:00 GMT</pubDate>
+                <category domain="https://worldoftanks.eu/en/news/live-streams/">Live Streams</category>
+                
+                <enclosure url="https://eu-wotp.wgcdn.co/dcont/fb/image/amd_opera_ols_season_7_kv_1022x360_reworked.jpg" length="236891" type="image/jpeg" />
+                
+            </item>
+<item>
+                <title>Maneuvers: Prove Your Clan&#39;s Strength</title>
+                <link>https://worldoftanks.eu/en/news/general-news/maneuvers-november-2026/</link>
+                <description>
+                    <![CDATA[
+
+<div>
+    Team up to master the battlefield and compete for Fame Points and elite rewards in intense clan battles.
+</div>
+
+<div>
+    <a href="https://worldoftanks.eu/en/news/general-news/maneuvers-november-2026/">Read more</a>
+    
+        <a href="https://discord.gg/YQ7N4U2DRF" target="_blank"> Discuss </a>
+    
+</div>]]>
+                </description>
+                <guid isPermaLink="true">https://worldoftanks.eu/en/news/general-news/maneuvers-november-2026/</guid>
+                <pubDate>Wed, 07 Oct 2026 13:00:00 GMT</pubDate>
+                <category domain="https://worldoftanks.eu/en/news/general-news/">General News</category>
+                
+                <enclosure url="https://eu-wotp.wgcdn.co/dcont/fb/image/maneuvers_nov26_1022x360.jpg" length="196454" type="image/jpeg" />
+                
+            </item>
+<item>
+                <title>Into the Forbidden Zone: Discover the Mirny Comic</title>
+                <link>https://worldoftanks.eu/en/news/general-news/halloween-2026-comic-book/</link>
+                <description>
+                    <![CDATA[
+
+<div>
+    Enter Mirny's forbidden zone in an original comic and follow war photographer Alex as she investigates Mirium, missing soldiers, and an anomaly that remembers everyone it takes.
+</div>
+
+<div>
+    <a href="https://worldoftanks.eu/en/news/general-news/halloween-2026-comic-book/">Read more</a>
+    
+        <a href="https://discord.gg/YQ7N4U2DRF" target="_blank"> Discuss </a>
+    
+</div>]]>
+                </description>
+                <guid isPermaLink="true">https://worldoftanks.eu/en/news/general-news/halloween-2026-comic-book/</guid>
+                <pubDate>Tue, 06 Oct 2026 13:00:00 GMT</pubDate>
+                <category domain="https://worldoftanks.eu/en/news/general-news/">General News</category>
+                
+                <enclosure url="https://eu-wotp.wgcdn.co/dcont/fb/image/hw2026-comic-book_1022x360.png" length="126862" type="image/png" />
+                
+            </item>
+<item>
+                <title>Update 2.4.1: Map Reworks and Rebalances</title>
+                <link>https://worldoftanks.eu/en/news/general-news/2-4-1-map-rebalance/</link>
+                <description>
+                    <![CDATA[
+
+<div>
+    Nebelburg transformed; Himmelsdorf, Ruinberg, Siegfried Line, Fisherman's Bay, and Overlord modified.
+</div>
+
+<div>
+    <a href="https://worldoftanks.eu/en/news/general-news/2-4-1-map-rebalance/">Read more</a>
+    
+        <a href="https://discord.gg/YQ7N4U2DRF" target="_blank"> Discuss </a>
+    
+</div>]]>
+                </description>
+                <guid isPermaLink="true">https://worldoftanks.eu/en/news/general-news/2-4-1-map-rebalance/</guid>
+                <pubDate>Mon, 05 Oct 2026 13:56:35 GMT</pubDate>
+                <category domain="https://worldoftanks.eu/en/news/general-news/">General News</category>
+                
+                <enclosure url="https://eu-wotp.wgcdn.co/dcont/fb/image/2-4-1-maps-1022x360.jpg" length="116686" type="image/jpeg" />
+                
+            </item>
+<item>
+                <title>Pick Your Weapon: The Nomad, Grom, or Turtle I</title>
+                <link>https://worldoftanks.eu/en/news/specials/charioteer-nomad-sdp-wz-66-grom-turtle-mk-i-october-2026/</link>
+                <description>
+                    <![CDATA[
+
+<div>
+    Three Tier VIII tank destroyers, three distinct playstyles: speed, close-range impact, or relentless firepower. Pick your favorite and roll out with bold customizations and valuable extras.
+</div>
+
+<div>
+    <a href="https://worldoftanks.eu/en/news/specials/charioteer-nomad-sdp-wz-66-grom-turtle-mk-i-october-2026/">Read more</a>
+    
+        <a href="https://discord.gg/YQ7N4U2DRF" target="_blank"> Discuss </a>
+    
+</div>]]>
+                </description>
+                <guid isPermaLink="true">https://worldoftanks.eu/en/news/specials/charioteer-nomad-sdp-wz-66-grom-turtle-mk-i-october-2026/</guid>
+                <pubDate>Mon, 05 Oct 2026 09:00:00 GMT</pubDate>
+                <category domain="https://worldoftanks.eu/en/news/specials/">Specials</category>
+                
+                <enclosure url="https://eu-wotp.wgcdn.co/dcont/fb/image/nomad_grom_turtle_thumg_onc_2026_1022x360.jpg" length="154371" type="image/jpeg" />
+                
+            </item>
+<item>
+                <title>World of Tanks: The Card Game Wave 4—Symphony of Steel is Here!</title>
+                <link>https://worldoftanks.eu/en/news/merchandise/archon-trading-card-game-september-2026/</link>
+                <description>
+                    <![CDATA[
+
+<div>
+    Welcome to World of Tanks: The Card Game Wave 4, Symphony of Steel, with 114 new cards!
+</div>
+
+<div>
+    <a href="https://worldoftanks.eu/en/news/merchandise/archon-trading-card-game-september-2026/">Read more</a>
+    
+        <a href="https://discord.gg/YQ7N4U2DRF" target="_blank"> Discuss </a>
+    
+</div>]]>
+                </description>
+                <guid isPermaLink="true">https://worldoftanks.eu/en/news/merchandise/archon-trading-card-game-september-2026/</guid>
+                <pubDate>Sat, 03 Oct 2026 13:00:00 GMT</pubDate>
+                <category domain="https://worldoftanks.eu/en/news/merchandise/">Merchandise</category>
+                
+                <enclosure url="https://eu-wotp.wgcdn.co/dcont/fb/image/wot_tcg_wave_4_symphony_of_steel_1022x360_thumbnail.jpg" length="146837" type="image/jpeg" />
+                
+            </item>
+</channel>
+</rss>

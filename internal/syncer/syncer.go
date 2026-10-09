@@ -142,6 +142,7 @@ func (s *Syncer) Sync(ctx context.Context, only Only) (Report, error) {
 				source{"wg:encyclopedia/vehicles", s.syncEncyclopedia},
 				source{"wg:encyclopedia/achievements", s.syncAchievementDefs},
 				source{"wg:encyclopedia/personalmissions", s.syncPersonalMissions},
+				source{"wg:encyclopedia/info", s.syncGameInfo},
 				source{"wg:account/info", s.syncAccountInfo},
 				source{"wg:tanks/stats", s.syncTankStats},
 				source{"wg:account/achievements", s.syncAccountAchievements},
@@ -153,7 +154,7 @@ func (s *Syncer) Sync(ctx context.Context, only Only) (Report, error) {
 		if s.XVM == nil && !s.DryRun {
 			report.Caveats = append(report.Caveats, "xvm: no client configured")
 		} else {
-			sources = append(sources, source{wn8SourceKey, s.syncWN8Expected})
+			sources = append(sources, source{wn8SourceKey, s.syncWN8Expected}, source{scalesSourceKey, s.syncScales})
 		}
 	}
 	// The client mod's dump is a local file: no client, no credential.

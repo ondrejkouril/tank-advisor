@@ -133,6 +133,36 @@ func newMCPServer(env *Env) *mcp.Server {
 		Annotations: &mcp.ToolAnnotations{Title: "Mark of Excellence thresholds", ReadOnlyHint: true, OpenWorldHint: &open},
 	}, m.moe)
 
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "wot_server_perf",
+		Description: "How one vehicle does across the whole server over 7, 30 or 60 days (tomato.gg, fetched now, never cached): win rate, its players' usual win rate and the difference (how much the tank lifts them), damage, assist, WN8, beside the player's own figures on it and the gap. Without a tank, ranks a tier's tanks (optionally one class) or the player's garage by that difference. Quote the table's date; server figures are not the player's.",
+		Annotations: &mcp.ToolAnnotations{Title: "Server-wide tank performance", ReadOnlyHint: true, OpenWorldHint: &open},
+	}, m.serverPerf)
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "wot_economics",
+		Description: "Average credits per battle for one vehicle (tomato.gg, fetched now, never cached): earnings, profit after ammunition, repairs and consumables, and per minute. Without a tank, ranks a tier's tanks or the player's garage by profit (optionally premium vehicles only, or per minute). Pick the account filter that matches the player's own account (premium or standard). Quote the table's date; these are averages across players, not the player's own.",
+		Annotations: &mcp.ToolAnnotations{Title: "Credits per tank", ReadOnlyHint: true, OpenWorldHint: &open},
+	}, m.econ)
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "wot_onslaught",
+		Description: "The current Onslaught season across the server (tomato.gg, fetched now, never cached): one vehicle's season figures, or the season's tanks ranked by win rate (optionally one class, or the player's garage), and the rating it takes to reach the top half, quarter, tenth and hundredth. Wargaming has no Onslaught statistics, so the player's own Onslaught results are unknown. Quote the page's date.",
+		Annotations: &mcp.ToolAnnotations{Title: "Onslaught season", ReadOnlyHint: true, OpenWorldHint: &open},
+	}, m.onslaught)
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "wot_news",
+		Description: "Wargaming's latest news from its feed (fetched now): title, date, link and summary, or only game updates, preloads and micropatches, beside the server's game version and when a sync first saw it. Use it to check whether an update falls inside a window of stats being compared, then read that update's notes at its link.",
+		Annotations: &mcp.ToolAnnotations{Title: "Game news and updates", ReadOnlyHint: true, OpenWorldHint: &open},
+	}, m.news)
+
+	mcp.AddTool(server, &mcp.Tool{
+		Name:        "wot_profile",
+		Description: "A vehicle's characteristics in its stock and top configurations (Wargaming, fetched now): gun, DPM, shells, aim, dispersion, depression, view range, mobility and armour, the modules to research between the two with their XP, and the player's XP on the vehicle from the game client. Use it for how painful a stock grind is. Most tier X and all tier XI vehicles have nothing to research.",
+		Annotations: &mcp.ToolAnnotations{Title: "Stock and top configuration", ReadOnlyHint: true, OpenWorldHint: &open},
+	}, m.profile)
+
 	notDestructive := false
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "wot_sync",
@@ -210,6 +240,7 @@ const guidePreamble = `You are reading the wot-advisor skill through the wotctx 
 - wotctx brief → wot_brief
 - wotctx query resources | garage | tank | performance | sessions | candidates | missions → wot_resources, wot_garage, wot_tank, wot_performance, wot_sessions, wot_candidates, wot_missions (flags become arguments: --min-tier 8 is min_tier: 8, --open is open_only: true)
 - wotctx meta moe → wot_moe
+- wotctx meta perf → wot_server_perf, wotctx meta econ → wot_economics, wotctx meta onslaught → wot_onslaught, wotctx meta news → wot_news, wotctx meta profile → wot_profile (--days 30 is days: 30, --tier 10 is tier: 10, --owned is owned: true, --premium-tanks is premium_tanks: true)
 - references/<name>.md → wot_guide with topic <name>
 
 Its rules about shells (Bash, PowerShell, one command per call) apply only to the command line; ignore them here. Editing the overlay file and logging in to Wargaming need a terminal: tell the player the command to run.
@@ -330,6 +361,30 @@ func (m *mcpServer) moe(ctx context.Context, _ *mcp.CallToolRequest, in tankInpu
 		return nil, nil, m.toolErr(errors.New("wot_moe needs a vehicle name or tank_id"))
 	}
 	return m.query(ctx, func(s *query.Service) (query.Envelope, error) { return m.env.moe(ctx, s, ref) })
+}
+
+func (m *mcpServer) serverPerf(ctx context.Context, _ *mcp.CallToolRequest, in serverPerfInput) (*mcp.CallToolResult, any, error) {
+	return m.query(ctx, func(s *query.Service) (query.Envelope, error) { return m.env.serverPerf(ctx, s, in) })
+}
+
+func (m *mcpServer) econ(ctx context.Context, _ *mcp.CallToolRequest, in econInput) (*mcp.CallToolResult, any, error) {
+	return m.query(ctx, func(s *query.Service) (query.Envelope, error) { return m.env.econ(ctx, s, in) })
+}
+
+func (m *mcpServer) onslaught(ctx context.Context, _ *mcp.CallToolRequest, in onslaughtInput) (*mcp.CallToolResult, any, error) {
+	return m.query(ctx, func(s *query.Service) (query.Envelope, error) { return m.env.onslaught(ctx, s, in) })
+}
+
+func (m *mcpServer) news(ctx context.Context, _ *mcp.CallToolRequest, in newsInput) (*mcp.CallToolResult, any, error) {
+	return m.query(ctx, func(s *query.Service) (query.Envelope, error) { return m.env.news(ctx, s, in) })
+}
+
+func (m *mcpServer) profile(ctx context.Context, _ *mcp.CallToolRequest, in tankInput) (*mcp.CallToolResult, any, error) {
+	ref := strings.TrimSpace(in.Tank)
+	if ref == "" {
+		return nil, nil, m.toolErr(errors.New("wot_profile needs a vehicle name or tank_id"))
+	}
+	return m.query(ctx, func(s *query.Service) (query.Envelope, error) { return m.env.profile(ctx, s, ref) })
 }
 
 func (m *mcpServer) sync(ctx context.Context, _ *mcp.CallToolRequest, in syncInput) (*mcp.CallToolResult, any, error) {

@@ -88,8 +88,8 @@ func TestMCPListsTheTools(t *testing.T) {
 		}
 	}
 	sort.Strings(names)
-	want := []string{"wot_brief", "wot_candidates", "wot_data_status", "wot_garage", "wot_guide", "wot_missions",
-		"wot_moe", "wot_performance", "wot_resources", "wot_sessions", "wot_sync", "wot_tank"}
+	want := []string{"wot_brief", "wot_candidates", "wot_data_status", "wot_economics", "wot_garage", "wot_guide", "wot_missions",
+		"wot_moe", "wot_news", "wot_onslaught", "wot_performance", "wot_profile", "wot_resources", "wot_server_perf", "wot_sessions", "wot_sync", "wot_tank"}
 	if !reflect.DeepEqual(names, want) {
 		t.Errorf("tools = %v\nwant    %v", names, want)
 	}

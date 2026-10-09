@@ -13,6 +13,7 @@ import (
 	"text/tabwriter"
 	"time"
 
+	"github.com/ondrejkouril/tank-advisor/internal/config"
 	"github.com/ondrejkouril/tank-advisor/internal/secrets"
 	"github.com/ondrejkouril/tank-advisor/internal/store"
 	"github.com/ondrejkouril/tank-advisor/internal/syncer"
@@ -101,6 +102,7 @@ func collectChecks(ctx context.Context, env *Env) []check {
 		checkWGAuth(env),
 		checkDataAge(ctx, env),
 		checkVehicles(ctx, env),
+		checkGameVersion(ctx, env),
 		checkOverlay(ctx, env),
 		checkWN8(ctx, env),
 		checkModData(ctx, env),
@@ -373,9 +375,26 @@ func checkConfig(env *Env) check {
 	return check{
 		Name:   "config",
 		Status: statusOK,
-		Detail: fmt.Sprintf("%s; account %s/%d (%s)", paths,
-			env.Config.Account.Realm, env.Config.Account.AccountID, env.Config.Account.Nickname),
+		Detail: fmt.Sprintf("%s; account %s/%d (%s); %s", paths,
+			env.Config.Account.Realm, env.Config.Account.AccountID, env.Config.Account.Nickname,
+			fetchSwitches(env.Config)),
 	}
+}
+
+// fetchSwitches states each question-time fetch switch (docs/spec-desktop.md
+// section 12.4), so a switch turned off is visible, not a silent gap.
+func fetchSwitches(c config.Config) string {
+	state := func(b bool) string {
+		if b {
+			return "on"
+		}
+		return "off"
+	}
+	moe := state(c.MoEFetchEnabled())
+	if c.TomatoFetchEnabled() && !c.MoEFetchEnabled() {
+		moe = "off (meta.moe_fetch)"
+	}
+	return fmt.Sprintf("server-wide fetches: tomato.gg %s (MoE %s)", state(c.TomatoFetchEnabled()), moe)
 }
 
 // checkSecrets reports which credentials are present and where each came from.

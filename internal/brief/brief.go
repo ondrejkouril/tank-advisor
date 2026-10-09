@@ -207,6 +207,12 @@ func (b *builder) dataAge() *section {
 		sec.lines = append(sec.lines, fmt.Sprintf("- History: %d snapshot(s) since %s (%.1f days); nothing earlier can be known",
 			b.history.Snapshots, b.history.FirstSnapshot.Format("2006-01-02"), b.history.Days))
 	}
+	// The first sync to see a version dates the patch: a window of stats
+	// that starts before it straddles an update.
+	if v, err := b.s.DB.LatestGameVersion(b.ctx); err == nil {
+		sec.lines = append(sec.lines, fmt.Sprintf("- Server game version %s, first seen %s (wotctx meta news --updates for what changed)",
+			v.Version, v.FirstSeen.Format("2006-01-02")))
+	}
 	return sec
 }
 
@@ -310,6 +316,11 @@ func (b *builder) performance() *section {
 		sec.lines = append(sec.lines, fmt.Sprintf(
 			"\nAll tiers, for context: %s battles, WN8 %s; lower tiers include old games that do not describe current play.",
 			num(all.Total.Battles), wn8(all.Total.WN8)))
+		if rk := all.XVMRank; rk != nil && rk.WN8 != nil && rk.WinRate != nil {
+			sec.lines = append(sec.lines, fmt.Sprintf(
+				"XVM rank: WN8 %d, win rate %d (the share of the players XVM rates with a lower lifetime figure; XVM's field is stronger than the whole server).",
+				*rk.WN8, *rk.WinRate))
+		}
 	}
 	for _, w := range []string{"30d", "60d"} {
 		if p := b.perf[w]; p.Available && p.Span != nil && p.Span.Days > float64(windowDays(w))+0.5 {

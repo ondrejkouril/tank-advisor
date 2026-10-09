@@ -71,3 +71,45 @@ func (s *Syncer) syncWN8Expected(ctx context.Context, report *Report) error {
 	s.logf("%s: version %s, %d vehicles", wn8SourceKey, result.Version, n)
 	return nil
 }
+
+const scalesEndpoint = "scales"
+
+var scalesSourceKey = store.SourceKey(wn8Source, scalesEndpoint)
+
+// syncScales refreshes XVM's rating scales (docs/plan.md phase 6, step S6).
+// The file is small and has no version of its own, so the snapshot keeps it
+// whole and its Last-Modified goes into the HTTP cache, where doctor reads it
+// to tell a frozen file from a fresh one.
+func (s *Syncer) syncScales(ctx context.Context, report *Report) error {
+	due, err := s.due(ctx, wn8Source, scalesEndpoint, scalesSourceKey, report)
+	if err != nil || !due {
+		return err
+	}
+	if s.DryRun {
+		return s.reportIntent(scalesSourceKey, report)
+	}
+
+	result, fetchErr := s.XVM.FetchScales(ctx)
+	if len(result.Raw) > 0 || result.HTTPStatus != 0 {
+		snap := store.Snapshot{
+			Source: wn8Source, Endpoint: scalesEndpoint, RequestedAt: result.RequestedAt,
+			HTTPStatus: result.HTTPStatus, ETag: result.ETag, Raw: result.Raw,
+		}
+		if fetchErr != nil {
+			snap.WGError = oneLine(fetchErr.Error())
+		}
+		if _, err := s.DB.PutSnapshot(ctx, snap); err != nil {
+			return err
+		}
+	}
+	if fetchErr != nil {
+		return fetchErr
+	}
+	if err := s.DB.PutCacheEntry(ctx, store.CacheEntry{URLKey: scalesSourceKey, ETag: result.ETag,
+		LastModified: result.LastModified, FetchedAt: result.RequestedAt}); err != nil {
+		return err
+	}
+	report.Synced = append(report.Synced, scalesSourceKey)
+	s.logf("%s: last modified %s", scalesSourceKey, result.LastModified)
+	return nil
+}

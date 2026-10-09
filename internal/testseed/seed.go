@@ -9,6 +9,7 @@ package testseed
 
 import (
 	"context"
+	"encoding/json"
 	"os"
 	"path/filepath"
 	"testing"
@@ -164,6 +165,23 @@ func Seed(t testing.TB) Fixture {
 		{TankID: Obj261, Damage: 1100, Frags: 0.7, Spot: 0.1, Def: 0.2, WinRate: 50.8},
 		// No entry for the Leox, as XVM's pre-split file lacked it.
 	}))
+
+	// XVM's percentile scales, regular steps for readable ranks: WN8 200 to
+	// 4,160 in steps of 40, win rate 42 % to 66.75 % in steps of 0.25.
+	wn8Steps, winSteps := make([]float64, 100), make([]float64, 100)
+	for i := range 100 {
+		wn8Steps[i], winSteps[i] = 200+40*float64(i), 42+0.25*float64(i)
+	}
+	scales, err := json.Marshal(map[string][]float64{"xwn8": wn8Steps, "xwin": winSteps})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := db.PutSnapshot(ctx, store.Snapshot{Source: "xvm", Endpoint: "scales", RequestedAt: Now.Add(-30 * time.Minute), HTTPStatus: 200, Raw: scales}); err != nil {
+		t.Fatalf("PutSnapshot xvm scales: %v", err)
+	}
+	if err := db.PutCacheEntry(ctx, store.CacheEntry{URLKey: "xvm:scales", LastModified: "Thu, 17 Sep 2026 22:00:07 GMT", FetchedAt: Now.Add(-30 * time.Minute)}); err != nil {
+		t.Fatalf("PutCacheEntry xvm scales: %v", err)
+	}
 
 	run, err := db.BeginSyncRun(ctx, Now.Add(-time.Hour))
 	if err != nil {

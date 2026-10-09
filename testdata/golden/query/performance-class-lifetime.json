@@ -19,6 +19,10 @@
       "wn8": 1778,
       "wn8_excluded_battles": 2
     },
+    "xvm_rank": {
+      "wn8": 40,
+      "win_rate": 31
+    },
     "rows": [
       {
         "key": "SPG",
@@ -94,6 +98,12 @@
         "age_seconds": 3600
       },
       {
+        "name": "xvm:scales",
+        "observed_at": "2026-09-18T11:30:00Z",
+        "age_seconds": 1800,
+        "version": "2026-09-17"
+      },
+      {
         "name": "xvm:wn8exp",
         "observed_at": "2026-09-18T11:30:00Z",
         "age_seconds": 1800,
@@ -101,7 +111,8 @@
       }
     ],
     "caveats": [
-      "assist figures are random battles only, from the API's assist totals; the in-game service record shows an all-battles figure with no radio/track split, so they will not match it exactly"
+      "assist figures are random battles only, from the API's assist totals; the in-game service record shows an all-battles figure with no radio/track split, so they will not match it exactly",
+      "xvm_rank is the share of the players XVM rates whose lifetime figure is lower (XVM's scale, 0 to 100). XVM rates a field stronger than the whole server - its midpoint win rate is 54.2 % and its midpoint WN8 2160 - so the rank is against that field, not against everyone who plays"
     ]
   }
 }

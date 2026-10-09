@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/ondrejkouril/tank-advisor/internal/store"
@@ -60,6 +61,21 @@ func checkWN8(ctx context.Context, env *Env) check {
 		detail += fmt.Sprintf("; the version is %d days old, so the source may have stopped updating",
 			int(now.Sub(v).Hours()/24))
 		result.Fix = "check that " + xvm.DefaultURL + " still updates"
+	}
+
+	// The rating scales have no version of their own: their Last-Modified
+	// tells a frozen file from a fresh one, as the version does above.
+	if entry, err := db.CacheEntryFor(ctx, "xvm:scales"); err == nil {
+		if lm, err := http.ParseTime(entry.LastModified); err == nil {
+			detail += fmt.Sprintf("; rating scales of %s", lm.UTC().Format(time.DateOnly))
+			if now.Sub(lm) > staleExpectedAfter {
+				result.Status = statusWarn
+				detail += fmt.Sprintf(" (%d days old: the file may have stopped updating)", int(now.Sub(lm).Hours()/24))
+				result.Fix = "check that " + xvm.ScalesURL + " still updates"
+			}
+		}
+	} else if errors.Is(err, store.ErrNotFound) {
+		detail += "; rating scales not synced yet (no percentile ranks)"
 	}
 
 	rows, err := db.LatestTankStats(ctx, wg.ModeRandom)

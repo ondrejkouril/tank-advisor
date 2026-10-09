@@ -66,7 +66,7 @@ type CombinedRange struct {
 
 // MoE reports a vehicle's mark thresholds from a freshly fetched table,
 // beside the player's own combined damage. A nil table means the fetch is
-// switched off (meta.moe_fetch, docs/spec-desktop.md section 12.4): the
+// switched off (meta.tomato_fetch or meta.moe_fetch, docs/spec-desktop.md section 12.4): the
 // player's own marks are still reported, and the thresholds are said to be
 // unavailable.
 func (s *Service) MoE(ctx context.Context, ref string, table *meta.MoETable) (Envelope, error) {
@@ -99,7 +99,11 @@ func (s *Service) MoE(ctx context.Context, ref string, table *meta.MoETable) (En
 		})
 		r.used[table.URL] = true
 	} else {
-		r.caveat("mark thresholds are unavailable: fetching tomato.gg's table is switched off (meta.moe_fetch in config.yaml)")
+		sw := s.Config.MoEFetchSwitch()
+		if sw == "" {
+			sw = "meta.moe_fetch"
+		}
+		r.caveat("mark thresholds are unavailable: fetching tomato.gg's table is switched off (%s in config.yaml)", sw)
 	}
 	r.use(srcTankStats)
 

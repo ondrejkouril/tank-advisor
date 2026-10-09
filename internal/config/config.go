@@ -102,17 +102,36 @@ type Account struct {
 	Nickname  string `yaml:"nickname"`
 }
 
-// Meta controls the question-time fetches of server-wide pages.
+// Meta controls the question-time fetches of server-wide pages. There is one
+// switch per third party, so a fetch can be switched off at once if that
+// party asks (docs/spec-desktop.md section 12.4). Nil means on.
 type Meta struct {
-	// MoEFetch turns tomato.gg's Mark of Excellence page on or off. Nil means
-	// on. It exists so the fetch can be switched off at once if tomato.gg
-	// asks (docs/spec-desktop.md section 12.4).
+	// TomatoFetch turns every tomato.gg page on or off.
+	TomatoFetch *bool `yaml:"tomato_fetch"`
+	// MoEFetch is the older switch for tomato.gg's Mark of Excellence page
+	// alone. It is still honoured: false turns that page off even with
+	// tomato_fetch on.
 	MoEFetch *bool `yaml:"moe_fetch"`
 }
 
+func on(b *bool) bool { return b == nil || *b }
+
+// TomatoFetchEnabled reports whether tomato.gg's pages may be fetched.
+func (c Config) TomatoFetchEnabled() bool { return on(c.Meta.TomatoFetch) }
+
 // MoEFetchEnabled reports whether `meta moe` may fetch tomato.gg's table.
-func (c Config) MoEFetchEnabled() bool {
-	return c.Meta.MoEFetch == nil || *c.Meta.MoEFetch
+func (c Config) MoEFetchEnabled() bool { return c.TomatoFetchEnabled() && on(c.Meta.MoEFetch) }
+
+// MoEFetchSwitch names the setting that turned the MoE fetch off, for the
+// caveat that says so; "" while it is on.
+func (c Config) MoEFetchSwitch() string {
+	switch {
+	case !c.TomatoFetchEnabled():
+		return "meta.tomato_fetch"
+	case !on(c.Meta.MoEFetch):
+		return "meta.moe_fetch"
+	}
+	return ""
 }
 
 // Configured reports whether an account has been set up.
@@ -188,9 +207,12 @@ func Default() Config {
 				"wg:encyclopedia/vehicles":         {7 * 24 * time.Hour},
 				"wg:encyclopedia/achievements":     {7 * 24 * time.Hour},
 				"wg:encyclopedia/personalmissions": {7 * 24 * time.Hour},
-				"wg:account/info":                  {time.Hour},
-				"wg:tanks/stats":                   {time.Hour},
-				"wg:account/tanks":                 {time.Hour},
+				// One small request, and its first sighting of a new version dates
+				// the patch, so it is checked twice a day rather than weekly.
+				"wg:encyclopedia/info": {12 * time.Hour},
+				"wg:account/info":      {time.Hour},
+				"wg:tanks/stats":       {time.Hour},
+				"wg:account/tanks":     {time.Hour},
 				// Achievements move slowly and are never the subject of a
 				// "how am I doing lately" question.
 				"wg:account/achievements": {12 * time.Hour},
@@ -199,6 +221,8 @@ func Default() Config {
 				// within one vintage of expected values, so they are treated
 				// as patch-day reference data rather than chased daily.
 				"xvm:wn8exp": {7 * 24 * time.Hour},
+				// Percentile scales, regenerated daily; a rank moves little in a week.
+				"xvm:scales": {7 * 24 * time.Hour},
 			},
 		},
 		Confidence: Confidence{

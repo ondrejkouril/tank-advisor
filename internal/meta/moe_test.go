@@ -72,12 +72,12 @@ func TestFetchMoE(t *testing.T) {
 	}))
 	defer server.Close()
 
-	c := &MoEClient{URL: server.URL, HTTP: server.Client()}
-	table, err := c.FetchMoE(context.Background(), "eu")
+	c := &Tomato{Base: server.URL, Fetch: &Fetcher{HTTP: server.Client()}}
+	table, err := c.MoE(context.Background(), "eu")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if table.URL != server.URL || table.FetchedAt.IsZero() || len(table.ByTank) != 3 {
+	if table.URL != server.URL+"/moe/eu" || table.FetchedAt.IsZero() || len(table.ByTank) != 3 {
 		t.Errorf("table = %+v", table)
 	}
 	if !strings.Contains(agent, "wotctx") {
@@ -88,8 +88,8 @@ func TestFetchMoE(t *testing.T) {
 		w.WriteHeader(http.StatusServiceUnavailable)
 	}))
 	defer failing.Close()
-	if _, err := (&MoEClient{URL: failing.URL}).FetchMoE(context.Background(), "eu"); err == nil || !strings.Contains(err.Error(), "503") {
-		t.Errorf("FetchMoE on a 503 = %v", err)
+	if _, err := (&Tomato{Base: failing.URL}).MoE(context.Background(), "eu"); err == nil || !strings.Contains(err.Error(), "503") {
+		t.Errorf("MoE on a 503 = %v", err)
 	}
 }
 

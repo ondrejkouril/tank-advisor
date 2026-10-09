@@ -26,11 +26,22 @@ func xvmFixture(t *testing.T) []byte {
 	return raw
 }
 
-// newWN8Syncer wires a syncer to an XVM stand-in and counts its requests.
+// newWN8Syncer wires a syncer to an XVM stand-in and counts its requests for
+// expected values. The scales, XVM's other file, are answered from their
+// fixture and not counted; nothing reaches the real host.
 func newWN8Syncer(t *testing.T, db *store.DB, status int, body []byte) (*Syncer, *int) {
 	t.Helper()
+	scales, err := os.ReadFile(filepath.Join("..", "..", "testdata", "fixtures", "xvm", "xvmscales-wg.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	var requests int
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/xvmscales-wg.json" {
+			w.Header().Set("Last-Modified", "Thu, 08 Oct 2026 22:00:07 GMT")
+			w.Write(scales)
+			return
+		}
 		requests++
 		w.WriteHeader(status)
 		w.Write(body)
@@ -40,9 +51,34 @@ func newWN8Syncer(t *testing.T, db *store.DB, status int, body []byte) (*Syncer,
 	return &Syncer{
 		DB:     db,
 		Config: config.Default(),
-		XVM:    &xvm.Client{URL: server.URL, HTTP: server.Client(), Now: func() time.Time { return testNow }},
-		Now:    func() time.Time { return testNow },
+		XVM: &xvm.Client{URL: server.URL, ScalesURL: server.URL + "/xvmscales-wg.json",
+			HTTP: server.Client(), Now: func() time.Time { return testNow }},
+		Now: func() time.Time { return testNow },
 	}, &requests
+}
+
+func TestSyncScales(t *testing.T) {
+	ctx := context.Background()
+	db := openTestDB(t)
+	s, _ := newWN8Syncer(t, db, http.StatusOK, xvmFixture(t))
+	report, err := s.Sync(ctx, OnlyWN8)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !contains(report.Synced, "xvm:scales") {
+		t.Fatalf("synced = %v", report.Synced)
+	}
+	snap, err := db.LatestUsableSnapshot(ctx, "xvm", "scales")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := xvm.ParseScales(snap.Raw); err != nil {
+		t.Errorf("stored scales do not parse: %v", err)
+	}
+	entry, err := db.CacheEntryFor(ctx, "xvm:scales")
+	if err != nil || entry.LastModified != "Thu, 08 Oct 2026 22:00:07 GMT" {
+		t.Errorf("cache entry = %+v, %v", entry, err)
+	}
 }
 
 func TestSyncWN8StoresExpectedValues(t *testing.T) {

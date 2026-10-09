@@ -15,6 +15,7 @@ var migrations = []struct {
 	{version: 6, stmts: schemaV6},
 	{version: 7, stmts: schemaV7},
 	{version: 8, stmts: schemaV8},
+	{version: 9, stmts: schemaV9},
 }
 
 // schemaV1 is docs/spec.md section 4 in full. Later plan steps populate tables

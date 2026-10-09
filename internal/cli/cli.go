@@ -273,6 +273,36 @@ func root() *Command {
 						Short: "Mark of Excellence thresholds from tomato.gg, beside your combined damage",
 						Run:   runMetaMoE,
 					},
+					{
+						Name:  "perf",
+						Args:  "[--pretty] [--days 7|30|60] <name|id> | --tier N [--class C] | --owned [--min-battles N]",
+						Short: "How a tank does across the server (tomato.gg), beside your figures; or a tier or the garage ranked",
+						Run:   runMetaPerf,
+					},
+					{
+						Name:  "econ",
+						Args:  "[--pretty] [--days 14|30|60] [--account all|premium|standard] <name|id> | --tier N | --owned [--class C] [--premium-tanks] [--per-minute]",
+						Short: "Credits per battle for a tank (tomato.gg), or a tier or the garage ranked by profit",
+						Run:   runMetaEcon,
+					},
+					{
+						Name:  "onslaught",
+						Args:  "[--pretty] [<name|id>] [--class C] [--owned] [--min-battles N]",
+						Short: "This Onslaught season across the server (tomato.gg): a tank, or the tanks ranked, and the rating spread",
+						Run:   runMetaOnslaught,
+					},
+					{
+						Name:  "news",
+						Args:  "[--pretty] [--since YYYY-MM-DD] [--updates]",
+						Short: "Wargaming's latest news from its feed, or only game updates, beside the server's game version",
+						Run:   runMetaNews,
+					},
+					{
+						Name:  "profile",
+						Args:  "[--pretty] <name|id>",
+						Short: "A vehicle's stock and top configurations from Wargaming, and the module research between them",
+						Run:   runMetaProfile,
+					},
 				},
 			},
 			{

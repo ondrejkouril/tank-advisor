@@ -25,6 +25,7 @@ Phase 1 was built on `phase-1-mvp` (28 commits) and fast-forwarded into `main` a
 | phase 3 — packaging | **done**, built on `phase-3-packaging` and fast-forwarded into `main`: plugin installed (run 6: 10/10), framework over MCP (run 5b: 10/10), bundle installed in Desktop and confirmed working by the owner 2026-09-25; the phone export is built, not yet tried |
 | phase 4 — client mod | **done**, built on `phase-4-mod` and fast-forwarded into `main` at `b9a8b9d` (2026-09-26): the mod in the client (0.2.1, checked against it by the owner; 0.3.0 built), `wotctx` reading it, answers from it; runs 7 and 8c 10/10. mod 0.3.0 and the Desktop bundle installed by the owner |
 | phase 5 — Tank Advisor | **released as v1.0.0** on 2026-09-27, from the public repository `ondrejkouril/tank-advisor`; owner checks and D10 still open. Earlier: **in progress** on `phase-5-desktop`, in the worktree `../tank-advisor-phase5`. The spec was written, Wargaming's terms read and decisions D1–D9 settled with the owner on 2026-09-26. Wargaming and tomato.gg are contacted only if they raise something first. D1–D5 are done, with owner checks open on D1, D4 and D5. The switch-over happened on 2026-09-27: this branch's `wotctx` is installed, and so is the 0.5.0 launcher extension. D6, D7 and D8 were built 2026-09-27, each with its owner check open. D9 was built and tested locally the same day; releasing waits on D0 and on the repository going public. **D11's docs are done**; SignPath wants proof of users, so the first releases go out unsigned. The owner's advice settings are not in the overlay the installed `wotctx` reads (see D7). D0 (the owner's accounts) has not started. Next: the owner's checks, the rest of D0, and D10; then the 1.0 release |
+| phase 6 — server-wide data | **built** 2026-10-09 on `phase-6-server-data`, not merged: S1–S7 done and checked live against a copy of the owner's data, S8 dropped (WOTInspector's terms), S9's docs done. Open: owner checks for S2, S3 and S7, eval run 11, and the 1.1.0 release |
 
 **Phase 1 (MVP) is complete.** Its done-criterion — *"What tank should I get now?"* gets a
 grounded, data-cited answer — is met in docs/evals.md, runs 1 and 2, from fresh sessions in an
@@ -74,6 +75,10 @@ Verify the tree is intact with `make lint && make test` (no network required).
 5. **Tank Advisor** (`docs/spec-desktop.md`). An installer and a tray app for any player, with
    advice each player customises. Done when a player with no developer tools goes from
    download to a grounded answer in under ten minutes, with no terminal.
+6. **Server-wide data.** Free sources beside the account's own: how a tank does across the
+   server, what it earns, Onslaught, patches, percentile ranks, stock against top
+   configuration, and replays. Done when *"Is it the tank or is it me?"* and *"Which of my
+   tanks earns the most credits?"* are answered from server figures quoted with their dates.
 
 ## Step 0 — manual setup (human)
 
@@ -1547,6 +1552,244 @@ Risks particular to this phase:
 | Player rules undermine grounding | Core rules are fixed and restated after the player's rules. Conflicts are flagged in the app, and a settings pair in D3 tests it |
 | A game update breaks the mod for every player at once | Unchanged from phase 4: a failed field is left out, not a crash. The app shows the errors and fetches a fixed mod through self-update |
 | Claude Desktop changes how extensions install | The launcher keeps the bundle stable. The `claude_desktop_config.json` fallback is written down in the spec |
+
+## Phase 6 — server-wide data
+
+Every source here is free, needs no paid key, carries no account data, and was checked live
+on 2026-10-09. Mark of Excellence thresholds are left out: `meta moe` already has them, and
+Wargaming's `tanks/mastery` (see below) shows tomato.gg and Poliroid republish Wargaming's own
+figures.
+
+The phase is done when these get grounded answers that quote each server-wide figure with its
+source and date, and keep it apart from the player's own figures:
+
+- *"Is the Gorilla bad, or is it me?"*
+- *"Which of my tanks earns the most credits?"*
+- *"Which tank should I take into Onslaught?"*
+- *"Did 2.4.1 change any of my tanks?"*
+- *"Is my WN8 good?"*
+- *"How bad is the stock grind on X?"*
+- *"Show me a good game in X."*
+
+### What the sources say (checked 2026-10-09)
+
+| Source | Request | What it holds | Freshness | Notes |
+|---|---|---|---|---|
+| tomato.gg tank performance | `GET tomato.gg/tank-performance/recent/<server>/<days>`, days 7 / 30 / 60 | 967 tanks: battles, WR, the players' own overall WR, `winrate_differential` (tank WR minus players' WR), DPG, WN8, frags, spots, assist, blocked, survival, hit and pen rate | page `updated` 2026-10-09 | Embedded in the server-rendered HTML like the MoE page (~0.9 MB). No key, no `api.tomato.gg` call; `robots.txt` allows it. `/overall/` mode is stuck at 2026-09-11 |
+| tomato.gg economics | `GET tomato.gg/economics/all/30` | 909 tanks: average earnings, profit, ammo / repair / consumables cost, cost per shot, earnings and profit per minute | 30-day page 2026-10-01; **7-day page stuck at 2026-09-11** | A smaller sample than the performance page (Gorilla: 16,120 battles against 245,313), so likely tomato's mod users only. Whether earnings include a premium account is not stated |
+| tomato.gg Onslaught | `GET tomato.gg/onslaught/<server>` | Season (`azure_phoenix`), player counts by rating bucket, per-tank stats | 2026-10-08 | Wargaming's API has no Onslaught stats: `extra=comp7` / `onslaught` are rejected by both `account/info` and `tanks/stats` |
+| Wargaming `encyclopedia/info` | one call, existing application id | `game_version` ("2.4"), `tanks_updated_at` (2026-10-01) | live | |
+| Wargaming news RSS | `GET worldoftanks.eu/en/rss/news/` | 20 dated items: title, link, `pubDate` | live | Carried "Preload Update 2.4.1" and "Update 2.4.1: Map Reworks and Rebalances" that day. Sturdier than WebFetch on the news listing |
+| XVM scales | `GET static.modxvm.com/xvmscales-wg.json` | 100-step percentile scales for `xwn8`, `xwin`, `xwtr`, `xeff`, `xwgr` | no version header seen | 2.6 KB, same host as `wn8exp.json` |
+| Wargaming `encyclopedia/vehicleprofile` | `tank_id` plus module ids | Full characteristics for one configuration: gun, armour, engine, siege mode, dispersion | live | Module ids come from `encyclopedia/vehicles` `modules_tree`, which the sync does not request (`vehicleFields`) |
+| WOTInspector replays | `GET api.wotinspector.com/v2/replays/?vehicle_id=&realm=&map_id=&battle_type=` | 530k replays: damage, assist, blocked, XP, credits, mastery badge, game version | live | Answered without authentication although the OpenAPI lists cookie and key auth. No ordering parameter |
+| Wargaming `tanks/mastery` | `distribution=damage\|xp`, `percentile=` | MoE and mastery thresholds with `updated_at` | 2026-10-07 | Identical to tomato.gg and Poliroid. **Not in this phase** (see above) |
+
+Rejected that day: tomato.gg map and tank-characteristics pages (no per-battle map data to pair
+with; Wargaming covers characteristics), Wargaming's equipment, reserve, crew-skill and badge
+lists (names only), `encyclopedia/arenas` (empty), clan info (no advice value), the client's
+`battle_results` cache (only the current day's battles survive, as version-specific pickles; a
+per-battle log belongs in the mod, §3.6 "Not yet"), and wot-life, the Wargaming wiki, tanks.gg,
+fpcstat, wotlabs and the Cloudflare-blocked sites (unreachable or empty shells).
+
+### Design
+
+- **Question-time, never stored**, as spec §3.5 already rules for server-wide pages: tomato.gg,
+  RSS, `vehicleprofile` and replays. Two exceptions are slow reference data and sync like
+  `wn8exp`: the XVM scales (seven-day TTL) and `encyclopedia/info` (with the weekly
+  encyclopedia).
+- **Every figure carries its page's own date.** The envelope's source is `tomato:<page>` with
+  the page's `updated` as its age. A page more than 14 days older than its window says
+  (e.g. the 7-day economics page) gets a caveat, and the answer prefers a fresher window.
+- **One switch per third party**, as spec-desktop §12.4 requires: `meta.tomato_fetch`
+  replaces `meta.moe_fetch` (the old key is still honoured), and `meta.wotinspector_fetch` is
+  new. Wargaming and XVM need none beyond today's.
+- **No account data leaves the machine** in any of these requests. Replays are filtered by
+  vehicle and map, never `player_dbid`.
+- **Within one MCP session**, a fetched page is kept in memory for 30 minutes, so a
+  conversation about five tanks downloads the 0.9 MB page once. Nothing reaches the database.
+
+### Step S1 — one fetch layer for server-wide pages
+
+`internal/meta` splits into a fetcher (honest `User-Agent`, size cap, timeout, the session
+cache) and an extractor for tomato.gg's embedded data. The extractor parses the subset of
+JavaScript literal the pages use: unquoted keys, `$R[n]=` references, `!0`/`!1`, numbers and
+strings. It finds records by their leading key (`{tank_id:`, `{65:`). It reads both date
+formats seen (`2026-10-09 19:34:13.297692+00:00` and ISO with `Z`). `meta moe` moves onto it
+with no change in output. The config gains `meta.tomato_fetch` and `meta.wotinspector_fetch`,
+and `doctor` lists the switches.
+
+*Acceptance:* the `meta moe` golden is unchanged. Fixtures of the four tomato pages, cut to ten
+tanks, parse at every field. A page with no records, or no date, fails with an error that names
+the page. Nothing in it is ever served as a figure.
+
+**Result (2026-10-09): done.** `internal/meta` has a fetcher with a 30-minute in-process cache
+and one extractor for tomato.gg's embedded data (`tomato.go`); `meta moe` runs on it with its
+golden unchanged. Fixtures for the MoE, performance, economics and Onslaught pages; a page with
+no stamp, no records or an unreadable record fails with `ErrFormat`. `meta.tomato_fetch` is in,
+`meta.moe_fetch` still honoured, and `doctor`'s `config` line names both. Found on the way:
+`doctor`'s tests had failed since 2026-10-01, when a hard-coded token expiry passed; it is now
+relative to the clock.
+
+### Step S2 — how a tank does across the server (`meta perf`)
+
+`wotctx meta perf <tank> [--days 7|30|60]`, default 30. The output puts the server's figures
+beside the player's own on that tank: lifetime from the cache, and the same window when
+snapshots cover it. `--tier N [--class X]` lists a tier's tanks ranked by
+`winrate_differential`, for *"which tier X TD is strongest"*. MCP: `wot_server_perf`. A tank
+missing from the page (too new, too rare) is reported as missing.
+
+*Acceptance:* the Gorilla's row matches the page. The player's side matches `query tank`.
+**Owner:** three tanks look plausible against what you know of them.
+
+**Result (2026-10-09): done; owner check open.** Live: the Object 140 at 50.04 % over 307,426
+server battles (differential −0.45) against the player's 54.96 % over 262. Ranked lists exposed
+small samples (an AHT-7 topped tier X TDs on 1,775 battles), so every server figure carries
+`win_rate_margin`, the 95 % sampling margin, and the caveat says a gap inside it is noise.
+
+### Step S3 — credits per tank (`meta econ`)
+
+`wotctx meta econ <tank>` and `--garage` (the player's own tanks ranked by profit per battle
+and per minute), with `--tier`, `--class` and `--premium` filters. MCP: `wot_economics`. First,
+establish what the sample is: the battle counts point to mod users only, and nothing says
+whether premium account is included. The caveat says what remains unknown. Only the 30-day
+page is used while the 7-day page stays stale.
+
+*Acceptance:* rows match the page. **Owner:** for two tanks you play often, the average profit
+is in line with your post-battle screens, and the caveat on premium account is stated
+correctly.
+
+**Result (2026-10-09): done; owner check open.** The page has account filters, `all`, `premium`
+and `standard`, and 14/30/60-day windows; an unknown filter silently serves `all`, so
+`--account` is checked first. Measured: `all` is mostly premium accounts (Gorilla 16,120
+battles; standard 166), only the 30-day `all` page was fresh (1 Oct), the rest stuck at 11 Sep;
+the URL has no server. Live: the garage on premium ranks the Buryan first (72,446 profit a
+battle).
+
+### Step S4 — Onslaught (`meta onslaught`)
+
+`wotctx meta onslaught [<tank>]`: the current season, its date, per-tank stats, and players
+by rating. First, check whether per-tank figures split by rating anywhere on the page or its
+variants. If they do not, say so rather than imply it. MCP: `wot_onslaught`. The open question
+in the status section (does `all` include Onslaught) is unaffected.
+
+*Acceptance:* the season and date are quoted. Tank rows match the page.
+
+**Result (2026-10-09): done.** Season `azure_phoenix`, 13,912 rated players, top 10 % from
+1,500. Per-tank figures are not split by rating anywhere on the page, and there is no players'
+win rate, which the caveat says.
+
+### Step S5 — patches (`encyclopedia/info`, news RSS)
+
+- **Sync:** `encyclopedia/info` with the weekly encyclopedia. `game_version` and
+  `tanks_updated_at` are stored.
+- **`doctor`:** compares the server's version with the client's `version.xml`.
+- **`brief`:** names the version and when it was first seen.
+- **`wotctx meta news [--since DATE] [--updates]`** reads the RSS feed: title, date, link.
+  `--updates` keeps updates and micropatches. MCP: `wot_news`.
+- **Skill:** when an update is newer than the start of a window being compared, it reads that
+  update's notes for the tanks in question (framework §2.3). `meta-sources.md` drops the
+  WebFetch of the news listing.
+
+*Acceptance:* an RSS fixture parses. The live feed shows the 2.4.1 items. `doctor` shows
+server 2.4 against the installed client.
+
+**Result (2026-10-09): done.** `wg:encyclopedia/info` syncs with a 12-hour TTL (weekly would
+date a patch up to a week late) into `game_versions` (migration 9). `doctor` has a
+`game-version` check (live: server 2.4, client 2.4.0.2); `brief` names the version. `meta news`
+reads the feed; "Update 2.4.1: Map Reworks and Rebalances" was filed under General News, so a
+title naming an update number also marks an update.
+
+### Step S6 — percentile ranks (XVM scales)
+
+`xvm:scales` syncs with `xvm:wn8exp` under the same seven-day TTL. It has no version header,
+so it is stamped with the fetch time and `Last-Modified`, and `doctor` warns when
+`Last-Modified` is over 60 days old, as it does for `wn8exp`. `brief` and `query performance`
+gain the account's XVM percentile for WN8 and win rate ("better than about N % of players").
+The metrics reference says which population XVM ranks against.
+
+*Acceptance:* the account's WN8 maps to the percentile the scale gives, checked by hand. The
+scale and WN8 vintages appear in the sources.
+
+**Result (2026-10-09): done.** `xvm:scales` syncs with the expected values; the body stays in
+its snapshot and `Last-Modified` in `http_cache` (no migration). `query performance` (lifetime,
+all tiers) and `brief` carry `xvm_rank`. Live: WN8 1,829 ranks 54, win rate 53.81 % ranks 57;
+XVM's midpoint win rate is 52 %, which the caveat states. The syncer tests had begun fetching
+the real scales file; their stand-in now serves it.
+
+### Step S7 — stock against top configuration (`meta profile`)
+
+`wotctx meta profile <tank>` makes three Wargaming requests:
+- `encyclopedia/vehicles` with `fields=modules_tree` for that tank;
+- `vehicleprofile` for the stock modules;
+- `vehicleprofile` for the top module of each type.
+
+It shows the two side by side: firepower (DPM, alpha, pen, aim, dispersion), mobility, view
+range and armour. It adds the XP still needed for the top modules, using the dump's XP on the
+tank when there is one. MCP: `wot_profile`.
+
+*Acceptance:* a tank with nothing to research (the Gorilla) shows one configuration and says
+so. **Owner:** a tier IX line tank's stock and top guns match the game's module screen.
+
+**Result (2026-10-09): done; owner check open.** The top configuration is the valid profile
+whose modules cost the most XP; the research is its non-stock modules with the modules that
+unlock them. Measured: module research exists on every tech-tree vehicle from tier I to IX, on 5
+of 70 at tier X and on none at tier XI. Names came back in Czech without `language=en`. Live:
+the Object 263 needs 143,300 XP to its top configuration, with 15,654 on the vehicle; the AMX 13
+90 is elite.
+
+### Step S8 — replays (`meta replays`)
+
+`wotctx meta replays <tank> [--map M] [--limit 5]` reads WOTInspector's replays for the
+vehicle on this realm, from the current game version. It ranks them by damage plus assist,
+since the API has no ordering, reading at most three pages. It links each as
+`replays.wotinspector.com/en/view/<id>`. Before building, read WOTInspector's terms for
+automated API use. If they forbid it, drop the step. MCP: `wot_replays`.
+
+*Acceptance:* the Gorilla returns 2.4 replays with working links. Switching
+`meta.wotinspector_fetch` off makes no request.
+
+**Result (2026-10-09): dropped.** WOTInspector's terms license the service only for
+"noncommercial, limited personal use" and forbid displaying or distributing its content without
+"express prior written consent". A distributed app showing its replay data needs that consent,
+which the project does not have. `meta.wotinspector_fetch` was removed with the step. Revisit
+only with written consent.
+
+### Step S9 — skill, docs, evaluation, release
+
+- **Skill:**
+  - `references/meta-sources.md` rewritten around the new commands;
+  - `queries.md` and `metrics.md` gain entries for the differential, percentile ranks and
+    credit figures;
+  - the framework gains how to read server figures beside the player's own.
+- **Guide preamble:** the MCP guide preamble maps each new command to its tool.
+- **Docs:**
+  - `spec.md` §3.1 (`encyclopedia/info`), §3.3 (scales), §3.5 (the pages) and §7;
+  - `spec-desktop.md` §11 and §12.4 (outgoing requests, switches);
+  - the README's privacy and attribution lines;
+  - `packaging/nsis/notices.txt`.
+- **Evals:** the seven questions above join `docs/evals.md`, run over both CLI and MCP.
+- **Release:** 1.1.0 through the release workflow.
+
+*Acceptance:* the evals score 10/10 over the new questions and keep 10/10 on the old ones.
+Spec, README and notices match what shipped.
+
+**Result (2026-10-09): docs done; evaluation and release open.** Skill references, `SKILL.md`,
+spec §3.1, §3.3, §3.5, §4 and §7, spec-desktop §11 and §12.4, the README, the About page and the
+installer notices are updated, and `docs/evals.md` has questions 11–17. Not yet: run 11, which
+needs this build first on the PATH against a copy of the data (migration 9 makes the installed
+`wotctx` refuse a migrated database), and the 1.1.0 release.
+
+Risks particular to this phase:
+
+| Risk | Mitigation |
+|---|---|
+| tomato.gg changes how pages embed data | One extractor, fixtures per page, and a loud failure naming the page. Never a guessed figure |
+| tomato.gg objects to the fetches | `meta.tomato_fetch: false` ships as the default in an update. Marks still come from the dump |
+| The economics sample is skewed | State its basis, or that it is unknown, in every answer that uses it |
+| WOTInspector closes anonymous API access, or its terms forbid it | S8 is last and optional. The switch turns it off |
+| A tomato page stops refreshing (as `/overall/` and 7-day economics have) | The 14-day staleness caveat, and the fresher window preferred |
+| 0.9 MB per question is heavy | The 30-minute session cache; one fetch per page per conversation |
 
 ## Step 8 — overlay
 

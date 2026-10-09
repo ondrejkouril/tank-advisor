@@ -34,6 +34,48 @@ exactly "average for the tanks played"; above ~2,000 is very good.
 - **WN8 under-rewards passive spotting** — it has no assist term. For light tanks, read assist,
   spots and survival beside it.
 
+## XVM rank
+
+`query performance` (lifetime, all tiers) gives `xvm_rank.wn8` and `xvm_rank.win_rate`: on
+XVM's scales (`xvm:scales`, dated by the file's Last-Modified), the share of the players XVM
+rates whose lifetime figure is lower, 0 to 100. XVM's field is **stronger than the server as a
+whole** (the caveat states its midpoint, e.g. a 52 % win rate and WN8 about 1,690 on
+2026-10-09), so rank 50 is a solid player, not an average one. Say "better than about N % of the
+players XVM rates", never "top N % of the server".
+
+## Server-wide figures (`meta perf`, `meta onslaught`)
+
+From tomato.gg, every random (or Onslaught) battle on the server it records in the window, dated
+by the page's own `updated`. They describe the tank across all its players.
+
+| Field | Meaning |
+|---|---|
+| `win_rate` | the tank's win rate on the server |
+| `players_win_rate` | the overall win rate of the players who played it (random only) |
+| `win_rate_differential` | `win_rate` − `players_win_rate`: above zero, the tank lifts its players above their usual; the best single measure of a tank's strength that separates out who plays it |
+| `win_rate_margin` | 95 % sampling margin of `win_rate`, at least that wide. A differential, or a gap between two tanks, smaller than it is noise |
+| `wn8` | tomato.gg's own WN8 (its expected values): close to, not the same scale as, `wotctx`'s |
+| `versus` | the player minus the server, per basis (`lifetime`, the window), with the player's battles and confidence |
+
+Onslaught rows have no `players_win_rate`, so strong players gathering in strong tanks inflate
+those tanks' win rates; read an Onslaught ranking as "what wins, in whose hands it is played".
+
+## Credit figures (`meta econ`)
+
+Average credits per battle across players, **every server**, from at least 100 battles a tank,
+most likely only the battles tomato.gg's mod records. `earnings` is gross; `profit` is after
+ammunition, repairs and consumables; both also per minute. The account filter matters most: a
+premium account adds half again to earnings while costs stay the same, so profit can differ
+several-fold; match `--account` to the player. These are
+the average player's figures: premium ammunition, consumables, boosters and skill move them.
+
+## Configurations (`meta profile`)
+
+Wargaming's nominal characteristics, fully trained crew, nothing fitted. `dpm` = rate of fire ×
+the standard shell's average damage. `xp_to_top` sums every non-stock module on the way to the
+top configuration; which of them are already researched is in no source unless the vehicle is
+`elite`, so with `vehicle_xp` known, say what it covers, not what is left.
+
 ## Assist: random-only, labelled
 
 The API's random-battle block has assist only as totals, which `wotctx` divides by battles.
@@ -84,5 +126,5 @@ module-level research; ask the player.
 ## Mastery
 
 `mastery` 0 none, 1 third class, 2 second class, 3 first class, 4 Ace Tanker — the best ever
-earned on the tank, from `wg:account/tanks`. Marks of Excellence are a different thing and are
-not in any data.
+earned on the tank, from `wg:account/tanks`. Marks of Excellence are a different thing: the
+client mod's dump carries them, and `meta moe` the thresholds.

@@ -198,6 +198,30 @@ this is unverified without a live key. Resolved by the Step 5 acceptance test. I
 absent, the overlay gains `research_paths:` and those edges are stored with `source='overlay'`
 so provenance stays honest.
 
+#### `encyclopedia/info`
+
+Asked only for `game_version` and `tanks_updated_at` (measured 2026-10-09: `"2.4"`, 1 October).
+Synced with a 12-hour TTL: the first sync to see a version dates the patch, stored in
+`game_versions` (migration 9). `doctor`'s `game-version` check sets it beside the installed
+client's `version.xml`, and `brief` names it.
+
+#### `encyclopedia/vehicleprofiles`, `encyclopedia/vehicleprofile`, `modules_tree`
+
+Fetched at question time by `wotctx meta profile` (§3.5), never synced. `vehicleprofiles` lists
+a vehicle's valid module combinations; a `profile_id` is their module ids, sorted and joined
+by dashes. `vehicleprofile` gives one combination's characteristics (the stock one without a
+`profile_id`). `encyclopedia/vehicles?fields=modules_tree` gives each module's XP and credit
+price and what it unlocks. All three need `language=en`: without it names came back in Czech.
+Measured 2026-10-09: every non-premium vehicle from tier I to IX has modules to research, but
+only 5 of 70 at tier X and none at tier XI.
+
+#### `tanks/mastery` — known, not used
+
+`distribution=damage|xp` with `percentile=…` gives Mark of Excellence (damage) and mastery
+badge (XP, percentiles 50/80/95/99) thresholds for every vehicle, with an `updated_at`. On
+2026-10-09 its figures were identical to tomato.gg's MoE table, which `meta moe` keeps reading
+(§3.5). It is the fallback if that page goes.
+
 #### `auth/login` / `auth/prolongate`
 
 OpenID. Tokens are valid ~2 weeks. CLI flow:
@@ -293,21 +317,46 @@ in `wn8_expected` (the whole table replaced per fetch, never mixed across vintag
 stamped with both XVM's version and the fetch time, so a WN8 figure can say which vintage of
 expected values produced it.
 
+**Rating scales.** `https://static.modxvm.com/xvmscales-wg.json` (2.6 KB, regenerated daily)
+holds, for WN8, win rate, WTR, EFF and personal rating, the value at each of 100 steps of XVM's
+scale: the share of the players XVM rates with a lower figure. It syncs as `xvm:scales` with
+the expected values' seven-day TTL. It has no version of its own, so the snapshot keeps the file
+whole and its `Last-Modified` goes into `http_cache`; `doctor` warns when that is over 60 days
+old. `query performance` (lifetime, all tiers) and `brief` place the account's WN8 and win rate
+on it (`xvm_rank`). XVM's field is stronger than the server (midpoint win rate 52 % on
+2026-10-09), which every rank's caveat says.
+
 ### 3.4 Overlay — `wot-overlay.yaml`
 
 Hand-edited, versioned in git, the only writable-by-human data source. Schema in §5.
 
 ### 3.5 Meta data — fetched at question time, never synced
 
-Server-wide tank performance, economics, and MoE/mastery requirements have no API. They are
-fetched as text by the skill when a question needs them, and the answer must quote the page's
-own timestamp.
+Server-wide tank performance, economics, Onslaught and MoE requirements have no free API.
+`wotctx meta …` fetches them when a question needs them, never stores them, and every answer
+carries the page's own timestamp as the source's age (phase 6, checked 2026-10-09):
 
-`https://tomato.gg/moe/<server>` carries the full MoE requirement table (tank, tier, class,
-65/85/95/100 % thresholds, 30-day drift) and its own "updated" timestamp, but WebFetch sees
-only the first of 16 pages, so `wotctx meta moe <tank>` fetches it at question time and
-extracts the row, never storing it. Patch notes and news (worldoftanks.eu) are readable too;
-tanks.gg and the web shop return app shells that cannot be read. The skill's
+| Command | Page | What is read |
+|---|---|---|
+| `meta moe` | `tomato.gg/moe/<server>` | 794 tanks: 65/85/95/100 % thresholds, 30-day drift |
+| `meta perf` | `tomato.gg/tank-performance/recent/<SERVER>/<7\|30\|60>` | 967 tanks: battles, WR, the players' own WR and the difference, DPG, WN8, assist, hit and pen rate |
+| `meta econ` | `tomato.gg/economics/<all\|premium\|standard>/<14\|30\|60>` | ~900 tanks: credits earned, profit, costs, per minute. Not split by server; an unknown filter silently serves `all`, so it is checked first |
+| `meta onslaught` | `tomato.gg/onslaught/<SERVER>` | the season, players by rating, per-tank season figures |
+| `meta news` | `worldoftanks.<realm>/en/rss/news/` | the latest 20 articles; updates marked by category or by a title naming an update number |
+| `meta profile` | Wargaming encyclopedia (§3.1) | stock and top configuration, module research |
+
+tomato.gg's pages are server-rendered with their data embedded as JavaScript literals
+(seroval). One extractor (`internal/meta/tomato.go`) reads them for every page: it finds
+records by their leading key, parses the literal subset the pages use, and fails loudly - no
+stamp, no records, or a record it cannot read - rather than return a partial table. A page
+more than 14 days old is served with a caveat giving its age: two economics pages were stuck
+at 2026-09-11 on 2026-10-09. A process keeps each fetched page in memory for 30 minutes, so an
+MCP conversation about several tanks downloads each page once. `meta.tomato_fetch: false`
+turns every tomato.gg page off (spec-desktop §12.4).
+
+tanks.gg and the web shop return app shells that cannot be read. WOTInspector's replay API was
+considered and dropped: its terms license only personal, noncommercial use and forbid
+displaying its content elsewhere without written consent. The skill's
 `references/meta-sources.md` keeps the checked list.
 
 Rationale for not syncing: the data is server-wide rather than personal, it changes on WG's
@@ -436,6 +485,7 @@ The block above is the v1 schema as designed. Later migrations changed it:
 | 3 | Drops the three `tomato_*` tables (§3.2); adds `wn8_expected` |
 | 4 | `tank_stats` gains `capture_points`, `dropped_capture_points`, the three `*_assisted_damage` totals and `parser_version`; `wn8_expected` gains `version` |
 | 5 | Personal missions: `pm_missions` (reference), `pm_status` (per account snapshot) |
+| 9 | `game_versions`: each server game version with the first and last sync that saw it (§3.1 `encyclopedia/info`) |
 
 `moe_progression` and `loadouts` hold the client mod's marks and fitted items (§3.6), beside
 `mod_account`, `mod_vehicles`, `mod_crew` and `mod_unlocked` (migrations 6 and 7). Migration 8
@@ -458,7 +508,8 @@ change touches.
 | `game_dir` | the game folder, when detection (spec-desktop §6.1) should not decide |
 | `sync.auto_sync_after`, `sync.ttl` | when the skill syncs before answering, and per-source refetch intervals |
 | `sync.retention` | unset keeps all history; set (at least `7d`), each sync deletes older snapshots and their rows (spec-desktop §12.4) |
-| `meta.moe_fetch` | `false` stops the question-time fetch of tomato.gg's Mark of Excellence page (spec-desktop §12.4) |
+| `meta.tomato_fetch` | `false` stops every question-time fetch of a tomato.gg page (spec-desktop §12.4) |
+| `meta.moe_fetch` | `false` stops the question-time fetch of tomato.gg's Mark of Excellence page alone; kept from before `tomato_fetch` |
 | `confidence.*` | the battle-count thresholds of §6.5 |
 | `consent`, `setup.completed`, `mod.managed`, `mod.placed`, `duties.paused` | the app's own records (spec-desktop §5); `wotctx` reads none of them |
 
@@ -691,7 +742,12 @@ wotctx query candidates  [--budget-credits N]
 wotctx query missions    [--operation X]
 wotctx doctor [--json]
 wotctx overlay validate | path
-wotctx meta moe <name|id>                   # fetched at question time, never cached
+wotctx meta moe <name|id>                   # fetched at question time, never cached (§3.5)
+wotctx meta perf <name|id> | --tier N [--class X] | --owned   [--days 7|30|60]
+wotctx meta econ <name|id> | --tier N | --owned   [--account all|premium|standard] [--days 14|30|60]
+wotctx meta onslaught [<name|id>] [--class X] [--owned]
+wotctx meta news [--updates] [--since YYYY-MM-DD]
+wotctx meta profile <name|id>
 wotctx version
 wotctx mcp                                  # phase 2
 wotctx export claude-ai [--out DIR]         # phase 3: brief + skill zip for claude.ai
@@ -959,9 +1015,10 @@ its generation time, and its relative ages count from that time.
 - **Account data leaves this machine only to Wargaming, and to Claude when the player asks
   it.** When the player asks Claude about their account, Claude receives the figures it needs
   to answer, under the player's own agreement with Anthropic (spec-desktop §12.3). The only
-  other requests are XVM's expected-values file and tomato.gg's MoE page. Both are plain GETs
-  of public pages that carry no account id, token or statistic, and neither client takes any
-  account input. The app's update check goes to `api.github.com` and downloads from
+  other requests are XVM's expected values and rating scales, tomato.gg's MoE, tank
+  performance, economics and Onslaught pages, and Wargaming's news feed. All are plain GETs of
+  public pages that carry no account id, token or statistic, and none of their clients takes
+  any account input. The app's update check goes to `api.github.com` and downloads from
   `github.com`, and carries no account data either. Every question-time request sends a
   `User-Agent` naming the project and its repository.
 - **Tests use recorded, scrubbed fixtures.** No live calls in CI. A test greps `testdata/` for

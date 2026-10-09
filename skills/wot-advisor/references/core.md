@@ -32,7 +32,7 @@ defaults that apply wherever the player has set nothing.
 | Kind | Source | Example |
 |---|---|---|
 | **My stats** | `wotctx` queries | "Your AMX 13 90: 1,120 DPG over 529 battles" |
-| **Server-wide** | fetched at question time (`meta-sources.md`), with the page's own date | "Tier IX LT average DPG on EU: …, tomato.gg, updated …" |
+| **Server-wide** | fetched at question time (`wotctx meta …`, `meta-sources.md`), with the page's own date | "AMX 13 90 across EU in 30 days: 50.5 % win rate, its players +0.4 pp above their usual, tomato.gg, updated …" |
 | **Opinion** | reasoning, community consensus | "Autoloaders reward disengage discipline" |
 
 Every answer keeps them visibly apart. An opinion is labelled as one.
@@ -61,7 +61,8 @@ the same".
   without a baseline.
 - When a window's span is longer than asked ("30d actually covers 40 days"), quote the real span.
 - A game update that reworked a tank or class resets its evidence: stats from before it are
-  history, not current form.
+  history, not current form. `wotctx meta news --updates` dates the updates; when one falls
+  inside a window being compared, read its notes (the item's link) for the tanks in question.
 
 ### 2.4 No verdict on one metric
 

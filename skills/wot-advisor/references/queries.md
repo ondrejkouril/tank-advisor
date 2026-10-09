@@ -10,7 +10,7 @@ sync".
 
 | Command | Use it for |
 |---|---|
-| `wotctx doctor --json` | The freshness gate. Checks: `build`, `config`, `secrets`, `wg-auth`, `data-age`, `vehicles`, `overlay`, `wn8`, `mod-data`. Each has `status` (ok/warn/fail/unknown), `detail`, and `fix` — the exact command to run |
+| `wotctx doctor --json` | The freshness gate. Checks: `build`, `config`, `secrets`, `wg-auth`, `data-age`, `vehicles`, `game-version`, `overlay`, `wn8`, `mod-data`. Each has `status` (ok/warn/fail/unknown), `detail`, and `fix` — the exact command to run |
 | `wotctx sync` | Refresh everything that is past its TTL (account and stats hourly, reference data weekly). Safe to run often; fresh sources are skipped |
 | `wotctx sync --only wg` / `--only wn8` | One source family |
 | `wotctx brief` | The one-page orientation. Read once per conversation |
@@ -43,8 +43,10 @@ record shows); `recent` (30 d and 60 d, each `available` with a `span`, or a `re
 Rollups with a `total` line. **Use `--min-tier 8` for current play** (framework §3.2); the
 all-tier total mixes in old low-tier games. A window without a baseline returns
 `available: false` and a `reason`; one whose baseline is older than asked reports its real
-`span` and says so in a caveat. **Questions:** "am I better in mediums or heavies", "which
-nation suits me", "am I improving" (windowed).
+`span` and says so in a caveat. The lifetime, all-tier result also carries `xvm_rank`: the
+account's WN8 and win rate on XVM's percentile scales (metrics: XVM rank). **Questions:** "am I
+better in mediums or heavies", "which nation suits me", "am I improving" (windowed), "is my WN8
+good".
 
 ### `wotctx query sessions [--window 7d]`
 One `interval` per pair of consecutive syncs: `from`, `to`, a stats line, and `tanks` played.
@@ -81,12 +83,59 @@ combined-damage **range** — `lifetime` and `recent_30d` (`low`, `high`, `battl
 `confidence`), or `recent_reason`. The first source in `meta.sources` is the page itself,
 aged from its own "updated" stamp. **Questions:** "can I mark X", "how far is the second mark".
 
+### `wotctx meta perf <name|id> [--days 7|30|60]`
+How the tank does across the whole server over the window (tomato.gg): `server` with
+`battles`, `win_rate`, `players_win_rate`, `win_rate_differential`, `win_rate_margin`, `dpg`,
+assist, `wn8`; beside it the player's `lifetime` and the same-window `recent` line, and
+`versus` (player minus server, per basis, with confidence). A tank missing from the page gets
+the player's side and a caveat. **Questions:** "is X bad or is it me", "is X underperforming".
+
+### `wotctx meta perf --tier N [--class C] | --owned [--min-battles N]`
+A tier's (or a class's, or the garage's) tanks ranked by `win_rate_differential`, each with
+`win_rate_margin` and the player's own battles and win rate on it. Tanks under `--min-battles`
+server battles (default 1,000) are dropped and counted. **Questions:** "which tier X TD is
+strongest", "which of my tanks are strong right now".
+
+### `wotctx meta econ <name|id> | --tier N | --owned [--account all|premium|standard] [--days 14|30|60] [--class C] [--premium-tanks] [--per-minute]`
+Average credits per battle across players (tomato.gg, every server): `earnings`, `profit` (after
+ammo, repairs, consumables), costs, and per minute. The list ranks by `profit` (or
+`profit_per_minute`). **Pick `--account` by the player's own account** (`query resources` →
+premium): `all` is mostly premium accounts. Only the 30-day `all` page refreshes reliably; the
+others have stalled before, and a caveat gives a stale page's age. **Questions:** "which of my
+tanks earns most", "best tier VIII premium for credits", "does X lose credits".
+
+### `wotctx meta onslaught [<name|id>] [--class C] [--owned]`
+The current Onslaught season on the server (tomato.gg): one tank's season line, or the
+season's tanks ranked by `win_rate` with `win_rate_margin`, and `ratings` (rated players, and the
+rating from which the top 50/25/10/1 % start). No players' win rate exists here, and the
+player's own Onslaught results are in no source. **Questions:** "which tank for Onslaught",
+"is my rating good" (with the rating the player gives).
+
+### `wotctx meta news [--updates] [--since YYYY-MM-DD]`
+Wargaming's latest 20 articles from its feed (fetched now): `title`, `published`, `link`,
+`is_update` and the update `version` when named, a `summary`; plus `server_game_version` with
+`first_seen` (the first sync that saw it). **Questions:** "did the patch change X", "what's new";
+also before comparing two windows of the player's stats (framework §2.3).
+
+### `wotctx meta profile <name|id>`
+A vehicle's `stock` and `top` configuration from Wargaming (fetched now): gun, `dpm`, `shells`
+(average damage and penetration), reload, aim, dispersion, depression, view range, power to
+weight, speeds, traverse, armour; `research` (the modules between them, with XP and credits) and
+`xp_to_top`; with the client mod, `vehicle_xp` and `elite`. Tier X mostly, and tier XI always,
+has no `top`: nothing to research. **Questions:** "how bad is the stock grind on X", "is the top
+gun worth it", "how long until X is played properly".
+
 ## Recipes
 
 | Question | Calls |
 |---|---|
-| What should I get next? | `brief`, `query candidates`, then `query tank` for the two or three that fit best; server-wide strength from meta sources only as a tie-breaker |
-| Is my X underperforming? | `query tank X`, `query performance --by class --min-tier 8`; then the tank's server-wide DPG |
+| What should I get next? | `brief`, `query candidates`, then `query tank` for the two or three that fit best; `meta perf` (differential) only as a tie-breaker, and `meta profile` for a candidate's stock grind |
+| Is my X underperforming? / Is it the tank or me? | `query tank X`, `query performance --by class --min-tier 8`; then `meta perf X`: the server line and `versus` |
+| Which of my tanks earns the most credits? | `query resources` (premium?), then `meta econ --owned --account <premium or standard>` |
+| Which tank for Onslaught? | `meta onslaught --owned`; the player's own Onslaught results from the player |
+| Did the patch change my tanks? | `meta news --updates`; open the update's link for its notes (framework §2.3) |
+| Is my WN8 good? | `query performance` (lifetime): `total` and `xvm_rank` |
+| How bad is the stock grind on X? | `meta profile X`: stock against top, `xp_to_top`, and the player's `avg_xp` on similar tanks to cost it in battles |
 | How is my light-tank play going? | `query performance --by class --min-tier 8` (lifetime and 30d), `query garage --class LT` |
 | How did my week go? | `query sessions --window 7d` |
 | Can I mark X? | `meta moe X`: thresholds with the page date, and the player's marks, % and moving average from the client mod's dump (else a combined-damage range, and ask for the %) |

@@ -30,7 +30,10 @@ type Performance struct {
 	Reason string `json:"reason,omitempty"`
 
 	Total *StatLine `json:"total,omitempty"`
-	Rows  []Rollup  `json:"rows"`
+	// XVMRank places the total on XVM's percentile scales; only for the
+	// lifetime, all-tier record, which is what the scales describe.
+	XVMRank *XVMRank `json:"xvm_rank,omitempty"`
+	Rows    []Rollup `json:"rows"`
 }
 
 // Rollup is one group's line.
@@ -114,6 +117,9 @@ func (s *Service) Performance(ctx context.Context, by string, w Window, minTier 
 
 	total := s.line(rows, expected)
 	out.Total = &total
+	if rankable(w, minTier) {
+		out.XVMRank = r.xvmRank(&total)
+	}
 	if unknown, ok := groups["unknown"]; ok {
 		r.caveat("%d tank(s) with battles are missing from the vehicle list and are grouped as unknown", len(unknown))
 	}

@@ -7,30 +7,9 @@ package meta
 import (
 	"context"
 	"fmt"
-	"io"
-	"net/http"
-	"regexp"
 	"strconv"
 	"time"
-
-	"github.com/ondrejkouril/tank-advisor/internal/useragent"
 )
-
-// MoEURL is tomato.gg's Marks of Excellence table for one server.
-const MoEURL = "https://tomato.gg/moe/%s"
-
-// maxPage bounds the download; the real page is ~650 KB.
-const maxPage = 16 << 20
-
-// Server maps a wotctx realm to tomato.gg's server segment.
-func Server(realm string) string {
-	switch realm {
-	case "com":
-		return "na"
-	default:
-		return realm
-	}
-}
 
 // MoE is one vehicle's mark thresholds.
 //
@@ -54,111 +33,59 @@ type MoETable struct {
 	ByTank  map[int]MoE
 }
 
-// MoEClient fetches the table.
-type MoEClient struct {
-	HTTP *http.Client
-	// URL overrides MoEURL, for tests; it is used as given.
-	URL string
-	Now func() time.Time
-}
-
-// FetchMoE downloads and parses the MoE table for a server ("eu", "na", "asia").
-func (c *MoEClient) FetchMoE(ctx context.Context, server string) (MoETable, error) {
-	url := c.URL
-	if url == "" {
-		url = fmt.Sprintf(MoEURL, server)
-	}
-	now := time.Now
-	if c.Now != nil {
-		now = c.Now
-	}
-	client := c.HTTP
-	if client == nil {
-		client = &http.Client{Timeout: 30 * time.Second}
-	}
-
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
-	if err != nil {
-		return MoETable{}, fmt.Errorf("tomato.gg: %w", err)
-	}
-	req.Header.Set("User-Agent", useragent.String)
-	resp, err := client.Do(req)
-	if err != nil {
-		return MoETable{}, fmt.Errorf("tomato.gg: %w", err)
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
-		return MoETable{}, fmt.Errorf("tomato.gg: HTTP %d from %s", resp.StatusCode, url)
-	}
-	raw, err := io.ReadAll(io.LimitReader(resp.Body, maxPage))
-	if err != nil {
-		return MoETable{}, fmt.Errorf("tomato.gg: reading page: %w", err)
-	}
-
-	table, err := ParseMoE(raw)
+// MoE downloads and parses the MoE table for a server ("eu", "na", "asia").
+func (t *Tomato) MoE(ctx context.Context, server string) (MoETable, error) {
+	p, err := t.page(ctx, "/moe/"+server, "65")
 	if err != nil {
 		return MoETable{}, err
 	}
-	table.URL = url
-	table.FetchedAt = now().UTC()
+	table, err := moeTable(p.Records)
+	if err != nil {
+		return MoETable{}, fmt.Errorf("%s: %w", p.URL, err)
+	}
+	table.URL, table.FetchedAt, table.Updated = p.URL, p.FetchedAt, p.Updated
 	return table, nil
 }
 
-var (
-	// A record in the page's embedded data, as measured 2026-09-18:
-	//   {65:2198,85:3311,95:4242,100:5026,id:6769,"7diff65":123,…,name:"Tesák",tier:10,…}
-	recordRe  = regexp.MustCompile(`\{65:(\d+),85:(\d+),95:(\d+),100:(\d+),id:(\d+),([^{}]*)\}`)
-	nameRe    = regexp.MustCompile(`(?:^|,)name:"((?:[^"\\]|\\.)*)"`)
-	tierRe    = regexp.MustCompile(`(?:^|,)tier:(\d+)`)
-	diff30Re  = regexp.MustCompile(`"30diff(65|85|95|100)":(-?\d+)`)
-	updatedRe = regexp.MustCompile(`updated:"(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d(?:\.\d+)?[+-]\d\d:\d\d)"`)
-)
-
-// ParseMoE extracts the table from the page's embedded data.
+// ParseMoE extracts the table from the page's embedded data, as measured
+// 2026-09-18:
 //
-// This reads a site's internal page data, not an API, so it can break with any
-// redesign. It fails loudly - no records, or no update stamp - rather than
-// returning a partial table that would be quoted as if complete.
+//	{65:2198,85:3311,95:4242,100:5026,id:6769,"7diff65":123,…,name:"Tesák",tier:10,…}
 func ParseMoE(page []byte) (MoETable, error) {
-	table := MoETable{ByTank: map[int]MoE{}}
-
-	m := updatedRe.FindSubmatch(page)
-	if m == nil {
-		return table, fmt.Errorf("tomato.gg: no update timestamp in the page; its format has changed")
-	}
-	updated, err := time.Parse("2006-01-02 15:04:05.999999-07:00", string(m[1]))
+	updated, records, err := ParseTomato(page, "65")
 	if err != nil {
-		return table, fmt.Errorf("tomato.gg: update timestamp %q: %w", m[1], err)
+		return MoETable{}, err
 	}
-	table.Updated = updated.UTC()
+	table, err := moeTable(records)
+	if err != nil {
+		return MoETable{}, err
+	}
+	table.Updated = updated
+	return table, nil
+}
 
-	for _, rec := range recordRe.FindAllSubmatch(page, -1) {
-		atoi := func(b []byte) int { n, _ := strconv.Atoi(string(b)); return n }
-		moe := MoE{
-			TankID: atoi(rec[5]),
-			Thresholds: map[int]int{
-				65: atoi(rec[1]), 85: atoi(rec[2]), 95: atoi(rec[3]), 100: atoi(rec[4]),
-			},
-			Change30d: map[int]int{},
+func moeTable(records []Record) (MoETable, error) {
+	table := MoETable{ByTank: map[int]MoE{}}
+	for _, r := range records {
+		id, ok := r.Int("id")
+		if !ok {
+			continue
 		}
-		rest := rec[6]
-		if n := nameRe.FindSubmatch(rest); n != nil {
-			if s, err := strconv.Unquote(`"` + string(n[1]) + `"`); err == nil {
-				moe.Name = s
-			} else {
-				moe.Name = string(n[1])
+		moe := MoE{TankID: id, Name: r.String("name"), Thresholds: map[int]int{}, Change30d: map[int]int{}}
+		moe.Tier, _ = r.Int("tier")
+		for _, mark := range []int{65, 85, 95, 100} {
+			key := strconv.Itoa(mark)
+			if v, ok := r.Int(key); ok {
+				moe.Thresholds[mark] = v
+			}
+			if v, ok := r.Int("30diff" + key); ok {
+				moe.Change30d[mark] = v
 			}
 		}
-		if t := tierRe.FindSubmatch(rest); t != nil {
-			moe.Tier = atoi(t[1])
-		}
-		for _, d := range diff30Re.FindAllSubmatch(rest, -1) {
-			moe.Change30d[atoi(d[1])] = atoi(d[2])
-		}
-		table.ByTank[moe.TankID] = moe
+		table.ByTank[id] = moe
 	}
 	if len(table.ByTank) == 0 {
-		return table, fmt.Errorf("tomato.gg: no MoE records in the page; its format has changed")
+		return table, fmt.Errorf("tomato.gg: no MoE records in the page; %w", ErrFormat)
 	}
 	return table, nil
 }

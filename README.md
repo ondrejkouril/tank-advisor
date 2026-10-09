@@ -75,7 +75,9 @@ account, and [Claude Desktop](https://claude.ai/download) or Claude Code.
   the project.
 - **Tank Advisor talks to Wargaming** through its public API and its own login page. It asks
   Wargaming only for the fields it uses. It reads the public pages of XVM (WN8 reference
-  values) and tomato.gg (Marks of Excellence thresholds); those requests carry no account data.
+  values and rating scales), tomato.gg (Marks of Excellence thresholds, how each tank does across
+  the server, credits per tank, Onslaught) and Wargaming's news feed; those requests carry no
+  account data.
   It asks GitHub whether an update exists.
 - **When you ask Claude about your account, Claude receives the figures it needs to answer**,
   under your own agreement with Anthropic.
@@ -115,7 +117,8 @@ player.
   [North America](https://worldoftanks.com/), [Asia](https://worldoftanks.asia/).
   **[Wargaming Support](https://wargaming.net/support/)**.
 - Tank Advisor is not affiliated with or endorsed by Wargaming, XVM or tomato.gg.
-- WN8 expected values come from XVM. Marks of Excellence thresholds come from tomato.gg.
+- WN8 expected values and rating scales come from XVM. Marks of Excellence thresholds,
+  server-wide tank performance, credit economics and Onslaught figures come from tomato.gg.
 
 ---
 
@@ -140,7 +143,10 @@ hard-codes a number. The overlay holds what only the player knows.
 - The Wargaming Public API: account, garage, resources, per-tank statistics, achievements,
   personal missions, and the vehicle encyclopedia and tech tree.
 - XVM's WN8 expected values; WN8 is computed locally from them.
-- At question time only: tomato.gg's Mark of Excellence table, and Wargaming's news pages.
+- XVM's rating scales, for percentile ranks.
+- At question time only: tomato.gg's Mark of Excellence, tank-performance, economics and
+  Onslaught pages; Wargaming's news feed; and Wargaming's vehicle profiles for stock and top
+  configurations.
 
 Every raw response is stored gzipped before parsing, so a parser fix is a re-parse, never a
 re-fetch. **Recent form comes only from local snapshots:** the API is cumulative and cannot be

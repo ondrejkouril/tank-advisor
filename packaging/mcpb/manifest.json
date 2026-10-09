@@ -32,6 +32,11 @@
     { "name": "wot_candidates", "description": "What to buy or research next, with cost and affordability" },
     { "name": "wot_missions", "description": "Personal-mission progress" },
     { "name": "wot_moe", "description": "Mark of Excellence thresholds, fetched now" },
+    { "name": "wot_server_perf", "description": "How a tank does across the server, fetched now" },
+    { "name": "wot_economics", "description": "Credits per battle for a tank, fetched now" },
+    { "name": "wot_onslaught", "description": "The current Onslaught season across the server, fetched now" },
+    { "name": "wot_news", "description": "Wargaming's latest news and game updates, fetched now" },
+    { "name": "wot_profile", "description": "Stock and top configuration of a vehicle, fetched now" },
     { "name": "wot_sync", "description": "Fetch fresh data into the local cache" }
   ],
   "compatibility": {

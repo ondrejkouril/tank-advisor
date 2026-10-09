@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/ondrejkouril/tank-advisor/internal/secrets"
 )
@@ -51,7 +52,7 @@ func TestDoctorReportsEveryCheckByName(t *testing.T) {
 	}
 
 	for _, name := range []string{
-		"build", "config", "secrets", "wg-auth", "data-age", "vehicles", "overlay", "wn8", "mod-data",
+		"build", "config", "secrets", "wg-auth", "data-age", "vehicles", "game-version", "overlay", "wn8", "mod-data",
 	} {
 		if _, ok := checks[name]; !ok {
 			t.Errorf("doctor report is missing the %q check", name)
@@ -210,6 +211,8 @@ func valueFor(k secrets.Key) string {
 	case secrets.WGAccessToken:
 		return fakeToken
 	default:
-		return "2026-10-01T12:00:00Z"
+		// Relative to now: a fixed date passed on 2026-10-01 and failed
+		// every doctor test from then on.
+		return time.Now().Add(10 * 24 * time.Hour).UTC().Format(time.RFC3339)
 	}
 }

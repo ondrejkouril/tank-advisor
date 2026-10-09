@@ -8,8 +8,9 @@ Official World of Tanks website: https://worldoftanks.eu/ (EU),
 https://worldoftanks.com/ (North America), https://worldoftanks.asia/ (Asia).
 Wargaming Customer Support: https://wargaming.net/support/
 
-WN8 expected values come from XVM. Marks of Excellence thresholds come from
-tomato.gg.
+WN8 expected values and rating scales come from XVM. Marks of Excellence
+thresholds, server-wide tank performance, credit economics and Onslaught
+figures come from tomato.gg.
 
 What Tank Advisor does with your data
 - It stores your account statistics, garage, resources and, if you install

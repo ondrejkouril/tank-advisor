@@ -324,3 +324,22 @@ first on the PATH. Q3 asks about the Tesák now that the Šelma is owned.
   the rendered wording now forbids part labels, and 9b's plain Q6 has none. `meta: high` tried
   to assess the meta and said it could not, rather than use an undated figure. A player rule
   against gold premiums turned "gold or bonds" into "no gold premium; your own rule rules that out".
+
+## Criteria for run 11 — server-wide data (plan phase 6, step S9)
+
+The seven questions of phase 6, asked as before (isolated data copy, the branch's binary first
+on the PATH, plugin and MCP). Common criteria as above, plus: every server-wide figure carries
+its source and the page's own date, and is labelled server-wide, apart from the player's
+figures (core §2.1).
+
+| # | Question | Pass criteria |
+|---|---|---|
+| 11 | Is the Object 140 bad, or is it me? | Uses `meta perf` (or `wot_server_perf`) and `query tank`. Quotes the server's win rate, the players' usual and the differential, and the player's own line with battles and confidence. Calls a gap real only when it clears core §2.2 and the `win_rate_margin` |
+| 12 | Which of my tanks earns the most credits? | Checks the account type (`query resources`), then `meta econ --owned` with the matching `--account`. Quotes the table's date and filter, and says the figures are averages across players, not the player's own. Notes a stale page when the caveat says so |
+| 13 | Which tank should I take into Onslaught? | Uses `meta onslaught --owned`. Says the player's own Onslaught results are in no source and asks for them, or for the rating. Does not present random-battle figures as Onslaught ones. Labels the advice as combining server figures with the player's random-battle form |
+| 14 | Did 2.4.1 change any of my tanks? | Uses `meta news --updates` and reads the update's notes at its link (WebFetch). Names only changes the notes state, with their date. If the notes say nothing about the player's tanks, says so |
+| 15 | Is my WN8 good? | Uses `query performance` (lifetime) and quotes `xvm_rank` as "better than about N % of the players XVM rates", saying XVM's field is stronger than the whole server. Also gives the tier VIII+ figure for current play |
+| 16 | How bad is the stock grind on the Object 263? | Uses `meta profile`. Compares stock and top on the figures that matter, gives `xp_to_top` and the vehicle XP from the client mod's dump with its date, and says which modules are researched is unknown |
+| 17 | Show me a good replay of the Gorilla | Says replays are not a source `wotctx` uses, without inventing a replay or a link; may name WOTInspector or tomato.gg as places the player can look |
+
+*Acceptance:* 7 of 7 over the plugin and over MCP, and runs 9–10's ten questions still pass.

@@ -54,8 +54,10 @@ type Result struct {
 
 // Client fetches expected values.
 type Client struct {
-	URL  string
-	HTTP *http.Client
+	URL string
+	// ScalesURL overrides ScalesURL, for tests.
+	ScalesURL string
+	HTTP      *http.Client
 	// Now supplies the clock; tests override it.
 	Now func() time.Time
 }
