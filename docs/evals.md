@@ -30,7 +30,7 @@ no raw JSON is pasted; no SPG is recommended; nothing the data cannot know is st
 | 4 | What's fitted on my TVP T 50/51? | Says loadouts are not in any data source (client mod planned). Does not present a loadout as the player's. Asks the player, or offers general advice labelled as opinion |
 | 5 | How did my last week go? | Uses `query sessions`, not lifetime figures. States the span actually covered (history began 2026-09-17) and the battle count with its confidence. Draws no conclusion from a very-low sample |
 | 6 | Which Tier X should I push for marks? | Uses `wotctx meta moe` for the tanks it discusses and quotes the page's timestamp. Reports the player's combined damage as a **range**, never as mark progress. Asks for current mark percentages. Recommends at most one target, respecting the `moderate`+ confidence rule |
-| 7 | Is my light-tank play improving since 2.4? | Refuses a trend claim: no snapshot predates update 2.4 (history since 2026-09-17), and says so. May describe current tier VIII+ light-tank play, labelled as lifetime |
+| 7 | Is my light-tank play improving since 2.4? | Makes no firm trend claim. Says no snapshot predates update 2.4 (history since 2026-09-17), and dates 2.4 or says its date is unknown. Any comparison of post-2.4 play with lifetime is hedged to its confidence (revised for run 12) |
 | 8 | How fresh is my data? | Relays `doctor` accurately: per-source ages, the XVM expected-values version, token expiry (2026-10-01), overlay status, and that client-mod data does not exist |
 | 9 | Which personal missions do I have left? | Uses `query missions`. Reports T 55A (6 open: LT-15 and five heavy) and Object 260 not started. Says the Dravec / Fossa / Black Rock chains are not in the API. Does not call the first open mission "the next" one |
 | 10 | How am I doing in Onslaught? | Says the API has no Onslaught statistics and does not present random-battle figures as Onslaught performance |
@@ -370,3 +370,32 @@ product, and Q14 was re-asked with it off. $0.13–0.56 and 15–49 s per questi
   questions were re-asked and pass.
 - **Run 11: 7 of 7 over the plugin and 7 of 7 over MCP**, after the fix and the harness re-run.
   Runs 9–10's ten questions were not re-asked in this run.
+
+### Run 12 — 2026-10-09, runs 9–10's ten questions on the phase 6 build
+
+The same isolation as run 11, with context-mode off for the MCP sessions too, and the fix of
+run 11 in. Q3 asks about the Tesák, as in run 9. The account has moved on since the criteria
+were written: the Tesák is owned and elite, the Šelma sold, 22 days of history exist. Graded
+against the account as it is. $0.04–0.68 and 7–75 s per question.
+
+| # | Plugin | MCP | Notes |
+|---|---|---|---|
+| 1 | **pass** | **pass** | Five parts. Plugin: the researched AMX 30 B, 1,809,183 short incl. the buffer, ~4 sessions of credits, with `meta perf` and `meta profile` as tie-breakers. MCP: buy back the AMX 30 1er prototype (affordable, 218 battles at 2,232 WN8), or free-XP the LHMTV (tier VIII, within policy) |
+| 2 | **pass** | **pass** | Tier VIII+ mediums and lights; WN8 level, win rate −5.8 pp; `meta perf` put ~1 pp of it on the tank (−1.15 ± 0.24); no trend claim |
+| 3 | **pass** | **pass** | The premise is out of date: the Tesák is owned and elite (dump, 19:18 UTC, 94,562 XP); nothing to spend free XP on, and tier X is outside the policy anyway |
+| 4 | **pass** | **pass** | The full fit from the dump, dated; shells by kind and count; the crew slots without roles flagged |
+| 5 | **pass** | **pass** | 66 battles, interval by interval, low confidence; damage partly tier mix |
+| 6 | **pass** | **pass** | The STB-1 alone (2,295 against 2,359, +2.8 %); the rest with their distance and no encouragement |
+| 7 | **pass** | **pass** | Neither has a pre-2.4 snapshot. Plugin: "wotctx only started recording the game version today", 2.4 inferred to predate the history, then a low-confidence comparison of tanks played only inside it. MCP: 2.4's date (2 Sep) from worldoftanks.eu, 95 post-2.4 battles against lifetime, "leaning yes", and says lifetime is not a fair baseline |
+| 8 | **pass** | **pass** | Ages, XVM versions (expected values and scales), token expiry, overlay, the dump, the game version |
+| 9 | **pass** | **pass** | T 55A's six exact with conditions, Object 260 not started, the newer chains not in the API |
+| 10 | **pass** | **pass** | No Onslaught statistics for the player; the season's rating ladder from `meta onslaught`, asked for the rating; random-battle figures labelled as such |
+
+**Run 12: 10 of 10 over the plugin and 10 of 10 over MCP.** Criterion 7 was written when
+history was a day old ("refuses a trend claim"); with three weeks of post-2.4 snapshots, a
+hedged, low-confidence comparison is what core §2.2 allows, and both answers gave one with
+their limits stated. The criterion now reads: no firm trend claim, the 2.4 boundary dated or
+said to be unknown, confidence stated.
+
+Phase 6 step S9's evaluation acceptance (7/7 on the new questions, the old ten still passing) is
+met by runs 11 and 12.
