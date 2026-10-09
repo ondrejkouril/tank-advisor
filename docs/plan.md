@@ -25,7 +25,7 @@ Phase 1 was built on `phase-1-mvp` (28 commits) and fast-forwarded into `main` a
 | phase 3 — packaging | **done**, built on `phase-3-packaging` and fast-forwarded into `main`: plugin installed (run 6: 10/10), framework over MCP (run 5b: 10/10), bundle installed in Desktop and confirmed working by the owner 2026-09-25; the phone export is built, not yet tried |
 | phase 4 — client mod | **done**, built on `phase-4-mod` and fast-forwarded into `main` at `b9a8b9d` (2026-09-26): the mod in the client (0.2.1, checked against it by the owner; 0.3.0 built), `wotctx` reading it, answers from it; runs 7 and 8c 10/10. mod 0.3.0 and the Desktop bundle installed by the owner |
 | phase 5 — Tank Advisor | **released as v1.0.0** on 2026-09-27, from the public repository `ondrejkouril/tank-advisor`; owner checks and D10 still open. Earlier: **in progress** on `phase-5-desktop`, in the worktree `../tank-advisor-phase5`. The spec was written, Wargaming's terms read and decisions D1–D9 settled with the owner on 2026-09-26. Wargaming and tomato.gg are contacted only if they raise something first. D1–D5 are done, with owner checks open on D1, D4 and D5. The switch-over happened on 2026-09-27: this branch's `wotctx` is installed, and so is the 0.5.0 launcher extension. D6, D7 and D8 were built 2026-09-27, each with its owner check open. D9 was built and tested locally the same day; releasing waits on D0 and on the repository going public. **D11's docs are done**; SignPath wants proof of users, so the first releases go out unsigned. The owner's advice settings are not in the overlay the installed `wotctx` reads (see D7). D0 (the owner's accounts) has not started. Next: the owner's checks, the rest of D0, and D10; then the 1.0 release |
-| phase 6 — server-wide data | **built** 2026-10-09 on `phase-6-server-data`, not merged: S1–S7 done and checked live against a copy of the owner's data, S8 dropped (WOTInspector's terms), S9 done with eval run 11 at 7/7 over plugin and MCP. Run 12 (the old ten) 10/10 over both. Open: owner checks for S2, S3 and S7, and the 1.1.0 release |
+| phase 6 — server-wide data | **released as v1.1.0** on 2026-10-09, from `main` at `dfb40a0` (built on `phase-6-server-data`, fast-forwarded): S1–S7 done, S8 dropped (WOTInspector's terms), S9 done with eval runs 11 and 12 at 7/7 and 10/10 over plugin and MCP. The release checks passed: checksums, the signature against `release.pub`, and the phase 6 `wotctx` inside the app. Open: owner checks for S2, S3 and S7 |
 
 **Phase 1 (MVP) is complete.** Its done-criterion — *"What tank should I get now?"* gets a
 grounded, data-cited answer — is met in docs/evals.md, runs 1 and 2, from fresh sessions in an
@@ -1779,7 +1779,8 @@ spec §3.1, §3.3, §3.5, §4 and §7, spec-desktop §11 and §12.4, the README,
 the installer notices are updated. Run 11 (`docs/evals.md`): 7 of 7 over the plugin and over
 MCP, after one fix: two answers read the first sighting of the game version as its release
 date, so only a version change seen between syncs now dates a release. Run 12 re-asked runs
-9–10's ten questions: 10 of 10 over both. Not yet: the 1.1.0 release, which must ship this `wotctx` and the app together
+9–10's ten questions: 10 of 10 over both. Released as 1.1.0 on 2026-10-09; CI caught a launcher
+test pinned to twelve tools, which had passed locally from Go's test cache, which must ship this `wotctx` and the app together
 (migration 9 makes an older `wotctx` refuse the database).
 
 Risks particular to this phase:
