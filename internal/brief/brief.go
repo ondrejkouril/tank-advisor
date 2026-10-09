@@ -207,11 +207,10 @@ func (b *builder) dataAge() *section {
 		sec.lines = append(sec.lines, fmt.Sprintf("- History: %d snapshot(s) since %s (%.1f days); nothing earlier can be known",
 			b.history.Snapshots, b.history.FirstSnapshot.Format("2006-01-02"), b.history.Days))
 	}
-	// The first sync to see a version dates the patch: a window of stats
-	// that starts before it straddles an update.
-	if v, err := b.s.DB.LatestGameVersion(b.ctx); err == nil {
-		sec.lines = append(sec.lines, fmt.Sprintf("- Server game version %s, first seen %s (wotctx meta news --updates for what changed)",
-			v.Version, v.FirstSeen.Format("2006-01-02")))
+	// Only a version change seen by a sync dates a release; the version in
+	// use when recording began is undated (store.GameVersionState).
+	if v, err := b.s.DB.GameVersionState(b.ctx); err == nil {
+		sec.lines = append(sec.lines, "- Server game version "+v.Describe())
 	}
 	return sec
 }

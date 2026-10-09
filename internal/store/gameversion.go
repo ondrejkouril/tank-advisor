@@ -61,3 +61,58 @@ func (db *DB) LatestGameVersion(ctx context.Context) (GameVersion, error) {
 	}
 	return v, nil
 }
+
+// GameVersionState is the current version and, once a sync has seen the
+// version change, the one it replaced.
+//
+// Only a change dates a release. The first version ever recorded was already
+// in use when recording began, so its first_seen is when wotctx started
+// looking, not when Wargaming released it: run 11 of the evaluation read it as
+// a release date (docs/evals.md).
+type GameVersionState struct {
+	Current  GameVersion
+	Previous *GameVersion
+}
+
+// GameVersionState reads the current version and the one before it.
+func (db *DB) GameVersionState(ctx context.Context) (GameVersionState, error) {
+	cur, err := db.LatestGameVersion(ctx)
+	if err != nil {
+		return GameVersionState{}, err
+	}
+	state := GameVersionState{Current: cur}
+	var (
+		prev        GameVersion
+		first, last string
+	)
+	err = db.sql.QueryRowContext(ctx, `
+		SELECT version, first_seen, last_seen FROM game_versions
+		WHERE version <> ? AND last_seen <= ? ORDER BY last_seen DESC LIMIT 1`,
+		cur.Version, formatTime(cur.FirstSeen)).Scan(&prev.Version, &first, &last)
+	if errors.Is(err, sql.ErrNoRows) {
+		return state, nil
+	}
+	if err != nil {
+		return state, fmt.Errorf("reading the previous game version: %w", err)
+	}
+	if prev.FirstSeen, err = parseTime(first); err != nil {
+		return state, err
+	}
+	if prev.LastSeen, err = parseTime(last); err != nil {
+		return state, err
+	}
+	state.Previous = &prev
+	return state, nil
+}
+
+// Describe says what is known about when the current version arrived, for
+// doctor and the brief.
+func (s GameVersionState) Describe() string {
+	if s.Previous == nil {
+		return fmt.Sprintf("%s, recorded since %s; when it was released is not known here (wotctx meta news --updates dates updates)",
+			s.Current.Version, s.Current.FirstSeen.Format("2006-01-02"))
+	}
+	const at = "2006-01-02 15:04 UTC"
+	return fmt.Sprintf("%s, which replaced %s between %s and %s (the last sync on the old version and the first on the new)",
+		s.Current.Version, s.Previous.Version, s.Previous.LastSeen.Format(at), s.Current.FirstSeen.Format(at))
+}

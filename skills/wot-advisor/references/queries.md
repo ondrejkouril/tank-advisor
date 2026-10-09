@@ -113,8 +113,10 @@ player's own Onslaught results are in no source. **Questions:** "which tank for 
 
 ### `wotctx meta news [--updates] [--since YYYY-MM-DD]`
 Wargaming's latest 20 articles from its feed (fetched now): `title`, `published`, `link`,
-`is_update` and the update `version` when named, a `summary`; plus `server_game_version` with
-`first_seen` (the first sync that saw it). **Questions:** "did the patch change X", "what's new";
+`is_update` and the update `version` when named, a `summary`; plus `server_game_version`. Once
+a sync has seen the version change it carries `previous`, `released_after` and `released_by`;
+until then only `recorded_since`, which is when recording began, **not a release date**: date
+an update from its news items. **Questions:** "did the patch change X", "what's new";
 also before comparing two windows of the player's stats (framework §2.3).
 
 ### `wotctx meta profile <name|id>`

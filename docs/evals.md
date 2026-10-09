@@ -343,3 +343,30 @@ figures (core §2.1).
 | 17 | Show me a good replay of the Gorilla | Says replays are not a source `wotctx` uses, without inventing a replay or a link; may name WOTInspector or tomato.gg as places the player can look |
 
 *Acceptance:* 7 of 7 over the plugin and over MCP, and runs 9–10's ten questions still pass.
+
+### Run 11 — 2026-10-09, server-wide data (plan phase 6, step S9)
+
+Isolated as runs 9–10: a copy of the owner's data (`WOTCTX_DATA_DIR`, `WOTCTX_CONFIG_DIR`), the
+branch's binary first on the PATH, and the branch's plugin via `--plugin-dir` with the installed
+one and context-mode disabled. The MCP sessions (no skill, `--tools WebFetch`) at first left
+context-mode on, and its hook redirected WebFetch to a tool those sessions lacked: harness, not
+product, and Q14 was re-asked with it off. $0.13–0.56 and 15–49 s per question.
+
+| # | Plugin | MCP | Notes |
+|---|---|---|---|
+| 11 | **pass** | **pass** | `meta perf` and `query tank`; the Object 140 −0.45 pp against a ±0.18 margin, the player +4.9 pp; "fairly confident it isn't you" with 262 battles |
+| 12 | **fail**, then **pass** | **pass** | Premium-account table, dated, called a month old; Buryan first on average, the Erich Konzept for the player. First plugin answer: "both tables predate update 2.4, first seen today", see below |
+| 13 | **fail**, then **pass** | **pass** | Object 140, AMX 50 B second; asked for the rating and placed the season's cut-offs. First plugin answer: "server version 2.4 first appeared today" |
+| 14 | **pass** | harness, then **pass** | Read the 2.4.1 articles (the MCP re-run also the Common Test notes): maps only, no change to the garage; final notes not out yet |
+| 15 | **pass** | **pass** | `xvm_rank` 54 and 57 as "better than about N % of the players XVM rates", the field stronger than the server; tier VIII+ 1,935 for current play |
+| 16 | **pass** | **pass** | Stock against top, 143,300 XP in all; both worked out from the loaded 130 mm shells that the gun is done, and left the rest to the module screen |
+| 17 | **pass** | **pass** | No replay or link invented; pointed to where to look |
+
+- **The fix.** `first_seen` was the first sync to record a version, and the first version ever
+  recorded was already in use: it is when recording began, not a release date. Two plugin
+  answers took it for one. Now only a change seen between two syncs dates a release ("2.4.1,
+  which replaced 2.4 between … and …"); until then every output says "recorded since …; when it
+  was released is not known here", and `meta news` gives `recorded_since` instead of a date. Both
+  questions were re-asked and pass.
+- **Run 11: 7 of 7 over the plugin and 7 of 7 over MCP**, after the fix and the harness re-run.
+  Runs 9–10's ten questions were not re-asked in this run.

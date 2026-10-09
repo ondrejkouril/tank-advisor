@@ -223,7 +223,7 @@ func TestMetaNews(t *testing.T) {
 		t.Fatalf("meta news = %v\n%s", err, buf.String())
 	}
 	out := buf.String()
-	for _, want := range []string{`"server_game_version":{"version":"2.4"`, `"title":"Preload Update 2.4.1 Right Now!"`, `"version":"2.4.1"`} {
+	for _, want := range []string{`"server_game_version":{"version":"2.4","recorded_since"`, `"title":"Preload Update 2.4.1 Right Now!"`, `"version":"2.4.1"`} {
 		if !strings.Contains(out, want) {
 			t.Errorf("output lacks %s:\n%s", want, out)
 		}

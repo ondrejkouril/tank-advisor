@@ -201,8 +201,10 @@ so provenance stays honest.
 #### `encyclopedia/info`
 
 Asked only for `game_version` and `tanks_updated_at` (measured 2026-10-09: `"2.4"`, 1 October).
-Synced with a 12-hour TTL: the first sync to see a version dates the patch, stored in
-`game_versions` (migration 9). `doctor`'s `game-version` check sets it beside the installed
+Synced with a 12-hour TTL into `game_versions` (migration 9), one row per version with the first
+and last sync that saw it. Only a change dates a release: the new version arrived between the
+last sync on the old one and the first on the new. The version in use when recording began is
+undated, and every output says so; evaluation run 11 read its first sighting as a release date. `doctor`'s `game-version` check sets it beside the installed
 client's `version.xml`, and `brief` names it.
 
 #### `encyclopedia/vehicleprofiles`, `encyclopedia/vehicleprofile`, `modules_tree`

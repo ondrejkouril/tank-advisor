@@ -153,7 +153,7 @@ func newMCPServer(env *Env) *mcp.Server {
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "wot_news",
-		Description: "Wargaming's latest news from its feed (fetched now): title, date, link and summary, or only game updates, preloads and micropatches, beside the server's game version and when a sync first saw it. Use it to check whether an update falls inside a window of stats being compared, then read that update's notes at its link.",
+		Description: "Wargaming's latest news from its feed (fetched now): title, date, link and summary, or only game updates, preloads and micropatches, beside the server's game version (dated only when a sync has seen it change; recorded_since is when recording began, not a release date). Use it to check whether an update falls inside a window of stats being compared, then read that update's notes at its link.",
 		Annotations: &mcp.ToolAnnotations{Title: "Game news and updates", ReadOnlyHint: true, OpenWorldHint: &open},
 	}, m.news)
 

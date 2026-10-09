@@ -12,10 +12,16 @@ import (
 const srcGameInfo = "wg:encyclopedia/info"
 
 // GameVersion is the server's game version as the last sync saw it.
+//
+// A release is dated only by a change a sync has seen: Previous with
+// ReleasedAfter and ReleasedBy. Without one, the version was already in use
+// when recording began on RecordedSince, and its release date is unknown here.
 type GameVersion struct {
-	Version string `json:"version"`
-	// FirstSeen dates the version to within a sync: the first sync that saw it.
-	FirstSeen time.Time `json:"first_seen"`
+	Version       string     `json:"version"`
+	Previous      string     `json:"previous,omitempty"`
+	ReleasedAfter *time.Time `json:"released_after,omitempty"`
+	ReleasedBy    *time.Time `json:"released_by,omitempty"`
+	RecordedSince *time.Time `json:"recorded_since,omitempty"`
 }
 
 // NewsEntry is one article from the feed.
@@ -47,9 +53,19 @@ func (s *Service) News(ctx context.Context, feed *meta.News, since time.Time, up
 		AgeSeconds: max(0, int64(r.now.Sub(feed.FetchedAt).Seconds()))})
 
 	out := News{Items: []NewsEntry{}}
-	if v, err := s.DB.LatestGameVersion(ctx); err == nil {
+	if v, err := s.DB.GameVersionState(ctx); err == nil {
 		r.use(srcGameInfo)
-		out.ServerVersion = &GameVersion{Version: v.Version, FirstSeen: v.FirstSeen}
+		gv := &GameVersion{Version: v.Current.Version}
+		if v.Previous != nil {
+			after, by := v.Previous.LastSeen, v.Current.FirstSeen
+			gv.Previous, gv.ReleasedAfter, gv.ReleasedBy = v.Previous.Version, &after, &by
+		} else {
+			since := v.Current.FirstSeen
+			gv.RecordedSince = &since
+			r.caveat("wotctx began recording the server's game version on %s, with %s already in use; when %s was released is not known from that, so take it from the update items' dates",
+				since.Format("2006-01-02"), v.Current.Version, v.Current.Version)
+		}
+		out.ServerVersion = gv
 	} else if !errors.Is(err, store.ErrNotFound) {
 		return Envelope{}, err
 	}
