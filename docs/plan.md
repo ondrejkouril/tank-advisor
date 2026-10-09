@@ -25,7 +25,7 @@ Phase 1 was built on `phase-1-mvp` (28 commits) and fast-forwarded into `main` a
 | phase 3 — packaging | **done**, built on `phase-3-packaging` and fast-forwarded into `main`: plugin installed (run 6: 10/10), framework over MCP (run 5b: 10/10), bundle installed in Desktop and confirmed working by the owner 2026-09-25; the phone export is built, not yet tried |
 | phase 4 — client mod | **done**, built on `phase-4-mod` and fast-forwarded into `main` at `b9a8b9d` (2026-09-26): the mod in the client (0.2.1, checked against it by the owner; 0.3.0 built), `wotctx` reading it, answers from it; runs 7 and 8c 10/10. mod 0.3.0 and the Desktop bundle installed by the owner |
 | phase 5 — Tank Advisor | **released as v1.0.0** on 2026-09-27, from the public repository `ondrejkouril/tank-advisor`; owner checks and D10 still open. Earlier: **in progress** on `phase-5-desktop`, in the worktree `../tank-advisor-phase5`. The spec was written, Wargaming's terms read and decisions D1–D9 settled with the owner on 2026-09-26. Wargaming and tomato.gg are contacted only if they raise something first. D1–D5 are done, with owner checks open on D1, D4 and D5. The switch-over happened on 2026-09-27: this branch's `wotctx` is installed, and so is the 0.5.0 launcher extension. D6, D7 and D8 were built 2026-09-27, each with its owner check open. D9 was built and tested locally the same day; releasing waits on D0 and on the repository going public. **D11's docs are done**; SignPath wants proof of users, so the first releases go out unsigned. The owner's advice settings are not in the overlay the installed `wotctx` reads (see D7). D0 (the owner's accounts) has not started. Next: the owner's checks, the rest of D0, and D10; then the 1.0 release |
-| phase 6 — server-wide data | **released as v1.1.0** on 2026-10-09, from `main` at `dfb40a0` (built on `phase-6-server-data`, fast-forwarded): S1–S7 done, S8 dropped (WOTInspector's terms), S9 done with eval runs 11 and 12 at 7/7 and 10/10 over plugin and MCP. The release checks passed: checksums, the signature against `release.pub`, and the phase 6 `wotctx` inside the app. **v1.1.1** (2026-10-09, `739edbb`) followed: after 1.1.0, Claude Desktop kept serving the previous `wotctx`, so the status window now asks for a Claude restart, and the Desktop extension is 0.6.0. Open: owner checks for S2, S3 and S7 |
+| phase 6 — server-wide data | **done**; released as v1.1.0 on 2026-10-09, from `main` at `dfb40a0` (built on `phase-6-server-data`, fast-forwarded): S1–S7 done, S8 dropped (WOTInspector's terms), S9 done with eval runs 11 and 12 at 7/7 and 10/10 over plugin and MCP. The release checks passed: checksums, the signature against `release.pub`, and the phase 6 `wotctx` inside the app. **v1.1.1** (2026-10-09, `739edbb`) followed: after 1.1.0, Claude Desktop kept serving the previous `wotctx`, so the status window now asks for a Claude restart, and the Desktop extension is 0.6.0. The owner's checks for S2, S3 and S7 matched the game and tomato.gg. **Phase 6 is complete.** |
 
 **Phase 1 (MVP) is complete.** Its done-criterion — *"What tank should I get now?"* gets a
 grounded, data-cited answer — is met in docs/evals.md, runs 1 and 2, from fresh sessions in an
@@ -1642,7 +1642,7 @@ missing from the page (too new, too rare) is reported as missing.
 *Acceptance:* the Gorilla's row matches the page. The player's side matches `query tank`.
 **Owner:** three tanks look plausible against what you know of them.
 
-**Result (2026-10-09): done; owner check open.** Live: the Object 140 at 50.04 % over 307,426
+**Result (2026-10-09): done; owner check passed 2026-10-09.** Live: the Object 140 at 50.04 % over 307,426
 server battles (differential −0.45) against the player's 54.96 % over 262. Ranked lists exposed
 small samples (an AHT-7 topped tier X TDs on 1,775 battles), so every server figure carries
 `win_rate_margin`, the 95 % sampling margin, and the caveat says a gap inside it is noise.
@@ -1659,7 +1659,7 @@ page is used while the 7-day page stays stale.
 is in line with your post-battle screens, and the caveat on premium account is stated
 correctly.
 
-**Result (2026-10-09): done; owner check open.** The page has account filters, `all`, `premium`
+**Result (2026-10-09): done; owner check passed 2026-10-09.** The page has account filters, `all`, `premium`
 and `standard`, and 14/30/60-day windows; an unknown filter silently serves `all`, so
 `--account` is checked first. Measured: `all` is mostly premium accounts (Gorilla 16,120
 battles; standard 166), only the 30-day `all` page was fresh (1 Oct), the rest stuck at 11 Sep;
@@ -1731,7 +1731,7 @@ tank when there is one. MCP: `wot_profile`.
 *Acceptance:* a tank with nothing to research (the Gorilla) shows one configuration and says
 so. **Owner:** a tier IX line tank's stock and top guns match the game's module screen.
 
-**Result (2026-10-09): done; owner check open.** The top configuration is the valid profile
+**Result (2026-10-09): done; owner check passed 2026-10-09.** The top configuration is the valid profile
 whose modules cost the most XP; the research is its non-stock modules with the modules that
 unlock them. Measured: module research exists on every tech-tree vehicle from tier I to IX, on 5
 of 70 at tier X and on none at tier XI. Names came back in Czech without `language=en`. Live:
