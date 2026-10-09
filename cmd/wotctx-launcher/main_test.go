@@ -2,11 +2,13 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"sort"
 	"strings"
 	"testing"
 	"time"
@@ -103,8 +105,29 @@ func TestLauncherRunsTheInstalledWotctx(t *testing.T) {
 	for _, tool := range tools.Tools {
 		names = append(names, tool.Name)
 	}
-	if len(names) != 12 || !strings.Contains(strings.Join(names, " "), "wot_guide") {
-		t.Errorf("tools through the launcher = %v, want wotctx's twelve", names)
+	// The Desktop bundle's manifest lists every tool, and a test in
+	// internal/cli keeps it equal to the server's: compare against it rather
+	// than a count that every new tool would break.
+	raw, err := os.ReadFile(filepath.Join("..", "..", "packaging", "mcpb", "manifest.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var manifest struct {
+		Tools []struct {
+			Name string `json:"name"`
+		} `json:"tools"`
+	}
+	if err := json.Unmarshal(raw, &manifest); err != nil {
+		t.Fatal(err)
+	}
+	var want []string
+	for _, tool := range manifest.Tools {
+		want = append(want, tool.Name)
+	}
+	sort.Strings(names)
+	sort.Strings(want)
+	if strings.Join(names, " ") != strings.Join(want, " ") {
+		t.Errorf("tools through the launcher = %v\nwant the manifest's %v", names, want)
 	}
 }
 
